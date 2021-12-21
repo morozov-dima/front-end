@@ -301,15 +301,21 @@
     1. array destructing
     2. REST operator
 */
-const nameData = ['Max', 'Schwarz', 'Mr', 30];
-// const firstName = nameData[0];
-// const lestName = nameData[1];
+// const nameData = ['Max', 'Schwarz', 'Mr', 30];
+// // const firstName = nameData[0];
+// // const lestName = nameData[1];
 
-const [ firstName, lastName , ...otherInformation] = nameData;
+// const [ firstName, lastName , ...otherInformation] = nameData;
 
-console.log(firstName);
-console.log(lastName);
-console.log(otherInformation);
+// console.log(firstName);
+// console.log(lastName);
+// console.log(otherInformation);
+
+
+
+
+
+
 
 
 
