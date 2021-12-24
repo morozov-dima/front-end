@@ -20,13 +20,29 @@ const renderMovies = (filter = '') => {
     const filteredMovies = !filter ? movies : movies.filter(movie => movie.info.title.includes(filter));
 
     filteredMovies.forEach((movie) => {
+        
+        // we want to check if a property is part of an object - option1
+        if (!('info' in movie)) {}
+
+        // we want to check if a property is part of an object - option2
+        if (movie.info === undefined) {}
+
+
         const movieEl = document.createElement('li');
-        let text = movie.info.title + ' - ';
+        const { info, ...otherProperties } = movie;  // object destructuring + rest operator.
+        console.log(info);
+        console.log(otherProperties);
+
+        //const { title: movieTitle } = info; // we can assign new name to the destructed property.
+         let { getFormattedTitle } = movie;
+         // getFormattedTitle =getFormattedTitle.bind(movie); // we need add bind() with current object because we use this inside our method.
+         // let text = getFormattedTitle() + ' - ';
+            let text = getFormattedTitle.call(movie) + ' - ';
         
         // loop over "info" property
-        for (const key in movie.info) {
+        for (const key in info) {
             if (key !== 'title') {
-                text = text + `${key}: ${movie.info[key]}`;
+                text = text + `${key}: ${info[key]}`;
             }
         }
         movieEl.textContent = text;
@@ -56,16 +72,30 @@ const addMovieHandler = () => {
             title,
             [extraName]: extraValue
         },
-        id: Math.random()
+        id: Math.random().toString(),
+        
+
+        // getFormattedTitle: function() {
+        //     return this.info.title.toUpperCase();
+        // }
+
+        getFormattedTitle() {
+            console.log(this);
+            return this.info.title.toUpperCase();
+        }
+
+
     };
+
 
     movies.push(newMovie);
     renderMovies();
 };
 
 
-
-const searchMovieHandler = () => {
+// const searchMovieHandler = function() { // "this" will be element
+const searchMovieHandler = () => { // "this" will be global window object
+    console.log(this);
     const filterTerm = document.getElementById('filter-title').value;
     renderMovies(filterTerm);    
 };
