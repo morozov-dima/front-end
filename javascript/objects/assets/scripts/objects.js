@@ -75,6 +75,8 @@ const addMovieHandler = () => {
         id: Math.random().toString(),
         
 
+
+        
         // getFormattedTitle: function() {
         //     return this.info.title.toUpperCase();
         // }
