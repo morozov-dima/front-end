@@ -1,17 +1,34 @@
+class Product {
+    title = 'DEFAULT'; // we set default value to class property
+    imageUrl;
+    description;
+    price;
+
+    constructor(title, image, desc, price) {
+        this.title = title;
+        this.imageUrl = image;
+        this.description = desc;
+        this.price = price;
+    }   
+
+}
+
+console.log(new Product());
+
 const productList = {
     products : [
-        {
-            title: 'A Pillow',
-            imageUrl: 'https://via.placeholder.com/150/FF0000/FFFFFF%20C/O%20https://placeholder.com',
-            price: 19.99,
-            description: 'A soft pillow!'
-        },
-        {
-            title: 'A Carpet',
-            imageUrl: 'https://via.placeholder.com/150/000000/FFFFFF%20C/O%20https://placeholder.com/',
-            price: 89.99,
-            description: 'A carpet which you might like - or not.'
-        }
+        new Product( // we create new product object
+            'A Pillow',
+            'https://via.placeholder.com/150/FF0000/FFFFFF%20C/O%20https://placeholder.com',
+             'A soft pillow!',   
+             19.99
+        ), 
+        new Product( // we create new product object
+            'A Carpet',
+            'https://via.placeholder.com/150/000000/FFFFFF%20C/O%20https://placeholder.com/',
+             'A carpet which you might like - or not.',   
+             89.99
+        )
     ],
     render() {
         const renderHook = document.getElementById('app');
