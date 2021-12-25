@@ -24,8 +24,15 @@ class ElementAttribute {
 
 
 class Component {
-    constructor(renderHookId) {
+    constructor(renderHookId, shouldRender = true) {
         this.hookId = renderHookId;
+        if (shouldRender) {
+            this.render();
+        }
+    }
+
+    render() {
+
     }
 
     createRootElement(tag, cssClasses, attributes) {
@@ -93,8 +100,9 @@ class ShoppingCart extends Component {
 
 class ProductItem extends Component  {
     constructor(product, renderHookId) {
-        super(renderHookId);
+        super(renderHookId, false);
         this.product = product;
+        this.render();
     }
 
     addToCart() {
@@ -125,32 +133,46 @@ class ProductItem extends Component  {
 
 
 class ProductList extends Component {
-    products = [
-            new Product( 
-                'A Pillow',
-                'https://via.placeholder.com/150/FF0000/FFFFFF%20C/O%20https://placeholder.com',
-                 'A soft pillow!',   
-                 19.99
-            ), 
-            new Product( 
-                'A Carpet',
-                'https://via.placeholder.com/150/000000/FFFFFF%20C/O%20https://placeholder.com/',
-                 'A carpet which you might like - or not.',   
-                 89.99
-            )
-    ];
+    products = [];
 
 
     constructor(renderHookId) {
         super(renderHookId);
+        this.fetchProducts();
     }
+
+    fetchProducts() {
+        this.products = [
+            new Product( 
+                'A Pillow',
+                'https://via.placeholder.com/150/FF0000/FFFFFF%20C/O%20https://placeholder.com',
+                'A soft pillow!',   
+                19.99
+                ), 
+                new Product( 
+                    'A Carpet',
+                    'https://via.placeholder.com/150/000000/FFFFFF%20C/O%20https://placeholder.com/',
+                    'A carpet which you might like - or not.',   
+                    89.99
+                )
+        ];
+        this.renderProducts();
+    }
+
+
+   renderProducts() {
+        for (const prod of this.products) {
+            new ProductItem(prod, 'prod-list');
+        }
+   } 
+
+
 
     // render method in our class
     render() {
         this.createRootElement('ul', 'product-list', [new ElementAttribute('id', 'prod-list')]);
-        for (const prod of this.products) {
-            const productItem = new ProductItem(prod, 'prod-list');
-            productItem.render();
+        if (this.products && this.products.length > 0) {
+            this.renderProducts();
         }
     }
 }
@@ -160,11 +182,13 @@ class ProductList extends Component {
 
 
 class Shop {
+    constructor() {
+        this.render();
+    }
+
     render() {
         this.cart = new ShoppingCart('app'); // now "cart" is a property of shop
-        this.cart.render();
-        const productList = new ProductList('app');
-        productList.render();
+        new ProductList('app');
     }
 }
 
@@ -179,7 +203,6 @@ class App {
 
   static init() {
     const shop = new Shop();
-    shop.render();
     this.cart = shop.cart;
   }  
 
