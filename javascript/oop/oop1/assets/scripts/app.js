@@ -13,9 +13,32 @@ class Product {
 }
 
 
+
+
+
 class ShoppingCart {
    items = [];
+
+    set cartItems(value) {
+        this.items = value;
+        this.totalOutput.innerHTML = `
+            <h2>Total: \$${this.totalAmount.toFixed(2)}</h2>
+        `;
+    }
+
+   get totalAmount() {
+       const sum = this.items.reduce((prevValue, curItem) => prevValue + curItem.price, 0); // sum of array items
+       return sum;
+   }
+
+   // add product method
+   addProduct(product) {
+        const updatedItems = [...this.items]; // we create updatedItems as copy of items (with spread operator)
+        updatedItems.push(product);
+        this.cartItems = updatedItems;
+   }
    
+   // render method
    render() {
        const cartEl = document.createElement('section');
        cartEl.innerHTML = `
@@ -23,9 +46,14 @@ class ShoppingCart {
         <button>Order Now!</button>
        `;
         cartEl.className = 'cart';
+        this.totalOutput = cartEl.querySelector('h2');
         return cartEl;
    }
 }
+
+
+
+
 
 
 class ProductItem {
@@ -34,8 +62,7 @@ class ProductItem {
     }
 
     addToCart() {
-        console.log('Adding product to cart...');
-        console.log(this.product);
+        App.addPtoductToCart(this.product);
     }
 
     render() {
@@ -57,6 +84,10 @@ class ProductItem {
         return prodEl;
     }
 }
+
+
+
+
 
 
 
@@ -98,11 +129,15 @@ class ProductList {
 }
 
 
+
+
 class Shop {
+ 
     render() {
         const renderHook = document.getElementById('app');
-        const cart = new ShoppingCart(); 
-        const cartEl = cart.render();
+
+        this.cart = new ShoppingCart(); // now "cart" is a property of shop
+        const cartEl = this.cart.render();
         const productList = new ProductList();
         const prodListEl = productList.render();
         
@@ -112,5 +147,22 @@ class Shop {
 }
 
 
-const shop = new Shop();
-shop.render();
+
+// class with static properties and static methods
+class App {
+  static cart;  
+
+  static  init() {
+    const shop = new Shop();
+    shop.render();
+    this.cart = shop.cart;
+  }  
+
+  static addPtoductToCart(product) {
+         this.cart.addProduct(product);
+  }
+
+}
+
+
+App.init(); // run static method
