@@ -70,7 +70,12 @@ class ShoppingCart extends Component {
    }
 
    constructor(renderHookId) {
-       super(renderHookId); // calls the parent constructor.
+       super(renderHookId, false); // calls the parent constructor.
+       this.orderProducts = () => {
+            console.log('Ordering...');
+            console.log(this.items);
+        } 
+        this.render();  
    }
 
    // add product method
@@ -79,14 +84,19 @@ class ShoppingCart extends Component {
         updatedItems.push(product);
         this.cartItems = updatedItems;
    }
-   
-   // render method
+
+
+
+
    render() {
        const cartEl = this.createRootElement('section', 'cart'); //method from Component class
        cartEl.innerHTML = `
         <h2>Total: \$${0}</h2>
         <button>Order Now!</button>
        `;
+        const orderButton = cartEl.querySelector('button');
+        // orderButton.addEventListener('click', () => this.orderProducts());
+        orderButton.addEventListener('click', this.orderProducts);
         this.totalOutput = cartEl.querySelector('h2');
    }
 }
@@ -133,16 +143,17 @@ class ProductItem extends Component  {
 
 
 class ProductList extends Component {
-    products = [];
+    #products = []; // private proterty
 
 
     constructor(renderHookId) {
-        super(renderHookId);
-        this.fetchProducts();
+        super(renderHookId, false);
+        this.render();
+        this.#fetchProducts();
     }
 
-    fetchProducts() {
-        this.products = [
+    #fetchProducts() { // private method
+        this.#products = [
             new Product( 
                 'A Pillow',
                 'https://via.placeholder.com/150/FF0000/FFFFFF%20C/O%20https://placeholder.com',
@@ -161,7 +172,7 @@ class ProductList extends Component {
 
 
    renderProducts() {
-        for (const prod of this.products) {
+        for (const prod of this.#products) {
             new ProductItem(prod, 'prod-list');
         }
    } 
@@ -171,7 +182,7 @@ class ProductList extends Component {
     // render method in our class
     render() {
         this.createRootElement('ul', 'product-list', [new ElementAttribute('id', 'prod-list')]);
-        if (this.products && this.products.length > 0) {
+        if (this.#products && this.#products.length > 0) {
             this.renderProducts();
         }
     }
