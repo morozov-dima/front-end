@@ -70,10 +70,11 @@ div.addEventListener('click', event => {
 
 
 
-button.addEventListener('click', event => {
+button.addEventListener('click', function(event) {
     event.stopPropagation();
-    console.log('ckicked button');
-    console.log(event); 
+    //console.log('ckicked button');
+    //console.log(event); 
+    console.log(this)
 });
 
 
@@ -95,7 +96,8 @@ const list = document.querySelector('ul');
 
 
 list.addEventListener('click', event => {
-    event.target.classList.toggle('highlight');
+    event.target.closest('li').classList.toggle('highlight');
+    form.submit();
 });
 
 
