@@ -1,3 +1,4 @@
+// Example 1 - Promise
 const button = document.querySelector('button');
 const output = document.querySelector('p');
 
@@ -21,7 +22,7 @@ const setTimer = duration => {
   const promise = new Promise((resolve, reject) => {
 
     setTimeout(() => {  // times is set when this promise is created.
-       resolve('Done!'); 
+       resolve('Timer Done!'); 
     }, duration);
 
   });
@@ -30,35 +31,35 @@ const setTimer = duration => {
 
 
 
- function trackUserHandler() {
-    let positionData;
+async function trackUserHandler() {
+    //let positionData;
     let posData;
     let timerData;
-  try {
-     posData = getPosition();
-     timerData = setTimer(2000);
-   } catch (error) {
-    console.log(error);
-  }
+    try {
+      posData = await getPosition();
+      timerData = await setTimer(2000);
+     } catch (error) {
+        console.log(error);
+    }
+    console.log(timerData, posData);
 
-  console.log(timerData, posData);
-  getPosition()
-  .then(posData => {
-    positionData = posData;
-    return setTimer(2000);
-  })
-  .catch(err => {
-    console.log(err);
-  })
-  .then(data => {
-      console.log(data, positionData);
-  });
 
-  setTimer(1000).then(() => {
-        console.log('Timer done!');
-    }, 0);
+  // .then(posData => {
+  //   positionData = posData;
+  //   return setTimer(2000);
+  // })
+  // .catch(err => { // catch any errors, any rejections produced anywhere in your promise chain
+  //   console.log(err);
+  // })
+  // .then(data => {
+  //     console.log(data, positionData);
+  // });
 
-  console.log('Gettimg position...');
+  // setTimer(1000).then(() => {
+  //       console.log('Timer done!');
+  //   }, 0);
+
+  // console.log('Gettimg position...');
 }
 
 button.addEventListener('click', trackUserHandler);
@@ -89,10 +90,10 @@ let p = new Promise((resolve, reject) => {
 });
 
 p.then(message => {
-  console.log('This is in the then ' + message);
+  //console.log('This is in the then ' + message);
 })
 .catch(message => {
-  console.log('This is in the catch ' + message);
+  //console.log('This is in the catch ' + message);
 })
 
 
@@ -103,12 +104,12 @@ p.then(message => {
 
 // Example 3 - Async Prpgramming
 setTimeout(() => {
-  //console.log('Async')
+  console.log('Async')
 }, 2*1000);
 
 let counter = 0;
 let interval = setInterval(() => {
-  //console.log(++counter)
+  console.log(++counter)
 }, 1000*2); // 1sec = 1000msec
 
 setTimeout(() => {
