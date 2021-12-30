@@ -65,6 +65,15 @@ async function trackUserHandler() {
 button.addEventListener('click', trackUserHandler);
 
 
+Promise.race([getPosition(), setTimer(1000)]).then(data => {
+  console.log(data);
+});
+
+
+
+Promise.all([getPosition(), setTimer(1000)]).then((promiseData) => {
+  console.log(promiseData);
+});
 
 
 
@@ -162,8 +171,8 @@ let promise = new Promise((resolve, reject) => {
       { uid: 'id2', name: 'Elena' }
     ];
 
-    console.log('Server: ask DB for list of users', users);
-    console.log('...');  
+    //console.log('Server: ask DB for list of users', users);
+    //console.log('...');  
     resolve(users);
   }, 1000);
 });
@@ -172,8 +181,8 @@ let promise = new Promise((resolve, reject) => {
 promise.then((dbUsers) => {
   return dbPromise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log('Data base - create list of users');
-      console.log('...');
+      //console.log('Data base - create list of users');
+      //console.log('...');
       let users = dbUsers.map(user => {
         return {
           id: user.uid,
@@ -188,22 +197,22 @@ promise.then((dbUsers) => {
 .then((users) => {
   return dbPromise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log('Server - send response to client', users);
-      console.log('...');
+      //console.log('Server - send response to client', users);
+      //console.log('...');
       resolve();
     }, 500);
   });
 })
 .then(() => {
   setTimeout(() => {
-    console.log('client - get response from server and show result');
+    //console.log('client - get response from server and show result');
   }, 1000);
 })
 .catch(error => {
-  console.error(error);
+  //console.error(error);
 })
 .finally(() => {
-  console.log('Finally');
+  //console.log('Finally');
 });
 
 
