@@ -51,6 +51,7 @@ Example 1
     //             if(xhr.status >= 200 && xhr.status < 300) {
     //                 resolve(xhr.response);
     //             }else {
+    //                    xhr.response;
     //                 reject(new Error('something went wrong!!!'));
     //             }
     //         }
@@ -104,15 +105,19 @@ Example 1
     function sendHttpRequest(method, url, data){
         return fetch(url, {
             method:  method,
-            body: JSON.stringify(data),
-            headers: {
-            'Content-Type': 'application/json' 
-            }
+            // body: JSON.stringify(data),
+            body: data,
+            // headers: {
+            // 'Content-Type': 'application/json' 
+            // }
         }).then(response => {
             if (response.status >= 200 && response.status < 300) { // success case
                 return response.json(); 
             } else {
-                throw new Error('Something went wrong - server-side.');
+                return response.json().then(errData => {
+                    console.log(errData);
+                    throw new Error('Something went wrong - server-side.');
+                })
             }
         }).catch(error => {
             console.log(error);
@@ -135,8 +140,8 @@ Example 1
 // option 2 (with async await)
 // get data from server
 async function fetchPosts() {
-    // try {
-        const responseData = await sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/postsXXX');
+    try {
+        const responseData = await sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts');
             //const listOfPosts = JSON.parse(xhr.response);
             const listOfPosts = responseData;   // if we add "xhr.responseType = 'json';" we can not use "JSON.parse "
             for (const post of listOfPosts) {
@@ -146,9 +151,9 @@ async function fetchPosts() {
                     postEl.querySelector('li').id = post.id;                
                     listElement.append(postEl);
             }
-    // } catch (error) {
-    //     console.error("Our error is : " + error.message);
-    // }
+    } catch (error) {
+        console.error("Our error is : " + error.message);
+    }
 }
 
 
@@ -162,7 +167,13 @@ async function createPost(title, content) {
        userId: userId 
      };
 
-     sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', post);
+     const fd = new FormData(form);
+    //  fd.append('title', title);
+    //  fd.append('body', content);
+     fd.append('userId', userId);
+
+     //sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', post);
+     sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts', fd);
 }
 
 
