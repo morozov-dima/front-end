@@ -8,7 +8,6 @@ const dbRequest = indexedDB.open('StorageDummy', 1); // create new database or o
 
 dbRequest.onsuccess = function(event) {
     db = event.target.result;
-
 }
 
 
