@@ -1,44 +1,37 @@
-/*
-  run "tsc app.ts" in order to convers "ts" code to "js" code
-*/
+// class User {
+//   name: string;
+//   private age: number;
 
+//   constructor(name: string, age: number) {
+//     this.name = name;
+//     this.age = age;
+//   }
+// }
 
-class User {
-  constructor(
-    public name: string,
-    private age: number
-  ){
+interface Greetable {
+  name: string;
+}
 
+interface Printable {
+  print(): void;
+}
 
+class User implements Greetable, Printable {
+  constructor(public name: string, private age: number) { }
+
+  print() {
+    console.log(this.name);
   }
 }
 
-
 class Admin extends User {
-  constructor(
-    name: string,
-    age: number,
-    private permissions: string[]
-  ){
-    // we will forward name and age to the super consrtuctor (to the User class)
+  constructor(name: string, age: number, private permissions: string[]) {
     super(name, age);
   }
 }
 
-
-
-const user = new User('Max', 30 );
+const user = new User('Max', 30);
 console.log(user.name);
-
-
-
-
-
-
-
-
-
-
 
 const num1Input = document.getElementById('num1') as HTMLInputElement;
 const num2Input = <HTMLInputElement>document.getElementById('num2');
@@ -49,33 +42,40 @@ function add(a: number, b: number) {
 }
 
 type PrintMode = 'console' | 'alert';
-//enum OutputMode { CONSOLE, ALERT };
+enum OutputMode {
+  CONSOLE,
+  ALERT
+}
 
-function printResult(result: string | number, printMode: PrintMode) {
-  if (printMode === 'console') {
+function printResult(result: string | number, printMode: OutputMode) {
+  if (printMode === OutputMode.CONSOLE) {
     console.log(result);
-  } else if (printMode === 'alert') {
+  } else if (printMode === OutputMode.ALERT) {
     alert(result);
   }
-
 }
 
 // const result = add(5, 3);
-// const isDone = false;
+// let isDone = false;
 
-// console.log(result);
+// printResult(result);
 
-// printResult("Skoda");
-// printResult(12);
+interface CalculationContainer {
+  res: number;
+  print(): void;
+}
 
-type CalculationResults = { res: number, print: () => void }[];
+type CalculationResults = CalculationContainer[];
 
-const results: CalculationResults = [];
+
+
+
+const results: Array<CalculationContainer> = [];
 const names = ['Max'];
 
 buttonElement.addEventListener('click', () => {
-  const num1 = +num1Input.value; // we add + to convert string info a number
-  const num2 = +num2Input.value; // we add + to convert string info a number
+  const num1 = +num1Input.value;
+  const num2 = +num2Input.value;
   const result = add(num1, num2);
   const resultContainer = {
     res: result,
@@ -84,8 +84,16 @@ buttonElement.addEventListener('click', () => {
     }
   };
   results.push(resultContainer);
+  // results.push(5);
   // results[0].print();
-  printResult(result, 'console');
-  printResult(result, 'alert');
+  printResult(result, OutputMode.CONSOLE);
+  printResult(result, OutputMode.ALERT);
+  // printResult(result, 'window');
 });
 
+function logAndEcho<T>(val: T) {
+  console.log(val);
+  return val;
+}
+
+logAndEcho<string>('Hi there!').split(' ');
