@@ -1,0 +1,28 @@
+<p>user-data works!</p>
+
+
+<button (click)="toggleParagraph()">Display Details</button>
+
+
+<p *ngIf="showText">Secret Password = tuna</p>
+
+<br>
+<br>
+
+
+
+    <div  *ngFor="let logD of logData; index as i"
+        [ngClass]="{'whiteColor': i >= 4}" 
+        [ngStyle]="{'background-color': i >= 4 ? 'blue' : 'transpatent' }" >
+        {{logD.time}}
+    </div>
+
+
+    <!-- <p  *ngFor="let logD of logData;"
+        [ngClass]="{'whiteColor': logData.length >= 5}" 
+        [ngStyle]="{backgroundColor: logData.length >= 5 ? 'blue' : 'transpatent' }" >
+        {{logD.time}}
+    </p> -->
+
+
+
