@@ -1,0 +1,7 @@
+<section class="row">
+    <input id="item-input" type="text" #newItem>
+    <button (click)="onAddText(newItem.value);">Add Text</button>
+</section>
+
+
+<app-show-user-data [itemsListChildComp]="itemsListForChildComponent"></app-show-user-data>

@@ -12,7 +12,6 @@ import {
   styleUrls: ['./game-control.component.css']
 })
 export class GameControlComponent implements OnInit {
-  @Output() newItemEvent = new EventEmitter<string>();
 
   counter: number = 0;
   resultOdd: object[] = [];
@@ -27,7 +26,7 @@ export class GameControlComponent implements OnInit {
 
   
 
-  onStartGame(event: Event) {
+  onStartGame() {
     const interval = 1000;
      this.gameInterval =  setInterval(() => {
   
@@ -39,14 +38,14 @@ export class GameControlComponent implements OnInit {
         this.resultEven.push({'num': this.counter});
       }
 
-      this.counter += 1;
+      this.counter++;
      
     }, interval);
   }
 
 
 
-  onStopGame(event: Event) {
+  onStopGame() {
     clearInterval(this.gameInterval);
   
   }

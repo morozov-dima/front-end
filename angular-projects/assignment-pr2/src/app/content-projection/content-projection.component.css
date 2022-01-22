@@ -1,0 +1,10 @@
+.content {
+    background-color: darkgoldenrod;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.content div {
+    padding: 10px;
+    text-align: left;
+}

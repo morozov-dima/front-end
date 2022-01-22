@@ -1,0 +1,77 @@
+<app-user-data (itemsList)="addItem($event)"></app-user-data>
+<section class="row">
+  <ul>
+    <li *ngFor="let item of items">
+      {{item}}
+    </li>
+  </ul>
+</section>
+
+<br><br><br><br>
+<hr>
+<br><br><br><br>
+
+<app-buttons-game></app-buttons-game>
+
+
+<br><br><br><br>
+<hr>
+<br><br><br><br>
+
+
+<app-books></app-books>
+
+
+<br><br><br><br>
+<hr>
+<br><br><br><br>
+
+
+<app-background></app-background>
+
+<br><br><br><br>
+<hr>
+<br><br><br><br>
+
+<app-numbers></app-numbers>
+
+<br><br><br><br>
+<hr>
+<br><br><br><br>
+
+
+<app-circle></app-circle>
+
+<br><br><br><br>
+<hr>
+<br><br><br><br>
+
+<app-toggle-text></app-toggle-text>
+
+<br><br><br><br>
+<hr>
+<br><br><br><br>
+
+
+<app-content-projection>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    <span [ngStyle]="{
+      color: 'blue' 
+    }">Iusto, eaque?</span>
+
+
+    <div textBlock>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <span [ngStyle]="{
+        color: 'white' 
+      }">Iusto, eaque?</span>
+    </div>
+
+    <div textBlock2>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <span [ngStyle]="{
+        color: 'orange' 
+      }">Iusto, eaque?</span>
+    </div>
+
+</app-content-projection>

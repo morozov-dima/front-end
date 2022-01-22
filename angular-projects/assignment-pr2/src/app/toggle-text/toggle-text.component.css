@@ -1,0 +1,22 @@
+.content {
+    background-color: cornflowerblue;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.content-button {
+    display: flex;
+    justify-content: center;
+    margin:10px;
+    padding: 10px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin:10px;
+    padding: 10px;
+    text-align: left;
+}
+
