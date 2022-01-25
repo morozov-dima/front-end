@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+.myTooltip {
+    position: relative;
+    display: inline-block;
+  }  
+
+.tooltiptext {
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 1;
+    min-width: 200px;
+  }
+
+
+
+.hide {
+    display: none;
+}
+
