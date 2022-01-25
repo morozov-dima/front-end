@@ -182,7 +182,27 @@
           tooltipBgColor: '#000000',
           tooltipText: 'This is tooltip text!!!'
         }">Lorem ipsum dolor</p>
+
+        <br>
+
+        <p [appTooltip]="{
+          tooltipTextColor: '#ffffff',
+          tooltipBgColor: 'blue',
+          tooltipText: 'This is tooltip text 123 123 123'
+        }">Lorem ipsum dolor</p>
+
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt, ullam.
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptates, doloribus.
+          <a href="#" [appTooltip]="{
+            tooltipTextColor: '#ffffff',
+            tooltipBgColor: '#000000',
+            tooltipText: 'This is tooltip text!!!'
+          }">Lorem</a>
+        </p>
       </div>
+
+
 
 
 
@@ -190,6 +210,11 @@
       <hr>
       <br>
 
+
+
+
+
+      
     </div>
   </div>
 </div>
