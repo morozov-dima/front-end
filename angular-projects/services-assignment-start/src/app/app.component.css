@@ -1,0 +1,12 @@
+.container {
+  margin-top: 30px;
+}
+
+
+.hrStyle {
+  height:2px;
+  border-width:0;
+  color:gray;
+  background-color:rgb(46, 73, 226);
+  margin: 150px 10px 150px 10px;
+}

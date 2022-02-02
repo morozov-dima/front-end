@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, AfterContentInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, AfterContentInit } from '@angular/core';
+import { RecipeService } from 'src/app/shared/recipe.service';
 import { Recipe } from '../../recipe.model'; // we will use "Recipe" model as type
 
 @Component({
@@ -11,9 +12,8 @@ export class RecipeItemComponent implements OnInit, AfterContentInit {
   // We get data from parent component
   @Input() recipe: Recipe = {};
 
-  @Output() recipeSelected = new EventEmitter<Recipe>();
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     
@@ -24,8 +24,7 @@ export class RecipeItemComponent implements OnInit, AfterContentInit {
   }
 
   onSelected(recipe: object) {
-    this.recipeSelected.emit(recipe);
-  
+    this.recipeService.recipeSelected.emit(this.recipe);
   }
 
 }

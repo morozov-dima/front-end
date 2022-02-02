@@ -10,7 +10,7 @@
     <div class="col-xl-12">
 
         <!-- We pass data to child component -->    
-        <app-recipe-item (recipeSelected)="showRecipe($event)" [recipe]="recipeEl" *ngFor="let recipeEl of recipes"></app-recipe-item>
+        <app-recipe-item  [recipe]="recipeEl" *ngFor="let recipeEl of recipes"></app-recipe-item>
 
 
     </div>

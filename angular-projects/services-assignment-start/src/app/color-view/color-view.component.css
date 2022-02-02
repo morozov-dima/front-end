@@ -1,0 +1,6 @@
+.color-view {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+

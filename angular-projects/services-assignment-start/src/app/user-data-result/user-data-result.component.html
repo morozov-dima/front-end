@@ -1,0 +1,42 @@
+<section>
+ 
+        <ul>
+            <li *ngFor="let item of items">
+                {{item}}    
+            </li>
+        </ul>
+
+        <p [ngStyle]="{color: 'red'}" *ngIf="showErrorMessage">{{message}}</p>
+
+</section>
+
+
+
+<section>
+    <p>
+        Year: {{showYear}}
+    </p>
+    <p>
+        Month: {{showMonth}}
+    </p>
+    <p>
+        Day: {{showDay}}
+    </p>
+    <p>
+        Hours: {{showHours}}
+    </p>
+    <p>
+        Minutes: {{showMinutes}}
+    </p>
+    <p>
+        Seconds : {{showSeconds}}
+    </p>
+</section>
+
+
+
+
+
+
+
+

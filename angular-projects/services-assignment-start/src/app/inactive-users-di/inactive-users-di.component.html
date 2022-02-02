@@ -1,0 +1,8 @@
+<h3>Inactive Users - DI</h3>
+<ul class="list-group">
+  <li
+    class="list-group-item"
+    *ngFor="let userDI of usersDI; let i = index">
+    {{ userDI }} | <a href="#" (click)="onSetToActiveDI(i)">Set to Active</a>
+  </li>
+</ul>
