@@ -1,0 +1,19 @@
+<section class="slots">
+    <h4>Slots Page</h4>
+    <ul class="slots-items">
+        <li *ngFor="let uData of userData" class="slots-item">
+            <a 
+                [routerLinkActive]="['active']"
+                [routerLinkActiveOptions]="{exact: true}" 
+                [routerLink]="['slot-games', uData.gameId, uData.gameName]">
+                {{uData.gameName}}
+            </a>
+        </li>
+    </ul>
+</section>
+
+
+
+<section class="slots-data">
+    <router-outlet></router-outlet>
+</section>

@@ -1,0 +1,12 @@
+<ul class="header-right-items">
+    <li class="header-right-item">
+        <a 
+            [ngClass]="{'active': loginUser}"
+            (click)="onLogin()">Login</a>
+    </li>
+    <li class="header-right-item">
+        <a
+         [ngClass]="{'active': !loginUser}"   
+         (click)="onLogout()">Logout</a>
+    </li>
+</ul>

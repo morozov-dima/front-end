@@ -12,6 +12,9 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { FormsModule } from '@angular/forms';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { DropdownHostbinding } from './shared/dropdown-hostbinding.directive';
+import { AppRoutingModule } from './app-routing.module';
+import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
 
 
@@ -26,11 +29,14 @@ import { DropdownHostbinding } from './shared/dropdown-hostbinding.directive';
     ShoppingListComponent,
     ShoppingEditComponent,
     DropdownDirective,
-    DropdownHostbinding
+    DropdownHostbinding,
+    RecipeStartComponent,
+    RecipeEditComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

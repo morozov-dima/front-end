@@ -1,0 +1,18 @@
+.header-right-items{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.header-right-item{
+    padding:5px;
+}
+
+.header-right-item a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.active{
+    font-weight:bold;
+}
