@@ -1,0 +1,46 @@
+<header class="header">
+    <div class="header-left">
+        <ul class="header-left-items">
+            <li class="header-left-item">
+                <a 
+                    [routerLink]="['']"
+                    [routerLinkActive]="['active']"
+                    [routerLinkActiveOptions]="{exact: true}" >
+                    Home Page
+                </a>
+            </li>
+            <li class="header-left-item">
+                <a 
+                    [routerLink]="['promotions']"
+                    [routerLinkActive]="['active']" >
+                    Promotions ({{numberOfProm}})
+                </a>
+            </li>
+            <li class="header-left-item">
+                <a 
+                    [routerLink]="['games']"
+                    [routerLinkActive]="['active']" >
+                    Games
+                </a>
+            </li>
+            <li class="header-left-item">
+                <a 
+                    [routerLink]="['slots']"
+                    [routerLinkActive]="['active']" >
+                    Slots
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="header-right">
+        <ul class="header-right-items">
+            <li class="header-right-item">
+                <a href="">Login</a>
+            </li>
+            <li class="header-right-item">
+                <a href="">Logout</a>
+            </li>
+        </ul>
+    </div>
+</header>

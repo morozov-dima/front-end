@@ -1,0 +1,17 @@
+.games-items{
+    display: flex;
+    flex-direction: column;
+ }
+
+ .games-item{
+     list-style: none;
+ }
+
+ .games-item a{
+     text-decoration: none;
+     padding:10px;
+ }
+
+ .active{
+     color:#000000;
+ }

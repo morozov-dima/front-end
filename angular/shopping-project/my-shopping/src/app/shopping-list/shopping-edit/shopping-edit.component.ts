@@ -28,7 +28,7 @@ export class ShoppingEditComponent implements OnInit {
     const userDataObj = new Ingredient(this.nameInput.nativeElement.value, this.amountInput.nativeElement.value);
 
     // this.sendUserData.emit(userDataObj);
-    this.shoppingListService.sendUserData.emit(userDataObj);
+    this.shoppingListService.sendUserData.next(userDataObj);
   }
 
 }

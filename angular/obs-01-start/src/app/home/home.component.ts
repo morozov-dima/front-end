@@ -43,12 +43,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.firstObsSubscription = customIntervalObservable
     .pipe(
-        filter(
+        filter( 
           data => {
-            return data > 0;
-          }
-        ),
-        map(
+             return data > 0; }),
+        map( 
           (data: number) => {
             return 'Round: ' + (data + 1);
           }
