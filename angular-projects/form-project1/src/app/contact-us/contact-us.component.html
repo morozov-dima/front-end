@@ -6,27 +6,30 @@
 
          <!-- email field begin -->
          <div class="form-row">
-            <label for="email">Email</label>
+            <label class="form-label" for="email">Email</label>
             <input 
                 type="email"
                 required
                 name="email"
                 email
                 #email="ngModel"
+                class="form-control"
                 ngModel >
             <span *ngIf="!email.valid">Please enter a valid email!</span>    
         </div>
          <!-- email field end -->
 
 
-        <br>
+
 
 
         <!-- subscription drop down list begin -->
         <div class="form-row">
+            <label class="form-label" for="subscription">Subscription</label>
             <select
                 name="subscription" 
                 id="subscription"
+                class="form-select"
                 [ngModel]="defaultSub" 
                 required >
                     <option  
@@ -42,10 +45,12 @@
 
         <!-- password field begin -->
         <div class="form-row">
+            <label class="form-label" for="password">Password</label>
             <input 
                 type="password" 
                 name="password" 
                 id="password"
+                class="form-control"
                 ngModel
                 #password="ngModel"
                 required >
@@ -58,23 +63,30 @@
 
 
         <!-- form submit button begin -->
-        <button 
-            type="submit"
-            [disabled]="!f.valid" >
-            Submit Button
-        </button> 
+        <div class="form-row">
+            <button 
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!f.valid" >
+                Submit Button
+            </button> 
+        </div>
         <!-- form submit button end -->
 
 
 
     </form>
 
+    <div class="form-row">
+        <p 
+            *ngIf="!f.valid && f.touched"
+            [ngStyle]="{color: 'red'}">
+            Form is invalid !!!
+        </p>
+    </div>
 
-    <p 
-        *ngIf="!f.valid && f.touched"
-        [ngStyle]="{color: 'red'}">
-        Form is invalid !!!
-    </p>
+
+
 
 
 
