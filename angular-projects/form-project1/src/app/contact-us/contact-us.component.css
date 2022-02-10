@@ -1,3 +1,9 @@
 .contact-us {
     margin:20px;
 }
+
+.form-row{
+    padding:10px;
+    margin:10px;
+    border:1px solid #a09090;
+}

@@ -1,12 +1,82 @@
 <section class="contact-us">
-    <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <form
+       (ngSubmit)="onSubmit()"
+         #f="ngForm">
+
+
+         <!-- email field begin -->
+         <div class="form-row">
+            <label for="email">Email</label>
+            <input 
+                type="email"
+                required
+                name="email"
+                email
+                #email="ngModel"
+                ngModel >
+            <span *ngIf="!email.valid">Please enter a valid email!</span>    
+        </div>
+         <!-- email field end -->
+
+
+        <br>
+
+
+        <!-- subscription drop down list begin -->
+        <div class="form-row">
+            <select
+                name="subscription" 
+                id="subscription"
+                [ngModel]="defaultSub" 
+                required >
+                    <option  
+                        [value]="userDataItem.subscriptionName" 
+                        *ngFor="let userDataItem of userDataItems">
+                            {{ userDataItem.subscriptionName }}
+                        </option>
+            </select>
+        </div>
+        <!-- subscription drop down list end -->
+
+       
+
+        <!-- password field begin -->
+        <div class="form-row">
+            <input 
+                type="password" 
+                name="password" 
+                id="password"
+                ngModel
+                #password="ngModel"
+                required >
+            <span *ngIf="!password.valid">Please enter password</span>
+        </div>
+        <!-- password field end -->
 
 
 
-        <button type="submit" [disabled]="!f.valid">
-            Save
-        </button>
 
-        
+
+        <!-- form submit button begin -->
+        <button 
+            type="submit"
+            [disabled]="!f.valid" >
+            Submit Button
+        </button> 
+        <!-- form submit button end -->
+
+
+
     </form>
+
+
+    <p 
+        *ngIf="!f.valid && f.touched"
+        [ngStyle]="{color: 'red'}">
+        Form is invalid !!!
+    </p>
+
+
+
+
 </section>
