@@ -5,6 +5,9 @@
           (ngSubmit)="onSubmit()" 
           #f="ngForm"
           >
+
+
+        <!-- userData group begin -->  
         <div 
             id="user-data" 
             ngModelGroup="userData"
@@ -39,9 +42,15 @@
               </span> 
           </div>
         </div>
+        <!-- userData group end -->  
+
+        
+
+
         <p *ngIf="!userData.valid && userData.touched">User Data is invalid!</p>
 
 
+        <!-- secret text field -->
         <div class="form-group">
           <label for="secret">Secret Questions</label>
           <select 
@@ -56,6 +65,8 @@
           </select>
         </div>
 
+
+        <!-- textarea field -->
         <div class="form-group">
           <textarea 
             name="questionAnswer" 
@@ -71,6 +82,7 @@
         </p>
 
 
+        <!-- radio field -->
         <div class="radio" *ngFor="let gender of genders">
           <label>
             <input 
@@ -85,7 +97,7 @@
 
           <!-- disable button if form in not valid-->
           <button 
-          [disabled]="!f.valid"
+          [disabled]="!f.valid" 
           class="btn btn-primary" 
           type="submit">Submit</button>
 
@@ -95,6 +107,8 @@
 
 
       <hr>
+
+      <!-- Output form results -->
       <div class="row" *ngIf="submitted">
         <div class="col-xs-12">
           <h3>Your Data</h3>
