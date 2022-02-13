@@ -1,30 +1,98 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            class="form-control">
+
+
+      <!-- ****** Reactive From begin ****** -->
+      <form 
+        [formGroup]="signupForm"
+        (ngSubmit)="onSubmit()" > 
+
+
+        <!-- nested form begin -->
+        <div formGroupName="userData">
+
+            <!-- username field begin --> 
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                formControlName="username"
+                class="form-control">
+                <span 
+                  *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
+                  class="help-block">Please enter a valid username!</span>
+            </div>
+            <!-- username field end -->
+
+
+            <!-- email field begin -->
+            <div class="form-group">
+              <label for="email">email</label>
+              <input
+                type="text"
+                id="email"
+                formControlName="email"
+                class="form-control">
+                <span 
+                  *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
+                  class="help-block">Please enter a valid email!</span>
+            </div>
+            <!-- email field end -->
+
         </div>
-        <div class="form-group">
-          <label for="email">email</label>
-          <input
-            type="text"
-            id="email"
-            class="form-control">
-        </div>
+        <!-- nested form begin -->
+
+
+
+       
+        <!-- gender field begin -->
         <div class="radio" *ngFor="let gender of genders">
           <label>
             <input
               type="radio"
+              formControlName="gender"
               [value]="gender">{{ gender }}
           </label>
         </div>
+        <!-- gender field end -->
+
+        
+
+        <!-- add hobbies controls begin -->
+        <div formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button 
+            class="btn btn-default" 
+            type="button"
+            (click)="onAddHobby()" >Add Hobby</button>
+
+            <div 
+              *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index"  
+              class="form-group">
+              <input type="text" class="form-control" [formControlName]="i">
+            </div>
+        </div>
+        <!-- add hobbies controls end -->
+
+
+
+        <span 
+        *ngIf="!signupForm.valid && signupForm.touched"
+        class="help-block">
+          Please enter a valid data!
+        </span>
+
+
+        <!-- submit button begin -->
         <button class="btn btn-primary" type="submit">Submit</button>
+        <!-- submit button end -->
+
+
       </form>
+      <!-- ****** Reactive From end ****** -->
+
     </div>
   </div>
 </div>
