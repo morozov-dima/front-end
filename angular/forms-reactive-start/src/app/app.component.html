@@ -22,7 +22,14 @@
                 class="form-control">
                 <span 
                   *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
-                  class="help-block">Please enter a valid username!</span>
+                  class="help-block">
+                  <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">
+                    This name is invalid!
+                  </span>
+                  <span *ngIf="signupForm.get('userData.username').errors['required']">
+                    This field is required!
+                  </span>
+                </span>
             </div>
             <!-- username field end -->
 
@@ -60,7 +67,7 @@
 
         
 
-        <!-- add hobbies controls begin -->
+        <!-- add hobbies controls dynamically begin -->
         <div formArrayName="hobbies">
           <h4>Your Hobbies</h4>
           <button 
@@ -71,10 +78,11 @@
             <div 
               *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index"  
               class="form-group">
+              <!-- input that alows the user to enter the actual hobby. -->
               <input type="text" class="form-control" [formControlName]="i">
             </div>
         </div>
-        <!-- add hobbies controls end -->
+        <!-- add hobbies controls dynamically end -->
 
 
 
