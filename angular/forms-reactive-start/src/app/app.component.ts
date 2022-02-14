@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
 
 
 
-
       // /* we can call this on an individual form control. */
       // this.signupForm.valueChanges.subscribe(
       //   (value) => {
@@ -81,7 +80,7 @@ export class AppComponent implements OnInit {
   onAddHobby() {
     /* add new bobby to the hobbies array */
     const control = new FormControl(null, Validators.required);
-    (<FormArray>this.signupForm.get('hobbies')).push(control);
+    (<FormArray>this.signupForm.get('hobbies')!).push(control);
   }
 
 

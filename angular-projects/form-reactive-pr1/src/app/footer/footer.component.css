@@ -1,0 +1,21 @@
+.footer {
+    padding: 3px;
+}
+
+.footer-block-items{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.footer-block-item{
+    padding:5px;
+    list-style: none;
+    align-items: center;
+}
+
+.footer-block-item a{
+    color:#000000;
+    text-decoration: none;
+}

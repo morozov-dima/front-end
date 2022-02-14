@@ -50,7 +50,7 @@ export class CustomValidators {
                 // if validation is successful, you have to pass nothing or null.
                 resolve(null)
             }
-            }, 1500);
+            }, 2000);
         }
         );
         return promise;

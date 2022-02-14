@@ -1,0 +1,93 @@
+<div class="container">
+
+
+  
+    <form [formGroup]="heroForm" (ngSubmit)="onSumbit()">
+  
+  
+         
+        <!-- name field begin -->
+        <div class="mb-3">
+            <label for="nameInput">Name</label>
+            <input 
+                type="text" 
+                id="nameInput" 
+                class="form-control"
+                formControlName="nameInput">
+
+                <span 
+                *ngIf="!heroForm.get('nameInput')!.valid && heroForm.get('nameInput')!.touched"
+                class="help-block">
+                Name is required.
+                </span>
+       
+        </div>
+
+
+
+
+
+   
+
+         <!-- email field begin -->
+        <div class="mb-3">
+            <label for="emailInput" class="form-label">Email address:</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                formControlName="emailInput"
+                id="emailInput" >
+                <span 
+                    *ngIf="!heroForm.get('emailInput')!.valid && heroForm.get('emailInput')!.touched"
+                    class="help-block">Please enter a valid email!
+                </span>
+        </div>
+        <!-- email field end -->
+
+
+
+
+        <!-- user skils begin -->
+        <div class="mb-3">
+            <select class="form-select" aria-label="Default select example">
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+            </select>
+        </div>
+        <!-- user skils end -->
+
+
+
+
+        <!-- user comment begin -->
+        <div class="mb-3">
+            <label for="userCommentsTextarea" class="form-label">User Comments</label>
+            <textarea 
+                class="form-control" 
+                id="userCommentsTextarea" 
+                formControlName="userComments"
+                rows="3"></textarea>
+                <span 
+                *ngIf="!heroForm.get('userComments')!.valid && heroForm.get('userComments')!.touched"
+                class="help-block">Please enter a comments!
+            </span>
+        </div>
+        <!-- user comment end -->
+
+  
+
+
+
+      <!-- submit button begin -->
+      <div class="col-12">
+        <button [disabled]="!heroForm.valid" type="submit" class="btn btn-primary">Sumbit</button>
+    </div>
+    <!-- submit button end -->
+
+
+     
+    </form>
+  
+
+  </div>

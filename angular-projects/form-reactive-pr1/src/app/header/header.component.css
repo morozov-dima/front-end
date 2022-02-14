@@ -1,0 +1,28 @@
+.header-content{
+    display: flex;
+    justify-content: center;
+    margin-top:20px;
+}
+
+.header-content-items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+
+
+
+.header-content-item a{
+    text-decoration: none;
+    margin:5px;
+}
+
+.header-content-item-link{
+    color:#000000;
+}
+
+.active{
+    color:red;
+}

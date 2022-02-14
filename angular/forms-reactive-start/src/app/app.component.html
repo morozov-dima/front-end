@@ -21,12 +21,12 @@
                 formControlName="username"
                 class="form-control">
                 <span 
-                  *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
+                  *ngIf="!signupForm.get('userData.username')!.valid && signupForm.get('userData.username')!.touched"
                   class="help-block">
-                  <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">
+                  <span *ngIf="signupForm.get('userData.username')!.errors['nameIsForbidden']">
                     This name is invalid!
                   </span>
-                  <span *ngIf="signupForm.get('userData.username').errors['required']">
+                  <span *ngIf="signupForm.get('userData.username')!.errors['required']">
                     This field is required!
                   </span>
                 </span>
@@ -43,7 +43,7 @@
                 formControlName="email"
                 class="form-control">
                 <span 
-                  *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
+                  *ngIf="!signupForm.get('userData.email')!.valid && signupForm.get('userData.email')!.touched"
                   class="help-block">Please enter a valid email!</span>
             </div>
             <!-- email field end -->
@@ -76,7 +76,7 @@
             (click)="onAddHobby()" >Add Hobby</button>
 
             <div 
-              *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index"  
+              *ngFor="let hobbyControl of signupForm.get('hobbies')!.controls; let i = index"  
               class="form-group">
               <!-- input that alows the user to enter the actual hobby. -->
               <input type="text" class="form-control" [formControlName]="i">

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+// class that contain custom validators
 import { CustomValidators } from './custom-validators';
+
+
 
 @Component({
   selector: 'app-root',

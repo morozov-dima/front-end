@@ -1,0 +1,15 @@
+.contact-us {
+    min-height:800px;
+    margin:20px;
+}
+
+input.ng-invalid.ng-touched{
+    border:1px solid red;
+}
+
+
+textarea.ng-invalid.ng-touched{
+    border:1px solid red;
+}
+
+
