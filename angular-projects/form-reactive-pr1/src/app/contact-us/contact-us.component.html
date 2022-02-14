@@ -1,10 +1,7 @@
 <div class="container">
-
-
   
-    <form [formGroup]="heroForm" (ngSubmit)="onSumbit()">
-  
-  
+    <form [formGroup]="heroForm" (ngSubmit)="onSumbit()"  #ngForm="ngForm">
+    
          
         <!-- name field begin -->
         <div class="mb-3">
@@ -20,11 +17,8 @@
                 class="help-block">
                 Name is required.
                 </span>
-       
         </div>
-
-
-
+        <!-- name field end -->
 
 
    
@@ -49,7 +43,12 @@
 
         <!-- user skils begin -->
         <div class="mb-3">
-            <select class="form-select" aria-label="Default select example">
+            <label for="userCommentsTextarea" class="form-label">User Skils</label>
+            <select 
+                name="userSkils" 
+                class="form-select" 
+                formControlName="userSkils"
+                aria-label="Default select example">
                 <option value="javascript">JavaScript</option>
                 <option value="html">HTML</option>
                 <option value="css">CSS</option>
@@ -88,6 +87,31 @@
 
      
     </form>
+
+
+    <br><br><br>
+
+
+    <!-- display data only if form was submitted begin -->
+    <div class="col-12" *ngIf="ngForm.submitted">
+        <p>
+            Form Data (Name) : {{userName}}
+        </p>   
+        <p>
+            Form Data (Email) : {{userEmail}}
+        </p>
+        <p>
+            Form Data (Skils) : {{userSkils}}
+        </p>
+        <p>
+            Form Data (Comments) : {{userComments}}
+        </p>
+    </div>
+    <!-- display data only if form was submitted end -->
+
   
 
+
   </div>
+
+
