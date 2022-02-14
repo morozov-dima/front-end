@@ -17,3 +17,104 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+<div class="form-container">
+  <form 
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()" >
+
+
+    <!-- project name begin -->
+    <div class="mb-3">
+      <label for="projectNameInput" class="form-label">Project Name:</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        id="projectNameInput" 
+        formControlName="projectName" >
+        <span 
+            *ngIf="!profileForm.get('projectName').valid && profileForm.get('projectName').touched"
+            class="help-block">
+                <span *ngIf="profileForm.get('projectName').errors['projecNameIsForbidden']">
+                  This name is invalid!
+                </span>
+                <span *ngIf="profileForm.get('projectName').errors['required']">
+                  This field is required!
+                </span>
+      </span>
+    </div>
+    <!-- project name end -->
+
+
+
+    <!-- project email begin -->
+    <div class="mb-3">
+      <label for="projectEmailInput" class="form-label">Project Email:</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        id="projectEmailInput"
+        formControlName="projectEmail" >
+          <span 
+            *ngIf="!profileForm.get('projectEmail').valid && profileForm.get('projectEmail').touched"
+            class="help-block">Please enter a valid email!
+          </span>
+    </div>
+    <!-- project email end -->
+
+
+
+
+
+      <!-- project email async begin -->
+        <div class="mb-3">
+          <label for="projectEmailAsyncInput" class="form-label">Project Email Async:</label>
+          <input 
+            type="email" 
+            class="form-control" 
+            id="projectEmailAsyncInput"
+            formControlName="projectEmailAsync" >
+            <span 
+            *ngIf="!profileForm.get('projectEmailAsync').valid && profileForm.get('projectEmailAsync').touched"
+            class="help-block">Please enter a valid email!</span>
+        </div>
+        <!-- project email end -->
+
+
+
+    <!-- project status begin -->
+    <div class="mb-3">
+      <label for="projectStatusSelect" class="form-label">Project Status:</label>
+    <select 
+        id="projectStatusSelect" 
+        class="form-select form-select-lg mb-3" 
+        formControlName="projectStatus"
+        aria-label=".form-select-lg example" >
+        <option 
+          *ngFor="let pStatus of projectStatus" [value]=pStatus>{{pStatus}}</option>
+    </select>
+  </div>
+    <!-- project status end -->
+
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+
+
+  </form>
+</div>
+
+
+
+
+
+
+
+
