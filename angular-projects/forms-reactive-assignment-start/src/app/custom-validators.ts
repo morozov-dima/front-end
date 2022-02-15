@@ -1,4 +1,4 @@
-import { FormControl } from "@angular/forms";
+import { AbstractControl } from "@angular/forms";
 import { Observable } from "rxjs/Observable";
 
 export class CustomValidators {
@@ -12,7 +12,7 @@ export class CustomValidators {
         Static methods can be called without instantiating the class first - so it is 
         important to add static.
     */
-    static forbiddenProjectName(control: FormControl): {[s: string]: boolean} {
+    static forbiddenProjectName(control: AbstractControl): {[s: string]: boolean} {
         // check if 'projectStatus' array contains the value of our control
         if (control.value === 'Test') {
           // if validation false we return this object
@@ -34,7 +34,7 @@ export class CustomValidators {
         Static methods can be called without instantiating the class first - so it is 
         important to add static.
     */
-    static forbiddenProjectEmailsAsync(control: FormControl): Promise<any> | Observable<any> {
+    static forbiddenProjectEmailsAsync(control: AbstractControl): Promise<any> | Observable<any> {
         const forbiddenProjectEmails: string[] = ['test@test123.com'];
         const promise = new Promise<any>(
         (resolve, reject) => {

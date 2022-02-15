@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CustomControls } from '../shared/custom-controls';
+//import { CustomControls } from '../shared/custom-controls';
 
 @Component({
   selector: 'app-contact-us',
@@ -21,7 +24,7 @@ export class ContactUsComponent implements OnInit {
     // set form controls
     this.heroForm = new FormGroup({  
       'nameInput': new FormControl(null, Validators.required),
-      'emailInput': new FormControl(null, [Validators.required, Validators.email]),
+      'emailInput': new FormControl(null, [Validators.required, Validators.email], CustomControls.forbiddenEmailsValidatorAsync),
       'userSkils': new FormControl(null),
       'userComments': new FormControl(null, Validators.required)
     }); 
@@ -48,7 +51,6 @@ export class ContactUsComponent implements OnInit {
       // reset form after form submitted
       this.heroForm.reset();
   }
-
 
 
 

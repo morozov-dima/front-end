@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
      Here we create our own validator
      for example our validator will return :  {nameIsForbidden: true}
   */
-  forbiddenNames(control: FormControl): {[s: string]: boolean} {
+  forbiddenNames(control: AbstractControl): {[s: string]: boolean} {
     // check if "forbiddenUsernames" array contains the value of our control
     if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
       return {'nameIsForbidden': true}
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
   /*
     Asynchronous validators - in case we get some data (forbidden emails) from server
   */
- forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+ forbiddenEmails(control: AbstractControl): Promise<any> | Observable<any> {
    const promise = new Promise<any>((resolve, reject) => {
 
      // we want right now to simulate the fact that we have
