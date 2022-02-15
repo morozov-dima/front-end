@@ -1,11 +1,15 @@
-import { AbstractControl, FormControl } from "@angular/forms";
+import { AbstractControl } from "@angular/forms";
 import { Observable } from 'rxjs';
 
 export class CustomControls {
 
 
-    /*
-        Asynchronous validators - in case we get some data (forbidden emails) from server
+
+    /**
+    * Asynchronous validator method - in case we get some data (forbidden emails) from server
+    * In this methid we use "AbstractControl" class. 
+    *
+    * Our method return Promise
     */
     static forbiddenEmailsValidatorAsync(control: AbstractControl): Promise<any> | Observable<any> {
         const forbiddenEmails: string[] = ['test1@gmail.com', 'test2@gmail.com'];
@@ -22,7 +26,7 @@ export class CustomControls {
                       // if validation is successful , you have to pass nothing or null.  
                       resolve(null)  
                     }
-                }, 1500);
+                }, 1500); // delay of 1.5 sec
 
         });        
 

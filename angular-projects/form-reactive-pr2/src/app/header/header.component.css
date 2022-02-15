@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    justify-content: center;
+
+}
+
+.header-items {
+    display: flex;
+    flex-direction: row;
+}
+
+.header-item{
+    margin:5px;list-style: none;
+}
+
+.header-item a{
+    text-decoration: none;
+
+}
+
+.active{
+    color:#ff0000;
+}

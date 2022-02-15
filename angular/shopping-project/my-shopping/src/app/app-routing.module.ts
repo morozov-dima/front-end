@@ -7,7 +7,9 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 
 const routes: Routes = [
+    // for redirect we need add (pathMatch: 'full')
     { path: '', redirectTo: 'recipes', pathMatch: 'full' },
+    
     { path: 'recipes', component: RecipesComponent, 
       children: [
         { path: '', component: RecipeStartComponent },

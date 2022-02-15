@@ -1,0 +1,86 @@
+<section class="contact-us">
+    <form 
+        [formGroup]="profileForm"
+        (ngSubmit)="onSubmit()" >
+
+        <!-- username field begin -->
+       <div class="md-3">
+            <label for="usernameInput" class="form-label">Usernane :</label>
+            <input 
+                name="usernameInput"
+                formControlName="usernameInput"
+                class="form-control"
+                type="text">
+                <span 
+                  *ngIf="!profileForm.get('usernameInput')!.valid && profileForm.get('usernameInput')!.touched"
+                  class="help-block">Please enter a valid username!</span>
+
+       </div> 
+       <!-- username field end -->
+
+
+
+        <!-- email field begin -->
+        <div class="md-3">
+            <label for="emailInput" class="form-label">Email :</label>
+            <input 
+                name="emailInput"
+                formControlName="emailInput"
+                class="form-control"
+                type="text">
+                <span 
+                *ngIf="!profileForm.get('emailInput')!.valid && profileForm.get('emailInput')!.touched"
+                class="help-block">Please enter a valid email!</span>
+       </div> 
+       <!-- email field end -->
+
+
+       <!-- user comments field begin -->
+       <div class="mb-3">
+        <label for="userCommentsTextarea" class="form-label">User Comments :</label>
+        <textarea 
+            class="form-control" 
+            id="userCommentsTextarea" 
+            name="userCommentsTextarea" 
+            formControlName="userCommentsTextarea"
+            rows="3" >
+        </textarea>
+        <span 
+        *ngIf="!profileForm.get('userCommentsTextarea')!.valid && profileForm.get('userCommentsTextarea')!.touched"
+        class="help-block">Please enter a comments!</span>
+
+      </div>
+      <!-- user comments field end -->
+
+
+
+       <!-- user skils field begin -->
+       <div class="mb-3">
+        <label for="userSkils" class="form-label">User Skils :</label>
+        <select 
+            class="form-select" 
+            id="userSkils" 
+            name="userSkils" 
+            formControlName="userSkils"
+            aria-label="User Skils" >
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    </div>
+    <!-- user skils field end -->
+
+
+    
+
+    <!-- submit button begin -->
+    <div class="col-12">
+        <button [disabled]="!profileForm.valid" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <!-- submit button end -->
+
+
+
+
+    </form>
+</section>
