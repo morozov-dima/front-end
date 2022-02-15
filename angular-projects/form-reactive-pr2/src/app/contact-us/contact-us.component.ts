@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../shared/custom-validators';
+import { UserDataModel } from '../shared/user-data-model';
 import { UserDataService } from '../shared/user-data.service';
 
 @Component({
@@ -35,7 +36,7 @@ export class ContactUsComponent implements OnInit {
     //console.log(this.profileForm);
 
     // get data from fields and assign it to object
-    const uData = {
+    const uData: UserDataModel = {
       userName: this.profileForm.get('usernameInput')!.value,
       userEmail: this.profileForm.get('emailInput')!.value,
       userComments: this.profileForm.get('userCommentsTextarea')!.value,
