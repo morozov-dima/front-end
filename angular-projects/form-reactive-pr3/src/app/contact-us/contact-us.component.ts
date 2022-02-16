@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidator } from '../shared/custom-validator';
 import { IndustryModel, VisitorsModel } from '../shared/user-data-model';
 import { UserDataService } from '../shared/user-data.service';
 
@@ -24,7 +25,7 @@ export class ContactUsComponent implements OnInit {
   ngOnInit(): void {
     this.profileForm = new FormGroup({
       'fullNameInput': new FormControl('', Validators.required),
-      'emailNameInput': new FormControl('', [Validators.required, Validators.email]),
+      'emailNameInput': new FormControl('', [Validators.required, Validators.email], CustomValidator.forbiddenEmails),
       'companyNameInput': new FormControl('', Validators.required),
       'phoneInput': new FormControl('', [Validators.maxLength(10), Validators.required]),
       'userData': new FormGroup({
@@ -33,6 +34,8 @@ export class ContactUsComponent implements OnInit {
       })
     });
 
+
+    
     // get industry data from service
     this.industryUserData = this.userDataService.getIndustryData();
    
