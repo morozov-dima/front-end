@@ -13,19 +13,26 @@
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers"
+          *ngFor="let server of servers | filter:filteredStatus:'instanceType'"
           [ngClass]="getStatusClasses(server)">
           <span
             class="badge">
             {{ server.status }}
           </span>
-          <strong>{{ server.name }}</strong> |
+
+
+          <!-- here we use custom pipe that reverse string - begin -->
+          <strong>{{ server.name | reverse }}</strong>
+          <!-- here we use custom pipe that reverse string - end -->
+
+
+           |
           {{ server.instanceType | uppercase }} |
           {{ server.started | date:'fullDate' | uppercase }}
         </li>
       </ul>
 
-      
+
     </div>
   </div>
 </div>
