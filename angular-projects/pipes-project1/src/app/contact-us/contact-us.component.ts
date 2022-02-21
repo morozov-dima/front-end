@@ -12,6 +12,7 @@ export class ContactUsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // create from group and controls
     this.profileForm = new FormGroup({
       'usernameInput': new FormControl('', Validators.required)
     });
@@ -19,7 +20,8 @@ export class ContactUsComponent implements OnInit {
 
   onSubmit() {
     console.log(this.profileForm);
-    
+
+       
   }
 
 }
