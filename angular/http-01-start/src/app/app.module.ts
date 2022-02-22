@@ -14,6 +14,7 @@ import { LoggingIntercaptorService } from './logging-interceptor.service';
   imports: [
     BrowserModule,
     FormsModule,
+    // module for Http
     HttpClientModule
   ],
   // the order of interceptors are important

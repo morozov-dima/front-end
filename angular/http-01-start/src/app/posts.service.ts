@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, pipe, Subject, throwError } from "rxjs";
+import { Observable, Subject, throwError } from "rxjs";
 import { map, catchError, tap } from "rxjs/operators";
 import { Post } from "./post.model";
 
@@ -12,8 +12,6 @@ export class PostsService {
     error = new Subject<string>();
 
     constructor(private http: HttpClient) {}
-
-
 
 
 
@@ -141,6 +139,7 @@ export class PostsService {
 
 
       // send Http request
+      // type that we will return is : { [key: string]: Post }
       return this.http.get<{ [key: string]: Post }>(
           url,
           httpOptions

@@ -1,0 +1,23 @@
+.footer {
+    background-color: black;
+}
+
+.footer-content{
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.footer-content-items{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin:0px;
+    flex-wrap:wrap;
+}
+
+.footer-content-item a{
+    text-decoration: none;
+    color:#ffffff;
+    padding:5px;
+}

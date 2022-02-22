@@ -1,0 +1,31 @@
+.my-form {
+    margin:5px;
+}
+
+.loading {
+    padding:20px;
+}
+
+input.ng-invalid.ng-touched {
+    border:1px solid red;
+}
+
+
+input.ng-valid.ng-touched {
+    border:1px solid green;
+}
+
+
+
+select.ng-invalid.ng-touched {
+    border:1px solid red;
+}
+
+select.ng-valid.ng-touched {
+    border:1px solid green;
+}
+
+.submitted {
+    text-align: center;
+    color: green;
+}

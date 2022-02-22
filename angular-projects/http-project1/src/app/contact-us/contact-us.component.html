@@ -1,0 +1,117 @@
+<section class="my-form">
+
+
+
+
+      <!-- Loading begin -->
+      <div class="text-center loading" *ngIf="showLoading">
+        <div class="spinner-grow text-primary" role="status">
+          </div>
+          <div class="spinner-grow text-secondary" role="status">
+          </div>
+          <div class="spinner-grow text-success" role="status">
+          </div>
+          <div class="spinner-grow text-danger" role="status">
+          </div>
+          <div class="spinner-grow text-warning" role="status">
+          </div>
+          <div class="spinner-grow text-info" role="status">
+          </div>
+          <div class="spinner-grow text-light" role="status">
+          </div>
+          <div class="spinner-grow text-dark" role="status">
+          </div>
+      </div>
+      <!-- Loading end -->
+
+
+    <!-- show form if form still not submitted -->  
+    <form [formGroup]="profileFrom" (ngSubmit)="onSubmit()" *ngIf="!isSubmitted">
+
+
+
+
+    <!-- username field begin -->
+    <div class="mb-3">
+        <label 
+            for="usernameInput" 
+            class="form-label">
+            User Name
+        </label>
+        <input 
+            type="text" 
+            class="form-control" 
+            formControlName="usernameInput"
+            id="usernameInput">
+            <span *ngIf="!usernameInput.valid && usernameInput.touched">Please enter a valid username</span>
+    </div>
+    <!-- username field end -->
+
+
+
+
+
+    <!-- email field begin -->
+    <div class="mb-3">
+        <label 
+            for="emailInput" 
+            class="form-label">
+            Email
+        </label>
+        <input 
+            type="text" 
+            class="form-control" 
+            formControlName="emailInput"
+            id="emailInput">
+            <span *ngIf="!emailInput.valid && emailInput.touched">Please enter a valid email</span>
+      </div>
+      <!-- email field end -->
+
+      
+
+
+      <!-- comments field begin -->
+      <div class="mb-3">
+        <label 
+            for="emailInput" 
+            class="form-label">
+            Comments
+        </label>
+        <select
+            name="commentsInput" 
+            id="commentsInput"
+            formControlName="commentsInput"
+            class="form-select">
+            <option *ngFor="let comment of comments; index as i;" [value]="i">{{comment.name}}</option>
+        </select>
+      </div>
+      <!-- comments field end -->
+
+
+
+
+
+
+
+      <!-- submit button begin -->
+      <div class="col-12">
+        <button [disabled]="!profileFrom.valid" type="submit" class="btn btn-primary">Submit</button>
+      </div>
+      <!-- submit button end -->
+      
+
+    </form>
+
+
+
+
+
+    <!-- after form submitted message begin -->
+    <!-- if form submitted show loading -->
+    <div class="mb-3 submitted" *ngIf="isSubmitted">
+        Form was submitted
+    </div>
+    <!-- after form submitted message end -->
+
+      
+</section>
