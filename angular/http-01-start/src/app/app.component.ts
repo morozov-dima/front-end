@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       // here we need unsubscribe
-      this.error.unsubscribe();
+      this.errorSub.unsubscribe();
   }
 
 }
