@@ -138,6 +138,11 @@ export class PostsService {
 
 
 
+
+
+      
+
+
       // send Http request
       // type that we will return is : { [key: string]: Post }
       return this.http.get<{ [key: string]: Post }>(
