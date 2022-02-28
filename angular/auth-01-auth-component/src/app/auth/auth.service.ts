@@ -27,7 +27,7 @@ export class AuthService {
     // *************** Subject *******************
 
 
-
+    private tokenExpirationTimer: any;
 
 
     constructor(
@@ -75,7 +75,7 @@ export class AuthService {
                         resData.email,
                         resData.localId,
                         resData.idToken,
-                        +resData.expireIn
+                        +resData.expiresIn
                     );
                 })
 
@@ -118,16 +118,16 @@ export class AuthService {
             }
         ).pipe(
             // catch error. we will execure 'handleError' private method.
-            catchError(
-                this.handleError),
+            catchError(this.handleError),
                 // 'tap' operator allows us to perform some action without changing the response.
                 tap(
                     resData => {
+                         
                         this.handleAuthentication(
                             resData.email,
                             resData.localId,
                             resData.idToken,
-                            +resData.expireIn
+                            +resData.expiresIn
                         );
                     }
                 )
@@ -137,17 +137,99 @@ export class AuthService {
 
 
 
-    // logout method
-    logout() {
-       this.user.next(null); 
-       // redirect to '/auth' page when user logout
-       this.router.navigate(['/auth']);
+
+
+
+
+    // method that will try to automatically set the user to login
+    // when the application starts.
+    autoLogin() {
+       // we need convert our data back from string to JavaScript object.
+       // we can add type for our data that we are fetching from '###localStorage###'
+       const userData: {
+          email: string;
+          id: string;
+          _token: string;
+          _tokenExpiratioDate: string;
+       } = JSON.parse(localStorage.getItem('userData'));
+
+       // in case user can't login
+       if (!userData) {
+            return;
+       }
+
+       // if user data is set and we can get data from localStorage
+       const loadedUser = new User(
+                            userData.email,
+                            userData.id,
+                            userData._token,
+                            new Date(userData._tokenExpiratioDate)
+                            );
+
+
+                                
+
+        // we will check if this user has a valid token
+        // 'this.user' is our 'Subject'
+        if (loadedUser.token) {
+            this.user.next(loadedUser);
+            // duration we have until the token expires which we should pass to auto logout.
+            const expirationDuration = new Date(userData._tokenExpiratioDate).getTime() - new Date().getTime();
+            
+            this.autoLogout(expirationDuration);
+        }
+
     }
 
 
 
 
+
+
+
+
+
+    // logout method
+    logout() {
+       this.user.next(null); 
+       // redirect to '/auth' page when user logout
+       this.router.navigate(['/auth']);
+
+       // clear 'userData' data from 'localStorage' when we logged out.
+       localStorage.removeItem('userData');
+
+       // check if we have 'tokenExpirationTimer' active timer.
+       if (this.tokenExpirationTimer) {
+          // clear timeout of 'tokenExpirationTimer'
+          clearTimeout(this.tokenExpirationTimer);  
+       }
+       this.tokenExpirationTimer = null;
+    }
+
+
+
+
+
+
+
+    
+    // 'expirationDuration' - amount of milliseconds we have until the token is invalid
+    autoLogout(expirationDuration: number) {
+        this.tokenExpirationTimer = setTimeout(() => {
+            // logout after 'expirationDuration' time
+            this.logout();
+         }, expirationDuration);
+    }
+
+
+
+
+
+
+
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
+
+        
         // number of seconds in which the ID token expires.
         const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
         // we pass data to the 'User' class constaructor.
@@ -161,6 +243,25 @@ export class AuthService {
         // now we can use our 'Subject' to set/emit this data
         // we use 'next' method in order to emit data.
         this.user.next(user);
+
+
+
+        // *****************************************    
+        // we will call auto logout
+        // logout after 1 min.
+        this.autoLogout(expiresIn * 1000);
+        // ****************************************
+
+
+
+
+
+        // save data from Firebase (User model) in localStorage
+        // key of user data in localStorage : 'userData'
+        // we will convert our data to string : 'JSON.stringify(user)'
+
+        
+        localStorage.setItem('userData', JSON.stringify(user));
     }
 
 

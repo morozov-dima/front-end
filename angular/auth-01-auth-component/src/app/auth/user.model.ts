@@ -1,6 +1,5 @@
-// we create class for user Model.
-// because we want to store data
-// we will store this data in localStorage
+// We create class for user Model. in this class we will store user data from Firebase.
+// we will store this data in localStorage, because we need current data also if user refresh page.
 export class User {
     
     constructor(
@@ -26,7 +25,7 @@ export class User {
     // we can't overwrite this token. because there is 
     // only 'get' and not 'set'.   
     get token() {
-        // in case token is expired
+        // in case token is expired. if token is invalid we will return null.
         if(!this._tokenExpirationData || new Date() > this._tokenExpirationData) {
             return null;
         }

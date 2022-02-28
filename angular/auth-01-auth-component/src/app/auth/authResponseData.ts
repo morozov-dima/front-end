@@ -4,7 +4,7 @@ export interface AuthResponseData {
     idToken: string;
     email: string;
     refreshToken: string;    
-    expireIn: string;
+    expiresIn: string;
     localId: string;
     // optional parameter
     registered?: boolean;
