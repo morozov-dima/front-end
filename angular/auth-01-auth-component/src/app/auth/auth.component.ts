@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { AuthResponseData } from './authResponseData';
+
+import { AlertComponent } from '../shared/alert/alert.component';
 
 @Component({
   selector: 'app-auth',
@@ -15,7 +17,11 @@ export class AuthComponent {
 
   error: string = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+              private authService: AuthService,
+              private router: Router,
+              // here we inject ComponentFactoryResolver class
+              private componentFactoryResolver: ComponentFactoryResolver) {}
 
 
 
@@ -74,7 +80,7 @@ export class AuthComponent {
       }, errorMessage => {
         console.log(errorMessage);
         this.error = errorMessage;
-
+ 
         // hide loading spinner after we get response
         this.isLoading = true;
       }
@@ -91,6 +97,20 @@ export class AuthComponent {
     // reset form after submit
     form.reset();
   }
+
+
+
+
+
+
+
+
+
+  onHandleError() {
+    // we want to reset the error.
+    this.error = null;
+  }
+
 
 
 

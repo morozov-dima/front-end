@@ -14,6 +14,12 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeForm: FormGroup;
 
+  // you can only read it
+  // this way we make it more securer.anf AOT compiler will not fail anymore.
+  get ingredientsControls() {
+    return (this.recipeForm.get('ingredients') as FormArray).controls;
+  }
+
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,

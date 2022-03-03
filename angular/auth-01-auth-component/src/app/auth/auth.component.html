@@ -12,13 +12,17 @@
 
 
 
+
+
+
+    <!-- show error message - ###### Popup ###### -->
+          <!-- we will send message string to our 'AlertComponent' component -->
+          <!-- if we have error show popup, 'AlertComponent' component -->
+          <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert>
     <!-- show error message -->
-      <div class="alert alert-danger" *ngIf="error">
-        <p>
-          {{ error }}
-        </p>
-      </div>
-    <!-- show error message -->
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-// We create class for user Model. in this class we will store user data from Firebase.
+// We create class for user Model. in this class we will store login user data from Firebase.
 // we will store this data in localStorage, because we need current data also if user refresh page.
 export class User {
     
@@ -15,8 +15,7 @@ export class User {
         // we can't access '_token' directly. only with get.
         private _token: string,
 
-        // we will store '_tokenExpirationData' value that is Date
-        // that we get from server 
+        // we will store '_tokenExpirationData' value that is Date that we get from server 
         private _tokenExpirationData: Date
     ) {}
 
@@ -25,7 +24,7 @@ export class User {
     // we can't overwrite this token. because there is 
     // only 'get' and not 'set'.   
     get token() {
-        // in case token is expired. if token is invalid we will return null.
+        // in case token is expired, or token is invalid we will return null.
         if(!this._tokenExpirationData || new Date() > this._tokenExpirationData) {
             return null;
         }
