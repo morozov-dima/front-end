@@ -4,6 +4,12 @@ import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, Subject, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 
+
+// here we need import just 'environment' and not 'environment.prod'
+// this will be swapped automatically for you by the Angular CLI
+// when you build for production.
+import { environment } from "src/environments/environment";
+
 // This is good practice in angular to define the
 // type of data you're working with.
 import { AuthResponseData } from "./authResponseData";
@@ -49,7 +55,9 @@ export class AuthService {
         // and in 'Web API Key' you can see this key.
 
         // API KEY from firebase panel
-        const apiKey = 'AIzaSyAicmLY0SSVqbnJJFDrJrWUW3if4ngn2_8';
+        // 'firebaseAPIKey' from 'src/environments/environment.ts' file
+        const apiKey = environment.firebaseAPIKey;
+
         // url where we need send request
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`;
 
@@ -101,8 +109,11 @@ export class AuthService {
     // accorduing to API firebase documentation we need use POST method
     // https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
     login(email: string, password: string) {
+
         // API KEY from firebase panel
-        const apiKey = 'AIzaSyAicmLY0SSVqbnJJFDrJrWUW3if4ngn2_8';
+        // 'firebaseAPIKey' from 'src/environments/environment.ts' file
+        const apiKey = environment.firebaseAPIKey;
+
         // url where we need send our request
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`;
 

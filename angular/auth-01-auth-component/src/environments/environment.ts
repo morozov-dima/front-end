@@ -2,8 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+
+// this file for DEV mode
 export const environment = {
-  production: false
+  production: false,
+
+  // you can store your API key here
+  // this code will be used for DEV mode.
+  firebaseAPIKey: 'AIzaSyAicmLY0SSVqbnJJFDrJrWUW3if4ngn2_8'
 };
 
 /*
