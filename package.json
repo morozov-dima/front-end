@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@ngrx/store": "^13.0.2",
+    "tslib": "^2.3.1"
+  }
+}
