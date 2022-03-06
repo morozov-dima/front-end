@@ -20,10 +20,7 @@ export interface State {
 }
 
 
-// here we define interface, we also can define this interface in different file.
-export interface AppState {
-    shoppingList: State;
-}
+
 
 
 

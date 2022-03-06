@@ -16,6 +16,7 @@ export const STOP_EDIT = 'STOP_EDIT';
 
 
 // Action definition. Our Action has a 'type' and has a 'payload'
+// 'AddIngredient' is a object.
 export class AddIngredient implements Action {
    // we add readonly property. That is TypeScript feature which
    // indicates to TypeScript that this must never be changed from 
