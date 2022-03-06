@@ -54,8 +54,7 @@ const initialState: State = {
 // **************** Reducer function begin ****************
 // Reducer it is just a function that we need export.
 // first argument - current state.
-// second argument - action that triggers the reducer and in the end, the 
-// state update.
+// second argument - action that triggers the reducer and in the end, the state update.
 //
 // we can set 'initialState' as a default value to 'state', because you can 
 // assign default values to arguments - this is TypeScript or next-gen Javascript feature.
@@ -70,12 +69,6 @@ export function shoppingListReducer(
     action: ShoppingListActions.ShoppingListActions
     ) {
     switch (action.type) {
-
-
-
-
-
-
         // 'ADD_INGREDIENT' const that imported from 'shopping-list.actions.ts'
         // We can check different types of avtions.
         case ShoppingListActions.ADD_INGREDIENT:
@@ -88,12 +81,6 @@ export function shoppingListReducer(
                 ingredients: [...state.ingredients, action.payload]
             };
 
-
-
-
-
-
-
         case ShoppingListActions.ADD_INGREDIENTS:
                 // we need return object 
                 return {
@@ -104,21 +91,15 @@ export function shoppingListReducer(
                     ingredients: [...state.ingredients, ...action.payload]
                 };   
 
-
-
-
-
-
-
         case ShoppingListActions.UPDATE_INGREDIENT:
             // this way we can get ingredient
-            const ingredient = state.ingredients[action.payload.index];    
+            const ingredient = state.ingredients[state.editedIngredientIndex];    
             const updatedIngredient = {
                  // we copy the old ingredients
                  ...ingredient,
                  
                  // copy action.payload.ingredient
-                 ...action.payload.ingredient
+                 ...action.payload
 
             };    
 
@@ -126,21 +107,15 @@ export function shoppingListReducer(
             // it is a new array with the data of the old states array.
             const updatedIngredients = [...state.ingredients];
 
-            updatedIngredients[action.payload.index] = updatedIngredient;
+            updatedIngredients[state.editedIngredientIndex] = updatedIngredient;
 
             return {
                 // copy existing state
                 ...state,
-                ingredients: updatedIngredients
+                ingredients: updatedIngredients,
+                editedIngredientIndex: -1,
+                editedIngredient: null
             };    
-
-
-
-
-
-
-
-
 
         case ShoppingListActions.DELETE_INGREDIENT:
              return {
@@ -150,14 +125,12 @@ export function shoppingListReducer(
                  // filter will always return a new array, so it will automatically
                  // give us a copy and filter is a function built into Javascript
                  ingredients: state.ingredients.filter((ig, igIndex) => {
-                     return igIndex !== action.payload;
-                 })
+                     return igIndex !== state.editedIngredientIndex;
+                 }),
+                 editedIngredientIndex: -1,
+                 editedIngredient: null
              };  
              
-             
-
-
-
           case ShoppingListActions.START_EDIT:
               return {
                   // copy the state
@@ -167,10 +140,6 @@ export function shoppingListReducer(
                   // and this now copies that ingredient which I am getting from my ingredients array.
                   editedIngredient: {...state.ingredients[action.payload]}
               };   
-
-
-
-
 
            case ShoppingListActions.STOP_EDIT:
                return {
@@ -183,10 +152,6 @@ export function shoppingListReducer(
 
                };   
 
-
-
-
-               
 
             // if we have dafault case
             // here we simply return the unchanged state and that will be our initial state.

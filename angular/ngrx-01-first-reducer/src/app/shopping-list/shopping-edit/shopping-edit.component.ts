@@ -29,7 +29,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   @ViewChild('f', { static: false }) slForm: NgForm;
   subscription: Subscription;
   editMode = false;
-  editedItemIndex: number;
   editedItem: Ingredient;
 
   constructor(
@@ -40,20 +39,48 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
 
 
+
+
   ngOnInit() {
-    this.subscription = this.slService.startedEditing
-      .subscribe(
-        (index: number) => {
-          this.editedItemIndex = index;
-          this.editMode = true;
-          this.editedItem = this.slService.getIngredient(index);
-          this.slForm.setValue({
-            name: this.editedItem.name,
-            amount: this.editedItem.amount
-          })
-        }
-      );
+    // here we will use our store and we will select the 'shopping list' slice.
+    // The subscription here, I would recommend that you also manage this on your own.
+    this.subscription = this.store.select('shoppingList').subscribe(stateData => {
+      if (stateData.editedIngredientIndex > -1) {
+        this.editMode = true;
+        this.editedItem = stateData.editedIngredient;
+
+        // here w are initializing the shopping list form.  
+        this.slForm.setValue({
+          name: this.editedItem.name,
+          amount: this.editedItem.amount
+        })
+
+      } else {
+        this.editMode = false;
+      }
+    })
+
+
+
+    // without STORE
+    // this.subscription = this.slService.startedEditing
+    //   .subscribe(
+    //     (index: number) => {
+    //       this.editedItemIndex = index;
+    //       this.editMode = true;
+    //       this.editedItem = this.slService.getIngredient(index);
+    //       this.slForm.setValue({
+    //         name: this.editedItem.name,
+    //         amount: this.editedItem.amount
+    //       })
+    //     }
+    //   );
+
   }
+
+
+
+
 
 
 
@@ -70,7 +97,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       // with STORE. now we can use dispatch() method.
       // we will dispatch our actions.
       // here we are using our global store.
-      this.store.dispatch(new ShoppingListActions.UpdateIngredient({index: this.editedItemIndex, ingredient: newIngredient}));
+      this.store.dispatch(
+            new ShoppingListActions.UpdateIngredient(newIngredient)
+        );
       // ********************* STORE ********************
 
 
@@ -100,8 +129,15 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
 
   onClear() {
+    // reset the form
     this.slForm.reset();
+    // reset 'editMode'
     this.editMode = false;
+
+    // here we want to reach out to my store and dispatch a new action.
+    // and we will use 'StopEdit' action.
+    // We don't need to pass in any data because stop edit requires no payload.
+    this.store.dispatch(new ShoppingListActions.StopEdit());
   }
 
 
@@ -115,7 +151,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
     // with STORE
     this.store.dispatch(
-        new ShoppingListActions.DeleteIngredient(this.editedItemIndex)
+        new ShoppingListActions.DeleteIngredient()
     );  
 
     
@@ -129,6 +165,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+
+    // here we want to reach out to my store and dispatch a new action.
+    // and we will use 'StopEdit' action.
+    // We don't need to pass in any data because stop edit requires no payload.
+    this.store.dispatch(new ShoppingListActions.StopEdit());
   }
 
 
