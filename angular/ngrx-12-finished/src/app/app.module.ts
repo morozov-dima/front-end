@@ -60,10 +60,31 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
 
 
 
+
+
+
     // ************************** Google Chrom Redux DevTools *****************
     // we need add this for 'Google Chrom Redux DevTools'
+    //
+    // 1. 'npm install @ngrx/store-devtools --save' this pachage should be installed.
+    //
+    // 2. here we need register a new module 'StoreDevtoolsModule' which is imported
+    //    from that newly added pachage.
+    //
+    // 3. we need call 'instrument' on this module.
+    // 
+    // 4. and we need pass 'logOnly: environment.production'
+    //
+    // 5. you can download Chrome extension for Redux Dev Tools.
+    //
+    // 6. in chrome you can see 'redux' tab. You can see list of actions in this dev tool.
+    //    We can see our state in this dev tool. We can see whitch action was dispatched.
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     // ************************** Google Chrom Redux DevTools *****************
+
+
+
+
 
 
 
