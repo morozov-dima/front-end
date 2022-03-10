@@ -18,6 +18,8 @@ import * as AuthActions from './store/auth.actions';
   selector: 'app-auth',
   templateUrl: './auth.component.html'
 })
+
+
 export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
   isLoading = false;
@@ -32,6 +34,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     private store: Store<fromApp.AppState>
   ) {}
 
+
+
+
+
   ngOnInit() {
     this.storeSub = this.store.select('auth').subscribe(authState => {
       this.isLoading = authState.loading;
@@ -42,11 +48,21 @@ export class AuthComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
+  
+
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
+
+
+
+
+  // form submit
   onSubmit(form: NgForm) {
+    // if form not valid just return
     if (!form.valid) {
       return;
     }
@@ -59,17 +75,29 @@ export class AuthComponent implements OnInit, OnDestroy {
         new AuthActions.LoginStart({ email: email, password: password })
       );
     } else {
+      // send data to the actions
       this.store.dispatch(
         new AuthActions.SignupStart({ email: email, password: password })
       );
     }
-
+    // reset form after submit
     form.reset();
   }
+
+
+
+
+
+
 
   onHandleError() {
     this.store.dispatch(new AuthActions.ClearError());
   }
+
+
+
+
+
 
   ngOnDestroy() {
     if (this.closeSub) {
@@ -79,6 +107,11 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.storeSub.unsubscribe();
     }
   }
+
+
+
+
+
 
   private showErrorAlert(message: string) {
     // const alertCmp = new AlertComponent();

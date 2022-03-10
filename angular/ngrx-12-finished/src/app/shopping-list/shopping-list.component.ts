@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 import { Ingredient } from '../shared/ingredient.model';
 import { LoggingService } from '../logging.service';
 import * as ShoppingListActions from './store/shopping-list.actions';
 import * as fromApp from '../store/app.reducer';
+import { ShoppingListState } from '../shopping-list/store/shopping-list.model';
+
+import { getIngredientsSelector } from '../shopping-list/store/shopping-list.selectors';
 
 @Component({
   selector: 'app-shopping-list',
@@ -13,8 +16,10 @@ import * as fromApp from '../store/app.reducer';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  ingredients: Observable<{ ingredients: Ingredient[] }>;
+  ingredients: Ingredient[];
   private subscription: Subscription;
+
+  public shoppingListIngredientsIndex: number;
 
   constructor(
     private loggingService: LoggingService,
@@ -37,15 +42,18 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     // 3. because we need to tell NgRx into which part of the store you are
     //    interested in at this point.
     // 4. this 'slice' give us an 'observable'
-    this.ingredients = this.store.select('shoppingList');
-    // this.ingredients = this.slService.getIngredients();
-    // this.subscription = this.slService.ingredientsChanged.subscribe(
-    //   (ingredients: Ingredient[]) => {
-    //     this.ingredients = ingredients;
-    //   }
-    // );
+    // 5. here we use our selector that we create in state/shoppingList folder.
+    // 6. 'getIngredients' this is selector that was created.
+    // 7. here we select our 'selecter' and we subscribe to it.
+    this.store.select(getIngredientsSelector).subscribe(res => {
+      this.ingredients = res;
+    });
+    
 
-    this.loggingService.printLog('Hello from ShoppingListComponent ngOnInit!');
+    //this.loggingService.printLog('Hello from ShoppingListComponent ngOnInit!');
+
+   
+    
   }
 
 
@@ -55,8 +63,16 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   onEditItem(index: number) {
     // this.slService.startedEditing.next(index);
+
+    // here we will use our global 'store'
+    // we will dispatch (send) a new action
     this.store.dispatch(new ShoppingListActions.StartEdit(index));
   }
+
+
+
+
+
 
   ngOnDestroy() {
     // this.subscription.unsubscribe();

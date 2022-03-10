@@ -30,14 +30,33 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     HttpClientModule,
     AppRoutingModule,
 
+
+
+    // ***************************** STORE *********************************
     // 1. we need to tell NgRx what makes up our store, which reducers are involved.
     // 2. here we connect our 'appReducer'.
     // 3. we told NgRx where to find our reducer.
+    // 4. here we are adding NgRx to our application by including 'StoreModule'
+    //    and calling 'forRoot' and we connect here our 'appReducer' reducer.
     StoreModule.forRoot(fromApp.appReducer),
+    // ***************************** STORE **********************************
+
+
 
 
     EffectsModule.forRoot([AuthEffects, RecipeEffects]),
+
+
+    
+
+    // ************************** Google Chrom Redux DevTools *****************
+    // we need add this for 'Google Chrom Redux DevTools'
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+    // ************************** Google Chrom Redux DevTools *****************
+
+
+
+
     StoreRouterConnectingModule.forRoot(),
     SharedModule,
     CoreModule

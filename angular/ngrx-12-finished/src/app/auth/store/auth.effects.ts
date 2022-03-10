@@ -10,15 +10,13 @@ import * as AuthActions from './auth.actions';
 import { User } from '../user.model';
 import { AuthService } from '../auth.service';
 
-export interface AuthResponseData {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
-}
+// inport 'auth' interface
+import { AuthResponseData } from './auth.model';
+
+
+
+
+
 
 const handleAuthentication = (
   expiresIn: number,
@@ -37,6 +35,11 @@ const handleAuthentication = (
     redirect: true
   });
 };
+
+
+
+
+
 
 const handleError = (errorRes: any) => {
   let errorMessage = 'An unknown error occurred!';
@@ -57,11 +60,43 @@ const handleError = (errorRes: any) => {
   return of(new AuthActions.AuthenticateFail(errorMessage));
 };
 
+
+
+
+
 @Injectable()
+// 1. we need export a normal class, we organize your effects in classes.
 export class AuthEffects {
+
+
+
+
+
+
+
+
+
+  // 1. we add such an effect as a normal property in your class
+  // 2. we will create 'authSignup' property.
+  // 3. 'actions$' is just a observable and we can call 'pipe', and what you
+  //    need to pipe here in now a special RxJs operator which in part of RxJs but 
+  //    which is provided by '@ngrx/effects' - in is 'ofType' operator.
+  // 4. 'ofType' operator simply allows you to define a filter for which types
+  //     of effects you want to continue in this observable pipe you are creating.
+  // 5. effect by default always should return a new action at the end one it is done
+  // 6. We also need to add a special decorator to this auth login property here
+  //    to turn it into an effect @ngrx/effects is able to pick up later,
+  //    that is the @Effect() decorator.
   @Effect()
   authSignup = this.actions$.pipe(
+    // 1. you can simply define different types of effects that you want to handle in each chain.
+    // 2. this is a filter to allow us to define for which exact actions
+    //    we want to continue in this chain.
+    // 3. Only continue in this 'observable chain' if the action that we are
+    //    reaching to here is of current type
     ofType(AuthActions.SIGNUP_START),
+    // 1. 'switchMap' operator allows us to create a new observable by taking
+    //     another observable's data.
     switchMap((signupAction: AuthActions.SignupStart) => {
       return this.http
         .post<AuthResponseData>(
@@ -92,10 +127,38 @@ export class AuthEffects {
     })
   );
 
+
+
+
+
+
+
+
+
+
+  // 1. we add such an effect as a normal property in your class
+  // 2. we will create 'authSignup' property.
+  // 3. 'actions$' is just a observable and we can call 'pipe', and what you
+  //    need to pipe here in now a special RxJs operator which in part of RxJs but 
+  //    which is provided by '@ngrx/effects' - in is 'ofType' operator.
+  // 4. 'ofType' operator simply allows you to define a filter for which types
+  //     of effects you want to continue in this observable pipe you are creating.
+  // 5. effect by default always should return a new action at the end one it is done.
+  // 6. We also need to add a special decorator to this auth login property here
+  //    to turn it into an effect @ngrx/effects is able to pick up later,
+  //    that is the @Effect() decorator.
   @Effect()
   authLogin = this.actions$.pipe(
+    // 1. you can simply define different types of effects that you want to handle in each chain.
+    // 2. this is a filter to allow us to define for which exact actions
+    //    we want to continue in this chain.
+    // 3. Only continue in this 'observable chain' if the action that we are
+    //    reaching to here is of current type
     ofType(AuthActions.LOGIN_START),
+    // 1. 'switchMap' operator allows us to create a new observable by taking
+    //     another observable's data.
     switchMap((authData: AuthActions.LoginStart) => {
+      // here we will use 'HttpClient' service.
       return this.http
         .post<AuthResponseData>(
           'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
@@ -118,6 +181,7 @@ export class AuthEffects {
               resData.idToken
             );
           }),
+          // in case we have errors
           catchError(errorRes => {
             return handleError(errorRes);
           })
@@ -125,8 +189,32 @@ export class AuthEffects {
     })
   );
 
+
+
+
+
+
+
+
+
+  // 1. we add such an effect as a normal property in your class
+  // 2. we will create 'authSignup' property.
+  // 3. 'actions$' is just a observable and we can call 'pipe', and what you
+  //    need to pipe here in now a special RxJs operator which in part of RxJs but 
+  //    which is provided by '@ngrx/effects' - in is 'ofType' operator.
+  // 4. 'ofType' operator simply allows you to define a filter for which types
+  //     of effects you want to continue in this observable pipe you are creating.
+  // 5. effect by default always should return a new action at the end one it is done.
+  // 6. We also need to add a special decorator to this auth login property here
+  //    to turn it into an effect @ngrx/effects is able to pick up later,
+  //    that is the @Effect() decorator.
   @Effect({ dispatch: false })
   authRedirect = this.actions$.pipe(
+    // 1. you can simply define different types of effects that you want to handle in each chain.
+    // 2. this is a filter to allow us to define for which exact actions
+    //    we want to continue in this chain.
+    // 3. Only continue in this 'observable chain' if the action that we are
+    //    reaching to here is of current type
     ofType(AuthActions.AUTHENTICATE_SUCCESS),
     tap((authSuccessAction: AuthActions.AuthenticateSuccess) => {
       if (authSuccessAction.payload.redirect) {
@@ -135,8 +223,34 @@ export class AuthEffects {
     })
   );
 
+
+
+
+
+
+
+
+
+
+
+  // 1. we add such an effect as a normal property in your class
+  // 2. we will create 'authSignup' property.
+  // 3. 'actions$' is just a observable and we can call 'pipe', and what you
+  //    need to pipe here in now a special RxJs operator which in part of RxJs but 
+  //    which is provided by '@ngrx/effects' - in is 'ofType' operator.
+  // 4. 'ofType' operator simply allows you to define a filter for which types
+  //     of effects you want to continue in this observable pipe you are creating.
+  // 5. effect by default always should return a new action at the end one it is done.
+  // 6. We also need to add a special decorator to this auth login property here
+  //    to turn it into an effect @ngrx/effects is able to pick up later,
+  //    that is the @Effect() decorator.
   @Effect()
   autoLogin = this.actions$.pipe(
+    // 1. you can simply define different types of effects that you want to handle in each chain.
+    // 2. this is a filter to allow us to define for which exact actions
+    //    we want to continue in this chain.
+    // 3. Only continue in this 'observable chain' if the action that we are
+    //    reaching to here is of current type
     ofType(AuthActions.AUTO_LOGIN),
     map(() => {
       const userData: {
@@ -179,8 +293,33 @@ export class AuthEffects {
     })
   );
 
+
+
+
+
+
+
+
+
+
+  // 1. we add such an effect as a normal property in your class
+  // 2. we will create 'authSignup' property.
+  // 3. 'actions$' is just a observable and we can call 'pipe', and what you
+  //    need to pipe here in now a special RxJs operator which in part of RxJs but 
+  //    which is provided by '@ngrx/effects' - in is 'ofType' operator.
+  // 4. 'ofType' operator simply allows you to define a filter for which types
+  //     of effects you want to continue in this observable pipe you are creating.
+  // 5. effect by default always should return a new action at the end one it is done.
+  // 6. We also need to add a special decorator to this auth login property here
+  //    to turn it into an effect @ngrx/effects is able to pick up later,
+  //    that is the @Effect() decorator.
   @Effect({ dispatch: false })
   authLogout = this.actions$.pipe(
+    // 1. you can simply define different types of effects that you want to handle in each chain.
+    // 2. this is a filter to allow us to define for which exact actions
+    //    we want to continue in this chain.
+    // 3. Only continue in this 'observable chain' if the action that we are
+    //    reaching to here is of current type
     ofType(AuthActions.LOGOUT),
     tap(() => {
       this.authService.clearLogoutTimer();
@@ -188,6 +327,15 @@ export class AuthEffects {
       this.router.navigate(['/auth']);
     })
   );
+
+
+
+
+
+
+
+
+
 
   constructor(
     private actions$: Actions,
