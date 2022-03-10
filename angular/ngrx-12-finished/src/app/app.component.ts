@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // 1. here we need access to our global store.
+    // 2. here we use 'AutoLogin' action.
     this.store.dispatch(new AuthActions.AutoLogin());
     this.loggingService.printLog('Hello from AppComponent ngOnInit');
   }

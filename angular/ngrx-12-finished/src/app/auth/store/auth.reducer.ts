@@ -59,10 +59,12 @@ export function authReducer(
         user: null
       };
 
-    // LOGIN_START and SIGNUP_START case  
+    // 1. LOGIN_START and SIGNUP_START case  
+    // 2. We can group multiple cases and run the same code.
     case AuthActions.LOGIN_START:
     case AuthActions.SIGNUP_START:
       return {
+        // copy the old state 
         ...state,
         authError: null,
         loading: true
@@ -71,6 +73,7 @@ export function authReducer(
     // AUTHENTICATE_FAIL case  
     case AuthActions.AUTHENTICATE_FAIL:
       return {
+        // copy the old state 
         ...state,
         user: null,
         authError: action.payload,

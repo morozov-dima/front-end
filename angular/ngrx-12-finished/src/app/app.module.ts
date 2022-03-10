@@ -44,10 +44,21 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
 
 
 
+
+
+    // ***************************** Effect *********************************
+    // 1. Now for registering all the effects and this effects login globally, 
+    // 2. we have to go back to the app module and register the 'EffectsModule'
+    // 3. this 'EffectsModule' also has s forRoot method and to 'forRoot' you
+    // 4. now have to pass an array of your root effects.
+    // 5. here we can see list of our effects.
     EffectsModule.forRoot([AuthEffects, RecipeEffects]),
-
-
+    // ***************************** Effect *********************************
     
+
+
+
+
 
     // ************************** Google Chrom Redux DevTools *****************
     // we need add this for 'Google Chrom Redux DevTools'

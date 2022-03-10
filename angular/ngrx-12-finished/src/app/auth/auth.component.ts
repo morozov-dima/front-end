@@ -38,7 +38,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
 
 
+
+
   ngOnInit() {
+    // 1. here we are subscribe to our global store
+    // 2. we are choose 'auth' slice
     this.storeSub = this.store.select('auth').subscribe(authState => {
       this.isLoading = authState.loading;
       this.error = authState.authError;
@@ -50,11 +54,20 @@ export class AuthComponent implements OnInit, OnDestroy {
 
 
 
+
+
   
 
   onSwitchMode() {
+    // here we are toggle isLoginMode
     this.isLoginMode = !this.isLoginMode;
   }
+
+
+
+
+
+
 
 
 
@@ -71,11 +84,16 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     if (this.isLoginMode) {
       // authObs = this.authService.login(email, password);
+
+      // 1. here, now we will use our global store.
+      // 2. here we will dispatch a new action whitch is 'LoginStart'.
       this.store.dispatch(
         new AuthActions.LoginStart({ email: email, password: password })
       );
     } else {
-      // send data to the actions
+      // 1. here, now we will use our global store.
+      // 2. here we will dispatch a new action whitch is 'SignupStart'.
+      // 3. we pass to our 'SignupStart' action an object.
       this.store.dispatch(
         new AuthActions.SignupStart({ email: email, password: password })
       );
@@ -90,7 +108,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
 
 
+
+
   onHandleError() {
+    // 1. here, now we will use our global store.
+    // 2. here we will dispatch a new action whitch is 'ClearError'.
     this.store.dispatch(new AuthActions.ClearError());
   }
 
@@ -101,9 +123,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.closeSub) {
+      // here we unsubscribe from our subscription
       this.closeSub.unsubscribe();
     }
     if (this.storeSub) {
+      // here we unsubscribe from our subscription
       this.storeSub.unsubscribe();
     }
   }
