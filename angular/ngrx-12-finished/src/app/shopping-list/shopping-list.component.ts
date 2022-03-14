@@ -48,18 +48,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.store.select(getIngredientsSelector).subscribe(res => {
       this.ingredients = res;
     });
-    
 
     //this.loggingService.printLog('Hello from ShoppingListComponent ngOnInit!');
-
-   
-    
   }
-
-
-
-
-
 
   onEditItem(index: number) {
     // this.slService.startedEditing.next(index);

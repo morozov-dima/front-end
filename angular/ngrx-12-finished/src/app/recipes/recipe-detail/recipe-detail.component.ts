@@ -17,11 +17,21 @@ export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
   id: number;
 
+
+
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    // here we inject our store
     private store: Store<fromApp.AppState>
   ) {}
+
+
+
+
+
+
 
   ngOnInit() {
     this.route.params
@@ -31,18 +41,25 @@ export class RecipeDetailComponent implements OnInit {
         }),
         switchMap(id => {
           this.id = id;
+          // here we select and return our recipes part of the store.
           return this.store.select('recipes');
         }),
         map(recipesState => {
+          // in 'find' we get each recipe but also the index of each recipe.
           return recipesState.recipes.find((recipe, index) => {
             return index === this.id;
           });
         })
       )
+      // we can subscribe on that inner observable,
+      // so on that store selection observable.
       .subscribe(recipe => {
         this.recipe = recipe;
       });
   }
+
+
+
 
   onAddToShoppingList() {
     // this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
@@ -51,10 +68,16 @@ export class RecipeDetailComponent implements OnInit {
     );
   }
 
+
+
+
   onEditRecipe() {
     this.router.navigate(['edit'], { relativeTo: this.route });
     // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
   }
+
+
+
 
   onDeleteRecipe() {
     // this.recipeService.deleteRecipe(this.id);

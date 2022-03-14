@@ -46,6 +46,10 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
 
 
 
+
+
+
+
     // ***************************** Effect *********************************
     // 1. Now for registering all the effects and this effects login globally, 
     // 2. we have to go back to the app module and register the 'EffectsModule'
@@ -55,6 +59,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     EffectsModule.forRoot([AuthEffects, RecipeEffects]),
     // ***************************** Effect *********************************
     
+
 
 
 
@@ -79,6 +84,11 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     //
     // 6. in chrome you can see 'redux' tab. You can see list of actions in this dev tool.
     //    We can see our state in this dev tool. We can see whitch action was dispatched.
+    //
+    // 7. In chrom redux dev tool we cal see now list of actions like:
+    //    @ngrx/routing-store/request
+    //    @ngrx/routing-store/navigation
+    //    @ngrx/router-store/navigated
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     // ************************** Google Chrom Redux DevTools *****************
 
@@ -89,7 +99,28 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
 
 
 
+
+
+
+
+    // ************************* NgRx router store ****************************
+    // 1. This is official package, part of the NgRx suite and it helps you
+    //    with reacting to routing actions.
+    //
+    // 2. we need 'StoreRouterConnectingModule.
+    //
+    // 3. We don't need to pass any arguments to 'forRoot' of 'StoreRouterConnectingModule'
+    // 
+    // 4. We don't need this in our application but of course, if you are building an app,
+    //    this could be convenient and could give you a quick and easy way of reacting to
+    //    different routing events and different data attached to these events.
     StoreRouterConnectingModule.forRoot(),
+    // ************************* NgRx router store ****************************
+
+
+
+
+
     SharedModule,
     CoreModule
   ],

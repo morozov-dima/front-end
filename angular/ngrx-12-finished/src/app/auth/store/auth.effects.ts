@@ -129,7 +129,9 @@ export class AuthEffects {
     //    we want to continue in this chain.
     //
     // 3. Only continue in this 'observable chain' if the action that we are
-    //    reaching to here is of current type
+    //    reaching to here is of current type.
+    //
+    // 4. here we add filter fro the action type.
     ofType(AuthActions.SIGNUP_START),
     // 1. 'switchMap' operator allows us to create a new observable by taking
     //     another observable's data.
@@ -205,7 +207,9 @@ export class AuthEffects {
     //    we want to continue in this chain.
     //
     // 3. Only continue in this 'observable chain' if the action that we are
-    //    reaching to here is of current type
+    //    reaching to here is of current type.
+    //
+    // 4. here we add filter fro the action type.
     ofType(AuthActions.LOGIN_START),
     // 1. 'switchMap' operator allows us to create a new observable by taking
     //     another observable's data.
@@ -343,7 +347,9 @@ export class AuthEffects {
     //    we want to continue in this chain.
     //
     // 3. Only continue in this 'observable chain' if the action that we are
-    //    reaching to here is of current type
+    //    reaching to here is of current type.
+    //
+    // 4. here we add filter fro the action type.
     ofType(AuthActions.AUTO_LOGIN),
     map(() => {
       const userData: {
@@ -424,7 +430,9 @@ export class AuthEffects {
     //    we want to continue in this chain.
     //
     // 3. Only continue in this 'observable chain' if the action that we are
-    //    reaching to here is of current type
+    //    reaching to here is of current type.
+    //
+    // 4. here we add filter fro the action type.
     ofType(AuthActions.LOGOUT),
     // 'tap' operator will not return anything
     tap(() => {
@@ -455,3 +463,7 @@ export class AuthEffects {
     private authService: AuthService
   ) {}
 }
+
+
+
+

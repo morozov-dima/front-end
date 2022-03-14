@@ -63,12 +63,10 @@ export function shoppingListReducer(
         // assign a new value to 'ingredients'.
         // here we also don't want to lose my old 'ingredients', Therefore in this
         // 'ingredients' array, I also again copy my old 'state.ingredients'.
-        // 
         ingredients: [...state.ingredients, action.payload]
       };
-      
-
-    case ShoppingListActions.ADD_INGREDIENTS:
+     
+  case ShoppingListActions.ADD_INGREDIENTS:
       return {
         // always copy the old state first with 'SPREAD' operator.
         ...state,

@@ -30,6 +30,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     private store: Store<fromApp.AppState>
   ) {}
 
+
+
+
+
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
@@ -37,6 +41,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.initForm();
     });
   }
+
+
 
   onSubmit() {
     // const newRecipe = new Recipe(
@@ -59,6 +65,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.onCancel();
   }
 
+
+
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
@@ -71,19 +79,30 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     );
   }
 
+
+
   onDeleteIngredient(index: number) {
     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
   }
+
+
 
   onCancel() {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
+
+
+
   ngOnDestroy() {
+    // we need unsubscribe
     if (this.storeSub) {
       this.storeSub.unsubscribe();
     }
   }
+
+
+
 
   private initForm() {
     let recipeName = '';

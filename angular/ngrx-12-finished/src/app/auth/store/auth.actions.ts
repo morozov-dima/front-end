@@ -104,3 +104,10 @@ export type AuthActions =
   | SignupStart
   | ClearError
   | AutoLogin;
+
+
+
+
+
+
+  

@@ -13,12 +13,22 @@ import { Recipe } from './recipe.model';
 import * as fromApp from '../store/app.reducer';
 import * as RecipesActions from '../recipes/store/recipe.actions';
 
+
+
 @Injectable({ providedIn: 'root' })
+
+
+
 export class RecipesResolverService implements Resolve<Recipe[]> {
   constructor(
     private store: Store<fromApp.AppState>,
     private actions$: Actions
   ) {}
+
+
+
+
+
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // return this.dataStorageService.fetchRecipes();
@@ -31,7 +41,11 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
         if (recipes.length === 0) {
           this.store.dispatch(new RecipesActions.FetchRecipes());
           return this.actions$.pipe(
+            // here we want listen to a specific action to occur
             ofType(RecipesActions.SET_RECIPES),
+            // 1. here we use RxJs operator , to take only one value so
+            //   then we can complete and unsubscribe from the subscription.
+            // 2. We are only interested in this event once.
             take(1)
           );
         } else {
@@ -40,4 +54,8 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
       })
     );
   }
+
+
+
+
 }

@@ -7,7 +7,13 @@ import * as fromAuth from '../auth/store/auth.reducer';
 import * as fromRecipes from '../recipes/store/recipe.reducer';
 
 
+
+
+
+
+
 // 'AppState' to describe the application-wide state.
+// 'shoppingList', 'auth' and 'recipes' are store slices.
 export interface AppState {
   shoppingList: fromShoppingListModel.ShoppingListState;
   auth: fromAuth.State;
@@ -18,6 +24,9 @@ export interface AppState {
 
 
 
+
+
+// ********************* appReducer **************************
 // 1. here we can see list of our reducers
 // 2. the idea here is that it merges all my other reducers together.
 // 3. 'ActionReducerMap' should be imported from '@ngrx/store'

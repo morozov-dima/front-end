@@ -34,6 +34,10 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
+
+
+
+
   onSubmit() {
     // const newRecipe = new Recipe(
     //   this.recipeForm.value['name'],
@@ -47,6 +51,10 @@ export class RecipeEditComponent implements OnInit {
     }
     this.onCancel();
   }
+
+
+
+  
 
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
