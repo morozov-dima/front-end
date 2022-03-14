@@ -34,6 +34,11 @@ import { Component } from "@angular/core";
       // transition('highlighted => normal', animate(800))
     ]),
 
+
+
+
+
+
     trigger("wildState", [
       state(
         "normal",
@@ -74,6 +79,10 @@ import { Component } from "@angular/core";
 
 
 
+
+
+
+
     trigger("list1", [
       state(
         "in",
@@ -99,6 +108,10 @@ import { Component } from "@angular/core";
         ),
       ]),
     ]),
+
+
+
+
 
 
 
@@ -156,6 +169,10 @@ import { Component } from "@angular/core";
       ]),
     ]
 
+
+
+
+    
 
     )
   ],
