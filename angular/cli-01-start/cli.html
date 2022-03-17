@@ -49,6 +49,18 @@ ng g c products --skip-tests -d
 
 
 
+<!-- 
+   ***************** Create new component ********************
+   *********** when we have more that one modules ************
+   1. create new component and connect this component to app.module
+   2. in case we have in our project more then one module.
+   3. for example : 'material.module.ts' also connected to app.module.
+ -->
+ng g c auth/signup --module app.module -d
+
+
+
+
 
 
 <!-- 
@@ -98,6 +110,32 @@ ng add @angular/pwa
 npm install -g http-server
 cd dist/angular-pwa/
 http-server -p 8081
+
+
+
+
+
+
+
+
+<!-- 
+    ******************** Unit tests ***********************
+    1. Runs unit tests in a project.
+ -->
+ ng test
+ 
+ 
+
+
+
+
+
+<!-- 
+    ******************** Angular Material ***********************
+    1. Install Angular Material
+ -->
+ ng add @angular/material
+
 
 
 
