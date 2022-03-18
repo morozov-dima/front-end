@@ -1,30 +1,33 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
-import { TrainingComponent } from './training/training.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
-  { path:'signup', component: SignupComponent },
-  { path: 'login', component: LoginComponent },
-  // route protection added here for 'training' path.
-  { path: 'training', component: TrainingComponent, canActivate: [AuthGuard] }
+
+  // Lazy-loading feature modules. In new Angular versions we must use
+  // 'import' instead 'loadChildren'
+  {
+    path: 'training',
+    loadChildren: () =>
+      import('./training/training.module').then((m) => m.TrainingModule),
+      // in case we use 'Lazy-loading feature modules' we need add 'canLoad'
+      // guard here instead 'canActivate'
+      canLoad: [AuthGuard]
+  },
 ];
 
-
-
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+    // ********************** Preload lazy loaded modules begin ***********************
+  // we pass second argument for 'preload lazy loaded modules'
+  // we can add 'preloadingStrategy' as second argument in main routing module (with forRoot)
+  // and set it to 'PreloadAllModules'. 
+  // Default is 'NoPreloading'
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+
+
   exports: [RouterModule],
-  providers: [
-    AuthGuard
-  ]
+  providers: [AuthGuard],
 })
-
-
 export class AppRoutingModule {}

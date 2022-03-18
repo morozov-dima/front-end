@@ -17,10 +17,10 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  // ********************** preload lazy loaded modules begin ***********************
+  // ********************** Preload lazy loaded modules begin ***********************
   // we pass second argument for 'preload lazy loaded modules'
   // we can add 'preloadingStrategy' as second argument in main routing module (with forRoot)
-  // and set ir to 'PreloadAllModules'. 
+  // and set it to 'PreloadAllModules'. 
   // Default is 'NoPreloading'
   imports: [RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})],
  

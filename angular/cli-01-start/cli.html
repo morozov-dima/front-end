@@ -22,9 +22,11 @@ ng new myapp --defaults --routing --skip-tests --d
 <!-- 
     ***************** Create production build ********************
     1. after current build result files will be in 'dist' folder.
+    2. 'ng build --prod' for old Angular versions.
+    3. 'ng build --configuration production' for new Angular versions.
  -->
- ng build --prod
-
+ ng build --prod 
+ ng build --configuration production
 
 
 
@@ -137,6 +139,38 @@ http-server -p 8081
  ng add @angular/material
 
 
+
+
+
+
+ 
+
+<!-- 
+    ********************AngularFire ***********************
+    1. Install AngularFire
+    2. Link to site : https://github.com/angular/angularfire
+ -->
+ npm i @angular/fire
+
+
+
+
+
+
+
+
+<!-- 
+    ******************** NgRx ***********************
+    1. You can install ngrx store with this link:
+       'npm install @ngrx/store --save'
+    2. You can install ngrx effects with this link:
+       'npm install @ngrx/effects --save'   
+    3.  inntall redux devtool for chrome:
+        'npm install @ngrx/store-devtools --save'  
+ -->
+ npm install @ngrx/store --save
+ npm install @ngrx/effects --save
+ npm install @ngrx/store-devtools --save
 
 
 
