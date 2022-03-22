@@ -85,7 +85,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     // 6. in chrome you can see 'redux' tab. You can see list of actions in this dev tool.
     //    We can see our state in this dev tool. We can see whitch action was dispatched.
     //
-    // 7. In chrom redux dev tool we cal see now list of actions like:
+    // 7. In chrom redux dev tool we can see now list of actions like:
     //    @ngrx/routing-store/request
     //    @ngrx/routing-store/navigation
     //    @ngrx/router-store/navigated

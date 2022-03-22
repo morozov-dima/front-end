@@ -1,0 +1,83 @@
+// Example 1:
+
+// ******************* interface **********************
+export interface CommentsModel {
+    postId: number;
+    id: number;
+    name: string;
+    email: string;
+    body: string;
+}
+
+
+// ****************  service file ******************
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { CommentsModel } from './data-model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiDataService {
+
+  constructor(private http: HttpClient) { }
+
+  getComments() {
+    const url = 'https://jsonplaceholder.typicode.com/comments/?_limit=5';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Custom-Header': 'Hello Comments'
+      }),
+    };
+    
+    return this.http.get<CommentsModel[]>(
+      url,
+      httpOptions
+    );
+  }
+}
+
+
+
+
+// ***************** component js *******************
+export class CommentsComponent implements OnInit, OnDestroy {
+  comments: CommentsModel[] = [];
+  commentsSubscription!: Subscription;
+
+  constructor(private apiDataService: ApiDataService) { }
+
+  ngOnInit(): void {
+    this.commentsSubscription = this.apiDataService.getComments().subscribe({
+      next: commentsData => {
+        this.comments = commentsData;
+      },
+      error: () => {
+        console.error('getComments subscribsion error');
+      },
+      complete: () => {
+        console.log('getComments subscribsion completed ...');
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.commentsSubscription.unsubscribe();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

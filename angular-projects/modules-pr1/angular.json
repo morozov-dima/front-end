@@ -3,9 +3,33 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng-mat-01-first-components": {
+    "modules-pr1": {
       "projectType": "application",
       "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -17,7 +41,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-mat-01-first-components",
+            "outputPath": "dist/modules-pr1",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -27,8 +51,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/my-theme.scss"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -69,10 +92,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng-mat-01-first-components:build:production"
+              "browserTarget": "modules-pr1:build:production"
             },
             "development": {
-              "browserTarget": "ng-mat-01-first-components:build:development"
+              "browserTarget": "modules-pr1:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +103,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-mat-01-first-components:build"
+            "browserTarget": "modules-pr1:build"
           }
         },
         "test": {
@@ -95,7 +118,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -104,5 +126,5 @@
       }
     }
   },
-  "defaultProject": "ng-mat-01-first-components"
+  "defaultProject": "modules-pr1"
 }

@@ -6,7 +6,8 @@ const routes: Routes = [
   // route protection added here for 'training' path.
   // this route will be loaded Lazy in app-routing.module.ts
   // 
-  // here we need use empty path.
+  // here we need use empty path, because we lazy load this module
+  // in app.module.ts
   { path: '', component: TrainingComponent },
 ];
 

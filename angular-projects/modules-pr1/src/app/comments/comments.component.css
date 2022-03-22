@@ -1,0 +1,9 @@
+.comments {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.comments-list li {
+    list-style: none;
+}

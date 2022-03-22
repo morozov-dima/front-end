@@ -1,0 +1,14 @@
+.header-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.header-list li {
+    padding:10px;
+    list-style: none;
+}
+
+.active {
+    font-weight: bold;
+}

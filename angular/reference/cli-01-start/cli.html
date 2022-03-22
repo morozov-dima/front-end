@@ -1,5 +1,5 @@
 <!-- 
-    ******************* Create new project ********************
+    ******************* new project ********************
     1. create new project with CLI.
     2. '--defaults' use defaults settings for our new project.
     3. '--routing' create routing module fir aour app.
@@ -9,6 +9,8 @@
     7. 'ng new' create new app commant in CLI.
     8. run again current command but without '--dry-run',
        you can also use '-d'.
+    9. this CLI command will crate our project and install
+       all the dependencies it needs.
  -->
 ng new myapp --defaults --routing --skip-tests --dry-run
 ng new myapp --defaults --routing --skip-tests --d
@@ -20,13 +22,16 @@ ng new myapp --defaults --routing --skip-tests --d
 
 
 <!-- 
-    ***************** Create production build ********************
+    ***************** production build ********************
     1. after current build result files will be in 'dist' folder.
     2. 'ng build --prod' for old Angular versions.
     3. 'ng build --configuration production' for new Angular versions.
+    4. current build will optimize our code for production.
+    5. this build use AOT compilation ,which means it will already pass
+       all the angular templates and turn them into 'vanilla JS'.
+    6. 'dist' forlder will be created. This content will be uploaded to server.
  -->
- ng build --prod 
- ng build --configuration production
+ ng build --configuration=production
 
 
 
@@ -34,7 +39,30 @@ ng new myapp --defaults --routing --skip-tests --d
 
 
 <!-- 
-    ***************** Create new component ********************
+    ***************** run Angular project locally ********************
+ -->
+ ng serve
+
+
+
+
+
+
+<!-- 
+    ***************** new module ********************
+    1. 'ng g module posts/posts-routing --flat -d'
+       create routing module for already existing module.
+ -->
+ ng generate module posts --dry-run
+ ng g module posts -d
+ ng g module posts/posts-routing --flat -d
+
+
+
+ 
+
+<!-- 
+    ***************** new component ********************
     1. 'g' this is alias of 'generate'.
     2. 'c' this is alias of 'component'.
     3. '--skip-tests' skip tests in our app.
@@ -42,9 +70,14 @@ ng new myapp --defaults --routing --skip-tests --d
     5. 'products' name of our component.
     6. run again current command but without '--dry-run',
        you can also use '-d'.
+    7. we can see example where we create new component
+       in case we have more then one module in our app.
+       this is command that we need to run:
+       'ng g c auth/signup --module app.module -d'   
  -->
 ng generate component  products --skip-tests  --dry-run
 ng g c products --skip-tests -d
+ng g c auth/signup --module app.module -d
 
 
 
@@ -52,14 +85,19 @@ ng g c products --skip-tests -d
 
 
 <!-- 
-   ***************** Create new component ********************
-   *********** when we have more that one modules ************
-   1. create new component and connect this component to app.module
-   2. in case we have in our project more then one module.
-   3. for example : 'material.module.ts' also connected to app.module.
+    ***************** new service ********************
  -->
-ng g c auth/signup --module app.module -d
+ng generate service shared/products --skip-tests --dry-run
+ng g service shared/products --skip-tests -d
 
+
+
+
+
+<!-- 
+    ***************** new interface ********************
+ -->
+ng g interface shared/data-model -d
 
 
 
@@ -132,17 +170,6 @@ http-server -p 8081
 
 
 
-<!-- 
-    ******************** Angular Material ***********************
-    1. Install Angular Material
- -->
- ng add @angular/material
-
-
-
-
-
-
  
 
 <!-- 
@@ -157,13 +184,34 @@ http-server -p 8081
 
 
 
+<!-- 
+    ******************** Git ***********************
+ -->
+ git status
+ git add .
+ git status
+ git commit -m "file updates"
+ git push morozov-dima/front-end 
+
+
+
 
 
 <!-- 
     ******************** NgRx ***********************
  
  -->
-TO DO .....
+ npm install @ngrx/store --save
+ npm install @ngrx/effects --save
+ npm install @ngrx/router-store --save
+ npm install @ngrx/store-devtools --save
 
 
 
+
+<!-- 
+    *************** Install angular CLI ******************
+    1. Before we install 'angular CLI' we need download
+       latest version on 'node'.
+ -->
+npm install -g @angular/cli
