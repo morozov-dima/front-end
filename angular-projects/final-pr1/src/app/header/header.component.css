@@ -1,0 +1,21 @@
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-lists {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.nav-lists li {
+    list-style: none;
+    padding:10px;
+}
+
+.active {
+    font-weight: bold;
+    color: #000000;
+}

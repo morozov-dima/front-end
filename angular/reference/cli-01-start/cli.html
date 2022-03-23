@@ -49,7 +49,7 @@ ng new myapp --defaults --routing --skip-tests --d
 
 
 <!-- 
-    ***************** new module ********************
+    ***************** Module ********************
     1. 'ng g module posts/posts-routing --flat -d'
        create routing module for already existing module.
  -->
@@ -111,6 +111,14 @@ ng g interface shared/data-model -d
 ng add @angular/material
 
 
+
+
+
+
+<!-- 
+    ***************** Add Angular Bootstrap ********************
+ -->
+ng add @ng-bootstrap/ng-bootstrap
 
 
 
@@ -215,3 +223,16 @@ http-server -p 8081
        latest version on 'node'.
  -->
 npm install -g @angular/cli
+
+
+
+
+
+
+
+<!-- 
+    *************** Install node_modules ******************
+    1. add '--force' if you have some problem with
+       instalation.
+ -->
+npm install --force

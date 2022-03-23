@@ -26,7 +26,8 @@ export class ApiDataService {
     const url = 'https://jsonplaceholder.typicode.com/comments/?_limit=5';
     const httpOptions = {
       headers: new HttpHeaders({
-        'Custom-Header': 'Hello Comments'
+         'Content-Type':  'application/json',
+         Authorization: 'my-auth-token'
       }),
     };
     
@@ -67,6 +68,28 @@ export class CommentsComponent implements OnInit, OnDestroy {
 }
 
 
+
+
+// **************** app.module.ts **************
+// 1. you need import 'HttpClientModule' to your app.module.ts
+//
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
 
 
 
