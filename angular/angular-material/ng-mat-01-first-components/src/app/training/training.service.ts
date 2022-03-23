@@ -26,6 +26,7 @@ export class TrainingService {
       (ex) => ex.id === selectedId
     );
     // we send data with next (we use copy of our object)
+    // we send 'this.runningExercise' to our Subject
     this.exerciseChanged.next({ ...this.runningExercise });
   }
 
