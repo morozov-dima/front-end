@@ -1,0 +1,92 @@
+
+
+// Example 1
+//  ********* Sending a GET Request **********
+// "GET" data from server.
+// This way you can get dynamic content from server and display it into
+// your application.
+// '200' this is status that we get back from server when we get data from server.
+
+const http = new XMLHttpRequest();
+
+// send request to this url.
+const url = 'https://jsonplaceholder.typicode.com/posts?_limit=2';
+
+// we can GET request (get data from server).
+const method = 'GET';
+
+http.open(method, url);
+http.onreadystatechange = function() {
+  if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+    // here we transform our data that we get from server into javascript object.
+    console.log(JSON.parse(http.responseText));
+  } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 200) {
+    console.log('Error!');
+  }
+};
+
+
+// send request
+http.send();
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Example 2
+// ********** Sending a POST Request ***********
+// This way you can send data to server
+// '201' this is status that we get back from server when a resource was created
+
+const http = new XMLHttpRequest();
+
+// send request to this url.
+const url = 'https://jsonplaceholder.typicode.com/posts?_limit=2';
+
+// we can POST request (send data to server).
+const method = 'POST';
+
+// data that we send to server
+const data = 'title=Post%20Title&body=Body';
+
+http.open(method, url);
+
+// set headers for our request
+http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+http.onreadystatechange = function() {
+
+  if(http.readyState === XMLHttpRequest.DONE && http.status === 201) {
+    // here we transform our data that we get from server into javascript object.
+    console.log(JSON.parse(http.responseText));
+  } else if (http.readyState === XMLHttpRequest.DONE && http.status !== 201) {
+    console.log('Error!');
+  }
+};
+
+
+// send request
+http.send(data);
+
+
+
+
+// ********* response from server **********
+// this is dummy data that we get from 'jsonplaceholder' when we send 'POST' request.
+/*
+{
+  body: "Body",
+  id: 101,
+  title: "Post Title"
+}
+*/
+
+

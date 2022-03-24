@@ -1,3 +1,5 @@
+
+
 // Example 1:
 
 // ******************* interface **********************
@@ -18,8 +20,8 @@ import { CommentsModel } from './data-model';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiDataService {
 
+export class ApiDataService {
   constructor(private http: HttpClient) { }
 
   getComments() {
