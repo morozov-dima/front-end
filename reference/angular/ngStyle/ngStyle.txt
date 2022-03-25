@@ -1,0 +1,35 @@
+// Example 1:
+// *********** html file ***********
+<section class="box">
+    <div class="box-view">
+        <div [ngStyle]="{
+                backgroundColor: changeBg ? 'blue' : 'unset',
+                color: changeBg ? 'white' : 'blue'
+            }"
+            class="box-view-bg">box</div>
+    </div>
+    <div class="button">
+        <button (click)="changeBg = !changeBg">Change Background</button>
+    </div>
+</section>
+
+
+
+
+// ************ js file *************
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-background',
+  templateUrl: './background.component.html',
+  styleUrls: ['./background.component.css']
+})
+export class BackgroundComponent implements OnInit {
+  changeBg: boolean = false;
+  
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
