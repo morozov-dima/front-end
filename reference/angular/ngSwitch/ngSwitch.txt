@@ -1,4 +1,7 @@
 // ********** app.component.html ***********
+// 1. here we use [ngSwitch] directive. you can use this declare
+//    if you have many values.
+// 2. for default we will use 'ngSwitchDefault' case.
 <div [ngSwitch]="randomNumber">
     <div *ngSwitchCase="0">number: 0</div>
     <div *ngSwitchCase="1">number: 1</div>
@@ -22,5 +25,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  randomNumber: number = Math.floor(Math.random() * 5); // expected output: 0, 1 , 2 , 3 or 4
+  // expected output: 0, 1 , 2 , 3 or 4
+  // in our html template we will use [ngSwitch] directive.
+  randomNumber: number = Math.floor(Math.random() * 5); 
 }
