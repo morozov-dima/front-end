@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UsersModel } from './data.model';
+import { ContactUsModel, UsersModel } from './data.model';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -13,6 +13,7 @@ export class ApiDataService {
   constructor(private http: HttpClient) { }
 
 
+  // get list of posts from server
   getUsers() {
     const url = 'https://jsonplaceholder.typicode.com/users/?_limit=3';
     const httpOptions = {
@@ -28,8 +29,35 @@ export class ApiDataService {
   }
 
 
+  // send form data to server with POST
+  sendContactUsForm(formData: ContactUsModel) {
+    const url = 'https://jsonplaceholder.typicode.com/posts';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+         Authorization: 'my-auth-token'
+      })
+    };
+    const body: ContactUsModel = formData;
+
+    return this.http.post<ContactUsModel>(url, body, httpOptions).
+      pipe(
+        map(
+          responseData => {
+            const submittedformInfo = {
+              email: responseData.email,
+              isSubmitted: true
+            };
+            return submittedformInfo;
+          }
+        )
+        );
+  }
 
 
+
+
+  // get data from server with GET
   getUsersAddress() {
     const url = 'https://jsonplaceholder.typicode.com/users/?_limit=3';
     const httpOptions = {

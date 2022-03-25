@@ -8,5 +8,12 @@ export interface UsersModel {
 }
 
 
+export interface ContactUsModel {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+
 
 

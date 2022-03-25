@@ -1,29 +1,10 @@
-<section class="users">
-    <table>
-        <thead>
-            <tr>
-                <th>Id:</th>
-                <th>Name:</th>
-                <th>UserName:</th>
-                <th>Email:</th>
-                <th>City:</th>
-                <th>Street:</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let userAddressData of usersAddressData">
-                <td >{{userAddressData.id}}</td>
-                <td>{{userAddressData.name}}</td>
-                <td>{{userAddressData.username}}</td>
-                <td>{{userAddressData.email}}</td>
-                <td>{{userAddressData.city}}</td>
-                <td>{{userAddressData.street}}</td>
-            </tr>
-        </tbody>
-    </table>
+<section class="users-content">
+  <div class="user-content-block">
+    <app-user [usersAddressData]="usersAddressData"></app-user>
+  </div>
+
+  <div *ngIf="showLoader" class="user-content-block">
+    <app-loader></app-loader>
+  </div>
+
 </section>
-
-
-
-
-

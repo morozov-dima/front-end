@@ -1,1 +1,46 @@
-<p>contact-us works!</p>
+<section class="contact-us">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="!isSubmitted">
+
+        <!-- firstName field begin -->
+        <p>
+            <label for="first-name">First Name: </label>
+            <input id="first-name" type="text" formControlName="firstName">
+            <span *ngIf="!firstNameInput.valid && firstNameInput.touched">
+                Please enter a valid industry
+            </span>
+        </p>
+        <!-- firstName field end -->
+
+
+        <!-- lastName field begin -->
+        <p>
+            <label for="last-name">Last Name: </label>
+            <input id="last-name" type="text" formControlName="lastName">
+            <span *ngIf="!lastNameInput.valid && lastNameInput.touched">
+                Please enter a valid industry
+            </span>
+        </p>
+        <!-- lastName field end -->
+
+
+        <!-- email field begin -->
+        <p>
+            <label for="last-name">Email: </label>
+            <input id="last-name" type="text" formControlName="email">
+            <span *ngIf="!emailInput.valid && emailInput.touched">
+                Please enter a valid industry
+            </span>
+        </p>
+        <!-- email field end -->
+
+        <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </form>
+
+
+    <p *ngIf="isSubmitted">
+          form was isSubmitted
+          <br>
+          you will get all details in your email: {{ submittedEmail }}  
+    </p>
+
+</section>

@@ -11,6 +11,7 @@ import { UsersModel } from '../shared/data.model';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit, OnDestroy {
+  showLoader: boolean = true;
 
   usersSubscription!: Subscription;
   usersAddressSubscription!: Subscription;
@@ -20,7 +21,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(private apiDataService: ApiDataService) { }
 
   ngOnInit(): void {
-    
 
     // user data
     this.usersSubscription = this.apiDataService.getUsers().subscribe({
@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       next: usersAddressData => {
         this.usersAddressData = usersAddressData;
         console.log(this.usersAddressData);
+        this.showLoader= false;
       },
       error: () => {
         console.log('error in getUsersAddress');

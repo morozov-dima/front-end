@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { UsersModel } from 'src/app/shared/data.model';
 
 @Component({
   selector: 'app-user',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
+  @Input() usersAddressData: UsersModel[] = [];
   constructor() { }
 
   ngOnInit(): void {
+ 
   }
 
 }
