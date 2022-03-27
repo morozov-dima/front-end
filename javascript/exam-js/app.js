@@ -4,14 +4,13 @@ const userButton = document.querySelector('.send-data button');
 const userNameInput = document.getElementById('userName');
 const emailInput = document.getElementById('email');
 
-let resultElement = document.querySelector('.result');
 let responseId = null;
 
 
-userButton.addEventListener('click', submitForm);
+userButton.addEventListener('click', onSubmitForm);
 
 
-function submitForm() {
+function onSubmitForm() {
     const url = 'https://jsonplaceholder.typicode.com/posts';
     fetch(url, {
         method: 'POST',
@@ -33,11 +32,25 @@ function submitForm() {
             (response) => response.json()
         )
         .then(
-            (json) => {
-                console.log(json)
-                console.log(json.id);
-                responseId = json.id
-                resultElement.innerHTML = json.id;
+            (responseJson) => {
+                displayFormResult(responseJson)
             }
         );
-}
+    }
+
+
+
+    function displayFormResult(responseJson) {
+        let resultListElement = document.createElement('ul');
+        let resultElement = document.querySelector('.result');
+        for (const key in responseJson) {
+            if (key === 'id') { continue; }  // skip id
+            if (Object.hasOwnProperty.call(responseJson, key)) {
+                const element = responseJson[key];
+                resultListElement.innerHTML += `
+                    <li>Username: ${element.userName}, email: ${element.email}</li>
+                `;
+            }
+        }
+        resultElement.append(resultListElement);
+    }

@@ -512,9 +512,17 @@ postList.addEventListener('click', event => {
 
 
 
-// Example 5 (send httpRequest with fetch)
-// ********** html file ************
 
+
+
+
+// Example 5 (send httpRequest with fetch)
+// 1. this example send data to 'jsonplaceholder'
+//    url , https://jsonplaceholder.typicode.com/posts.
+// 2. we send data with 'POST'.
+// 3. we display data that we get from server in the list.
+
+// ********** html file ************
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -524,11 +532,11 @@ postList.addEventListener('click', event => {
   <title>Arrays & Iterables</title>
   <link rel="stylesheet" href="style.css" />
   <script src="app.js" defer></script>
-  
-
 </head>
+
 <body>
   <section class="user-data">
+
     <!-- input userName field begin -->
     <p>
       <label for="userName">User Name:</label>
@@ -536,12 +544,14 @@ postList.addEventListener('click', event => {
     </p>
     <!-- input userName field end -->
 
+
     <!-- input email field begin -->
     <p>
       <label for="email">Email</label>
       <input type="email" name="email" id="email">
     </p>
     <!-- input email field end -->
+
 
     <!-- submit form button begin -->
     <p class="send-data">
@@ -552,8 +562,8 @@ postList.addEventListener('click', event => {
     <p class="result">
 
     </p>
-  </section>
 
+  </section>
 </body>
 </html>
 
@@ -568,13 +578,13 @@ const userButton = document.querySelector('.send-data button');
 const userNameInput = document.getElementById('userName');
 const emailInput = document.getElementById('email');
 
-let resultElement = document.querySelector('.result');
 let responseId = null;
 
-userButton.addEventListener('click', submitForm);
+
+userButton.addEventListener('click', onSubmitForm);
 
 
-function submitForm() {
+function onSubmitForm() {
     const url = 'https://jsonplaceholder.typicode.com/posts';
     fetch(url, {
         method: 'POST',
@@ -596,11 +606,32 @@ function submitForm() {
             (response) => response.json()
         )
         .then(
-            (json) => {
-                console.log(json)
-                console.log(json.id);
-                responseId = json.id
-                resultElement.innerHTML = json.id;
+            (responseJson) => {
+                displayFormResult(responseJson)
             }
         );
-}
+    }
+
+
+
+    function displayFormResult(responseJson) {
+        let resultListElement = document.createElement('ul');
+        let resultElement = document.querySelector('.result');
+        for (const key in responseJson) {
+            if (key === 'id') { continue; }  // skip id
+            if (Object.hasOwnProperty.call(responseJson, key)) {
+                const element = responseJson[key];
+                resultListElement.innerHTML += `
+                    <li>Username: ${element.userName}, email: ${element.email}</li>
+                `;
+            }
+        }
+        resultElement.append(resultListElement);
+    }
+
+
+
+
+
+
+
