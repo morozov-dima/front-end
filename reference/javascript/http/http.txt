@@ -507,3 +507,100 @@ postList.addEventListener('click', event => {
 
 
 
+
+
+
+
+
+// Example 5 (send httpRequest with fetch)
+// ********** html file ************
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Arrays & Iterables</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
+  
+
+</head>
+<body>
+  <section class="user-data">
+    <!-- input userName field begin -->
+    <p>
+      <label for="userName">User Name:</label>
+      <input type="text" name="userName" id="userName" >
+    </p>
+    <!-- input userName field end -->
+
+    <!-- input email field begin -->
+    <p>
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email">
+    </p>
+    <!-- input email field end -->
+
+    <!-- submit form button begin -->
+    <p class="send-data">
+      <button>Send</button>
+    </p>
+    <!-- submit form button end -->
+
+    <p class="result">
+
+    </p>
+  </section>
+
+</body>
+</html>
+
+
+
+
+
+
+
+// ********** js file ************
+const userButton = document.querySelector('.send-data button');
+const userNameInput = document.getElementById('userName');
+const emailInput = document.getElementById('email');
+
+let resultElement = document.querySelector('.result');
+let responseId = null;
+
+userButton.addEventListener('click', submitForm);
+
+
+function submitForm() {
+    const url = 'https://jsonplaceholder.typicode.com/posts';
+    fetch(url, {
+        method: 'POST',
+        // body: JSON.stringify({
+        //     userName: 'userNameInput',
+        //     email: 'email'
+        // }),
+        body: JSON.stringify([
+            { userName: 'userNameInput', email: 'email' },
+            { userName: 'userNameInput2', email: 'email2' },
+            { userName: 'userNameInput3', email: 'email3' },
+            { userName: 'userNameInput4', email: 'email4' }
+        ]),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+      })
+        .then(
+            (response) => response.json()
+        )
+        .then(
+            (json) => {
+                console.log(json)
+                console.log(json.id);
+                responseId = json.id
+                resultElement.innerHTML = json.id;
+            }
+        );
+}
