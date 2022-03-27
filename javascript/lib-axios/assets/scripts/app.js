@@ -7,9 +7,17 @@ const postList = document.querySelector('ul');
 
 
 // get data from server
+// link to documentation : https://axios-http.com/docs/req_config
 async function fetchPosts() {
     try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+        const response = await axios.get(
+            'https://jsonplaceholder.typicode.com/posts', {
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                params: {
+                    a: 11111.22222
+                }
+              }
+            );
         console.log(response);
             const listOfPosts = response.data; 
             for (const post of listOfPosts) {
@@ -41,7 +49,17 @@ async function createPost(title, content) {
     //  fd.append('body', content);
      fd.append('userId', userId);
 
-    const response = await axios.post('https://jsonplaceholder.typicode.com/posts', fd);
+    // const response = await axios.post('https://jsonplaceholder.typicode.com/posts', post);
+    const response = await axios.post(
+            'https://jsonplaceholder.typicode.com/posts',
+            fd,
+            {
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                params: {
+                    a: 11111.22222
+                }
+            }
+         );
     //console.log(response);
 }
 
@@ -64,7 +82,15 @@ createPost('DUMMY', 'A dummy post!');
 postList.addEventListener('click', event => {
     if(event.target.tagName === 'BUTTON') {
         const postId = event.target.closest('li').id;
-        axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);                
+        axios.delete(
+            `https://jsonplaceholder.typicode.com/posts/${postId}`,
+            {
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                params: {
+                    a: 11111.22222
+                }
+            }
+        );                
     }
 });
 

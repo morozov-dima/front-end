@@ -4,6 +4,7 @@ function load() {
     const url = 'https://jsonplaceholder.typicode.com/users';
    
     // fetch return promise.
+    // link to documentation : https://developer.mozilla.org/en-US/docs/Web/API/fetch
     fetch(url)
     .then(response => {
        return response.json();

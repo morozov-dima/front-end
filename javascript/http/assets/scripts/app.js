@@ -73,19 +73,19 @@ Example 1
     
     // option 1 (with then)
     // get data from server
-    // function fetchPosts() {
-    //     sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts')
-    //     .then((responseData) => {
-    //             //const listOfPosts = JSON.parse(xhr.response);
-    //             const listOfPosts = responseData;   // if we add "xhr.responseType = 'json';" we can not use "JSON.parse "
-    //             for (const post of listOfPosts) {
-    //                  const postEl = document.importNode(postTemplate.content, true);    // importNode() method creates a copy of a Node
-    //                  postEl.querySelector('h2').textContent = post.title.toUpperCase();
-    //                  postEl.querySelector('p').textContent = post.body;
-    //                  listElement.append(postEl);
-    //             }
-    //     });
-    // }
+    function fetchPosts() {
+        sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts')
+        .then((responseData) => {
+                //const listOfPosts = JSON.parse(xhr.response);
+                const listOfPosts = responseData;   // if we add "xhr.responseType = 'json';" we can not use "JSON.parse "
+                for (const post of listOfPosts) {
+                     const postEl = document.importNode(postTemplate.content, true);    // importNode() method creates a copy of a Node
+                     postEl.querySelector('h2').textContent = post.title.toUpperCase();
+                     postEl.querySelector('p').textContent = post.body;
+                     listElement.append(postEl);
+                }
+        });
+    }
     
     
     
@@ -139,22 +139,22 @@ Example 1
 
 // option 2 (with async await)
 // get data from server
-async function fetchPosts() {
-    try {
-        const responseData = await sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts');
-            //const listOfPosts = JSON.parse(xhr.response);
-            const listOfPosts = responseData;   // if we add "xhr.responseType = 'json';" we can not use "JSON.parse "
-            for (const post of listOfPosts) {
-                    const postEl = document.importNode(postTemplate.content, true);    // importNode() method creates a copy of a Node
-                    postEl.querySelector('h2').textContent = post.title.toUpperCase();
-                    postEl.querySelector('p').textContent = post.body;
-                    postEl.querySelector('li').id = post.id;                
-                    listElement.append(postEl);
-            }
-    } catch (error) {
-        console.error("Our error is : " + error.message);
-    }
-}
+// async function fetchPosts() {
+//     try {
+//         const responseData = await sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts');
+//             //const listOfPosts = JSON.parse(xhr.response);
+//             const listOfPosts = responseData;   // if we add "xhr.responseType = 'json';" we can not use "JSON.parse "
+//             for (const post of listOfPosts) {
+//                     const postEl = document.importNode(postTemplate.content, true);    // importNode() method creates a copy of a Node
+//                     postEl.querySelector('h2').textContent = post.title.toUpperCase();
+//                     postEl.querySelector('p').textContent = post.body;
+//                     postEl.querySelector('li').id = post.id;                
+//                     listElement.append(postEl);
+//             }
+//     } catch (error) {
+//         console.error("Our error is : " + error.message);
+//     }
+// }
 
 
 

@@ -10,6 +10,8 @@
     <script src="assets/scripts/app.js" defer></script>
   </head>
   <body>
+
+    <!-- delete post begin -->  
     <template id="single-post">
       <li class="post-item">
         <h2></h2>
@@ -17,6 +19,10 @@
         <button>DELETE</button>
       </li>
     </template>
+    <!-- delete post end -->
+
+
+    <!-- create new post begin -->
     <section id="new-post">
       <form>
         <div class="form-control">
@@ -30,9 +36,17 @@
         <button type="submit">ADD</button>
       </form>
     </section>
+    <!-- create new post end -->
+
+
+    <!-- load data from server begin -->
     <section id="available-posts">
       <button>FETCH POSTS</button>
       <ul class="posts"></ul>
     </section>
+        <!-- load data from server end -->
+
+
+
   </body>
 </html>
