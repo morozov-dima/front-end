@@ -69,7 +69,6 @@ export class ProductService {
       );
     }
     // Return an observable with a user-facing error message.
-    console.log('11111111111111111');
 
     return throwError(
       () => new Error('Something bad happened; please try again later !!!')

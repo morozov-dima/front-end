@@ -22,6 +22,9 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+
+    // Store Module. connect this module here in order to use
+    // Store in your 'app'
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     

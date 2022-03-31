@@ -2,6 +2,7 @@
 export interface ProductState {
     showProductCode: boolean;
     trigger: string; 
+    currentProductId: number | null; // number or null
     products: Product[];
     error: string;
 }

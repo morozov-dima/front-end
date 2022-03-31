@@ -14,6 +14,7 @@ import { ProductState } from "./products.interface";
 const initialState: ProductState = {
     showProductCode: true,
     trigger: 'default text',
+    currentProductId: null,
     products: [],
     error: ''
 };

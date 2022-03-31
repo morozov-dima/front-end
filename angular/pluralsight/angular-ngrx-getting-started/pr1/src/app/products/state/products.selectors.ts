@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ProductState } from "./products.interface";
-// import { ProductState } from "./products.reducer";
 
 // selectors
 const getProductFeatureState = createFeatureSelector<ProductState>('products');
@@ -30,3 +29,18 @@ export const getError = createSelector(
     getProductFeatureState,
     state => state.error
 ); 
+
+
+
+
+// This selector provide the ID of the currently selected product.
+export const getCurrentProductId = createSelector(
+    getProductFeatureState,
+    state => state.currentProductId
+);
+
+
+
+
+
+
