@@ -1,0 +1,34 @@
+<p>products works!</p>
+
+<button (click)="checkChanged()">click</button>
+
+<p *ngIf="showProduct$ | async">ku ku products</p>
+
+
+
+<br>
+<br>
+
+
+<br>
+{{ showProductTrigger$ | async }}
+<br>
+
+
+<br>
+<br>
+
+<ul>
+    <li *ngFor="let product of products$ | async">
+        {{product.title}}
+    </li>
+</ul>
+
+
+
+<br>
+<br>
+
+<p *ngIf="errorMessage$ | async as errorMessage">
+   Error:  {{ errorMessage }}
+</p>

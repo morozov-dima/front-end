@@ -1,0 +1,17 @@
+.active {
+    font-weight: bold;;
+}
+
+.header-left-items {
+    display: flex;
+    flex-direction: row;
+}
+
+.header-left-items li {
+    list-style: none;
+    padding:10px;
+}
+
+.header-left-items li a {
+    color:#000000;
+}
