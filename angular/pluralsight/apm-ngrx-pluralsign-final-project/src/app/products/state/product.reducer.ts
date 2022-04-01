@@ -16,6 +16,11 @@ const initialState: ProductState = {
   error: ''
 };
 
+
+
+
+
+
 export const productReducer = createReducer<ProductState>(
   initialState,
   on(ProductPageActions.toggleProductCode, (state): ProductState => {
@@ -27,7 +32,8 @@ export const productReducer = createReducer<ProductState>(
   on(ProductPageActions.setCurrentProduct, (state, action): ProductState => {
     return {
       ...state,
-      currentProductId: action.currentProductId
+      // 'action.currentProductId' this is data the we cat from our component.
+      currentProductId: action.currentProductId 
     };
   }),
   on(ProductPageActions.clearCurrentProduct, (state): ProductState => {
@@ -103,3 +109,7 @@ export const productReducer = createReducer<ProductState>(
     };
   })
 );
+
+
+
+

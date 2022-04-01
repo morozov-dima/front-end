@@ -358,21 +358,24 @@ export class ProductService {
 
 
 
-  private handleError(err: any) {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
-    let errorMessage: string;
-    if (err.error instanceof ErrorEvent) {
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
-      errorMessage = `An error occurred: ${err.error.message}`;
+      console.error('An error occurred:', error.error);
     } else {
       // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
     }
-    console.error(err);
-    return throwError(() => new Error(errorMessage))
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+
+
+
+
 
 }
 
@@ -429,3 +432,163 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ################## Example 4: #####################
+// ************** user.data.service.ts ***************
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { UserModel } from './user-model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserDataService {
+  constructor(private http: HttpClient) {}
+
+
+
+  getUsers(): Observable<UserModel[]> {
+    const url = 'https://jsonplaceholder.typicode.com/usersddd/?_limit=3';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Key: 'XYZ123KPY483',
+      }),
+    };
+    return this.http
+      .get<UserModel[]>(url, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `,
+        error.error
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
+  }
+
+
+
+}
+
+
+
+
+
+// ************** app.component.ts ***************
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserDataService } from './user-data.service';
+import { UserModel } from './user-model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent implements OnInit, OnDestroy {
+  userDataSubscription!: Subscription;
+  userData: UserModel[] = [];
+  isError: boolean = false;
+
+  constructor(private userDataService: UserDataService) {}
+
+  onLoadData() {
+    this.userDataSubscription = this.userDataService.getUsers().subscribe({
+      next: (data) => {
+        this.userData = data;
+      },
+      error: () => {
+        this.isError = true;
+      },
+      complete: () => {
+        console.log('Data was loaded ...');
+      },
+    });
+  }
+
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.userDataSubscription.unsubscribe();
+  }
+}
+
+
+
+
+
+
+// ************** app.component.html ***************
+<section class="users">
+  <div class="users-content">
+    <p>
+      <span>Here will be user data</span>
+      
+    </p>
+
+    
+    <ul *ngIf="!isError">
+      <li *ngFor="let u of userData;">
+        {{u.name}} - {{u.username}} - {{u.email}}
+      </li>
+    </ul>
+
+    <p *ngIf="isError">
+      Error on page !!!
+    </p>
+    
+    <p>
+      <button (click)="onLoadData()">Load Data</button>
+    </p>
+  </div>
+</section>
+
+
+
+
+
+// ************** app.component.css ***************
+.users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+   
+    
+.users-content {
+    width: 500px;
+    border:1px solid red;
+}

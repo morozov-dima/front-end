@@ -73,11 +73,19 @@ export class ProductEditComponent implements OnInit {
     );
   }
 
+
+
+  
   // Also validate on blur
   // Helpful if the user tabs through required fields
   blur(): void {
     this.displayMessage = this.genericValidator.processMessages(this.productForm);
   }
+
+
+
+
+
 
   displayProduct(product: Product | null): void {
     if (product) {
@@ -101,11 +109,20 @@ export class ProductEditComponent implements OnInit {
     }
   }
 
+
+
+
+
   cancelEdit(product: Product): void {
     // Redisplay the currently selected product
     // replacing any edits made
     this.displayProduct(product);
   }
+
+
+
+
+
 
   deleteProduct(product: Product): void {
     if (product && product.id) {
@@ -117,6 +134,10 @@ export class ProductEditComponent implements OnInit {
       this.store.dispatch(ProductPageActions.clearCurrentProduct());
     }
   }
+
+
+
+
 
   saveProduct(originalProduct: Product): void {
     if (this.productForm.valid) {
@@ -134,5 +155,10 @@ export class ProductEditComponent implements OnInit {
       }
     }
   }
+
+
+
+
+
 
 }
