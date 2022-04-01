@@ -478,6 +478,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { UserModel } from './user-model';
 
 @Injectable({
@@ -487,19 +488,34 @@ export class UserDataService {
   constructor(private http: HttpClient) {}
 
 
-
   getUsers(): Observable<UserModel[]> {
-    const url = 'https://jsonplaceholder.typicode.com/usersddd/?_limit=3';
+    const url = 'https://jsonplaceholder.typicode.com/users/?_limit=3';
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Key: 'XYZ123KPY483',
       }),
     };
-    return this.http
-      .get<UserModel[]>(url, httpOptions)
-      .pipe(catchError(this.handleError));
+    return this.http.get<UserModel[]>(url, httpOptions).pipe(
+      map((userData) => {
+        const newUserData: UserModel[] = [];
+        let index = 1;
+        for (const uData of userData) {
+          newUserData.push({
+            id: index,
+            name: uData.name,
+            username: uData.username,
+            email: uData.email,
+          });
+          index++;
+        }
+
+        return newUserData;
+      }),
+      catchError(this.handleError)
+    );
   }
+
 
 
 
@@ -529,6 +545,8 @@ export class UserDataService {
 
 
 
+
+
 // ************** app.component.ts ***************
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -547,10 +565,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private userDataService: UserDataService) {}
 
+
+
   onLoadData() {
     this.userDataSubscription = this.userDataService.getUsers().subscribe({
       next: (data) => {
         this.userData = data;
+        console.log(data);
+        
       },
       error: () => {
         this.isError = true;
@@ -560,6 +582,8 @@ export class AppComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  
 
   ngOnInit(): void {}
 
@@ -573,30 +597,30 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
 
+
+
+
 // ************** app.component.html ***************
 <section class="users">
   <div class="users-content">
     <p>
       <span>Here will be user data</span>
-      
     </p>
 
-    
     <ul *ngIf="!isError">
-      <li *ngFor="let u of userData;">
-        {{u.name}} - {{u.username}} - {{u.email}}
+      <li *ngFor="let u of userData">
+        {{ u.name }} - {{ u.username }} - {{ u.email }} - {{ u.id }}
       </li>
     </ul>
 
-    <p *ngIf="isError">
-      Error on page !!!
-    </p>
-    
+    <p *ngIf="isError">Error on page !!!</p>
+
     <p>
       <button (click)="onLoadData()">Load Data</button>
     </p>
   </div>
 </section>
+
 
 
 

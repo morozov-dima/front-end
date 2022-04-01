@@ -30,8 +30,11 @@ ng new myapp --defaults --routing --skip-tests --d
     5. this build use AOT compilation ,which means it will already pass
        all the angular templates and turn them into 'vanilla JS'.
     6. 'dist' forlder will be created. This content will be uploaded to server.
+    7. By default, the ng build command uses the production configuration
+       so this is default: 'ng build --configuration=production' and 
+       you can use just 'ng build'.
  -->
- ng build --configuration=production
+ ng build
 
 
 
@@ -217,8 +220,9 @@ http-server -p 8081
 
 
 <!-- 
-    *************** Install angular CLI ******************
-    1. Before we install 'angular CLI' we need download
+    ***************  CLI ******************
+    1. Install angular CLI
+    2. Before we install 'angular CLI' we need download
        latest version on 'node'.
  -->
 npm install -g @angular/cli
