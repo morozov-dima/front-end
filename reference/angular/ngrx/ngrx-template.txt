@@ -1,5 +1,8 @@
 // Exaample 1:
+
+// *****************************************
 // ************ app.module.ts **************
+// *****************************************
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -46,8 +49,9 @@ export class AppModule { }
 
 
 
-
+// *************************************************
 // ************ app.routing.module.ts **************
+// *************************************************
 // This is main routing module. In this module we 'lazy-loading' our feature modules.
 // 
 //
@@ -88,9 +92,9 @@ export class AppRoutingModule { }
 
 
 
-
+// **********************************************
 // ************ app.component.html **************
-
+// **********************************************
 <app-header></app-header>
 <router-outlet></router-outlet>
 
@@ -100,8 +104,9 @@ export class AppRoutingModule { }
 
 
 
-
-// ************ app.state.ts **************
+// ****************************************
+// ************ app/state/app.state.ts **************
+// ****************************************
 // this file appear in app/state/app.state.ts
 //
 import { ProductState } from "../products/state/products.interface";
@@ -119,8 +124,9 @@ export interface State {
 
 
 
-
-// ************ header.component.html **************
+// *************************************************
+// ************ app/header/header.component.html **************
+// *************************************************
 <ul class="header-left-items">
     <li class="header-left-item">
         <a [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">Home</a>
@@ -141,8 +147,9 @@ export interface State {
 
 
 
-
-// ************ app/products/state/products.selectors.ts **************
+// ************************************************************
+// ******** app/products/state/products.selectors.ts **********
+// ************************************************************
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ProductState } from "./products.interface";
 
@@ -185,8 +192,9 @@ export const getCurrentProductId = createSelector(
 
 
 
-
-// ************ app/products/state/products.reducer.ts **************
+// ************************************************************
+// ********* app/products/state/products.reducer.ts ***********
+// ************************************************************
 //
 import { createReducer, on } from "@ngrx/store";
 
@@ -261,8 +269,9 @@ export const productReducer = createReducer<ProductState>(
 
 
 
-
-// ************ app/products/state/products.interface.ts **************
+// ************************************************************
+// ******** app/products/state/products.interface.ts **********
+// ************************************************************
 export interface ProductState {
     showProductCode: boolean;
     trigger: string; 
@@ -284,8 +293,9 @@ export interface Product {
 
 
 
-
-// ************ app/products/state/products.effects.ts **************
+// ************************************************************
+// ********* app/products/state/products.effects.ts ***********
+// ************************************************************
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
@@ -345,8 +355,9 @@ export class ProductEffects {
 
 
 
-
-// ************ app/products/state/products.actions.ts **************
+// ************************************************************
+// ********* app/products/state/products.actions.ts ***********
+// ************************************************************
 import { createAction, props } from "@ngrx/store";
 import { Product } from "./products.interface";
 
@@ -385,8 +396,9 @@ export const loadProducts = createAction(
 
 
 
-
+// ***********************************************************
 // ************ app/products/product.service.ts **************
+// ***********************************************************
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
@@ -461,8 +473,9 @@ export class ProductService {
 
 
 
-
-// ************ app/products/products.component.html **************
+// ************************************************************
+// ********** app/products/products.component.html ************
+// ************************************************************
 <p>products works!</p>
 
 <button (click)="checkChanged()">click</button>
@@ -496,8 +509,9 @@ export class ProductService {
 
 
 
-
-// ************ app/products/products.component.ts **************
+// ************************************************************
+// *********** app/products/products.component.ts *************
+// ************************************************************
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -565,8 +579,9 @@ export class ProductsComponent implements OnInit {
 
 
 
-
+// ***********************************************************
 // ************ app/products/products.module.ts **************
+// ***********************************************************
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsComponent } from './products.component';
@@ -604,8 +619,9 @@ export class ProductsModule { }
 
 
 
-
-// ************ app/products/products.routing.module.ts **************
+// ************************************************************
+// ********* app/products/products.routing.module.ts **********
+// ************************************************************
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -632,8 +648,9 @@ export class ProductsRoutingModule { }
 
 
 
-
+// ***************************************************
 // ************ app/user/user.module.ts **************
+// ***************************************************
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserComponent } from './user.component';
@@ -663,8 +680,9 @@ export class UserModule { }
 
 
 
-
+// ***********************************************************
 // ************ app/user/user.routing.module.ts **************
+// ***********************************************************
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -691,8 +709,9 @@ export class UserRoutingModule { }
 
 
 
-
+// ******************************************************
 // ************ app/user/user.component.ts **************
+// ******************************************************
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -731,8 +750,9 @@ export class UserComponent implements OnInit {
 
 
 
-
+// ********************************************************
 // ************ app/user/user.component.html **************
+// ********************************************************
 <p>user works!</p>
 <button (click)="checkChanged()">click</button>
 <p *ngIf="showUser$ | async">ku ku user</p>
@@ -741,8 +761,9 @@ export class UserComponent implements OnInit {
 
 
 
-
+// **********************************************************
 // ************ app/user/state/user.actions.ts **************
+// **********************************************************
 import { createAction } from "@ngrx/store";
 
 export const maskUserName = createAction(
@@ -754,8 +775,9 @@ export const maskUserName = createAction(
 
 
 
-
+// ************************************************************
 // ************ app/user/state/user.interface.ts **************
+// ************************************************************
 export interface UserState {
     showUserName: boolean;
 }
@@ -765,8 +787,9 @@ export interface UserState {
 
 
 
-
+// **********************************************************
 // ************ app/user/state/user.reducer.ts **************
+// **********************************************************
 import { createReducer, on } from "@ngrx/store";
 
 import * as userAction from './user.actions';
@@ -802,8 +825,9 @@ export const userReducer = createReducer<UserState>(
 
 
 
-
+// ************************************************************
 // ************ app/user/state/user.selectors.ts **************
+// ************************************************************
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { UserState } from "./user.interface";
 
