@@ -640,3 +640,207 @@ export class AppComponent implements OnInit, OnDestroy {
     width: 500px;
     border:1px solid red;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ################## Example 5: #####################
+// ************** users.service.ts ***************
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, map } from "rxjs";
+import { HandleErrorService } from "src/app/shared/error/error.service";
+import { User } from "./users.interface";
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class UsersService {
+    constructor(private http: HttpClient, private handleErrorService: HandleErrorService) {}
+
+    getUsers() {
+        const url = 'https://jsonplaceholder.typicode.com/users/?_limit5';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Key': 'DFDFDFDFDFD34343DDSDSDS'
+            })
+        };
+        return this.http.get<User[]>(url, httpOptions).pipe(
+            map((responseData) => {
+                const userArray: User[] = [];
+                for (const key in responseData) {
+                    if (responseData.hasOwnProperty(key)) {
+                        userArray.push({ ...responseData[key], network: 'best games' });
+                    }
+                }
+                return userArray;
+            }),
+            catchError(this.handleErrorService.handleError)
+        );
+    }
+}
+
+
+
+
+// ************** users-shell.component.html ***************
+import { Component, OnInit } from "@angular/core";
+import { UsersService } from "../state/users.service";
+
+@Component({
+    selector: 'app-users-shell',
+    templateUrl: './users-shell.component.html',
+    styleUrls: ['./users-shell.component.css']
+})
+
+export class UsersShellComponent implements OnInit {
+    constructor(private usersService: UsersService) {}
+
+    ngOnInit(): void {
+        this.usersService.getUsers().subscribe(
+            (usersResponse) => {
+                console.log(usersResponse);
+                
+            }
+        );
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ################## Example 5: #####################
+// ************ user-data.service.ts *************
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Posts } from './user-data';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserDataService {
+
+
+  constructor(private http: HttpClient) { }
+
+
+  // get posts data from server
+  getPosts(): Observable<Posts[]> {
+    const url = 'https://jsonplaceholder.typicode.com/posts';
+    const options = {
+      // You can also create HTTP parameters directly
+      // from a query string by using the fromString variable.
+      params: new HttpParams({
+        fromString: '_limit=2'
+      }),
+      // Adding and updating headers
+      headers: new HttpHeaders({
+        Authorization: 'my-auth-token-xysdgfhejwjfe'
+      })
+    };
+
+    return this.http.get<Posts[]>(url, options).pipe(
+      catchError(errorRes => {
+        throw 'error in get posts response' + errorRes;
+      })
+    );
+  }
+
+}
+
+
+
+
+// ************ user-data.ts *************
+export interface Posts {
+    userId: number;
+    id: number;
+    title: string;
+    body: string;
+}
+
+
+
+
+// ************ promotions.component.ts *************
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { Posts } from '../shared/user-data';
+import { UserDataService } from '../shared/user-data.service';
+
+@Component({
+  selector: 'app-promotions',
+  templateUrl: './promotions.component.html',
+  styleUrls: ['./promotions.component.css']
+})
+export class PromotionsComponent implements OnInit, OnDestroy {
+
+  posts: Posts[] = [];
+  posts$Subscription!: Subscription;
+
+  showError: boolean = false;
+
+  constructor(private userDataService: UserDataService) { }
+
+  ngOnInit(): void {
+    //get posts data from service
+    this.posts$Subscription = this.userDataService.getPosts().subscribe({
+      next: (postsData) => {
+        this.posts = postsData;
+      },
+      error: () => {
+        // show error message
+        this.showError = true;
+      },
+      complete: () => {
+        console.log('get posts subscribe completed !!!');
+      }
+    }); 
+ }
+
+
+
+  ngOnDestroy(): void {
+      this.posts$Subscription.unsubscribe();
+  }
+
+}
+
+
+
+
+

@@ -1,0 +1,9 @@
+.page-not-found {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.page-not-found-image {
+    width:100%;
+}

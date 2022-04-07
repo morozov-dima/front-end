@@ -1,0 +1,28 @@
+<section class="header">
+    <div class="header-left">
+        <ul>
+             <li>
+                <a [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" >Home</a>
+            </li>
+             <li>
+                <a [routerLink]="['/promotions']" [routerLinkActive]="['active']" >Promotions</a>
+            </li>
+            <li>
+                <a [routerLink]="['/users']" [routerLinkActive]="['active']" >Users</a>
+            </li>
+        </ul>
+    </div>
+    <div class="header-right">
+        <ul>
+            <li>
+                <a href="">Login</a>
+            </li>
+            <li>
+                <a href="">Logout</a>
+            </li>
+            <li>
+                <a [routerLink]="['/join']" >Join</a>    
+            </li>
+        </ul>
+    </div>
+</section>

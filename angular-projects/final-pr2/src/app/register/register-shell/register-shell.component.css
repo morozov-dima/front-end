@@ -1,0 +1,63 @@
+.register-shell {
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.register-shell-content {
+  background-color: #ffffff;
+  color: #000000;
+  margin: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+.register-shell-form-content {
+  padding: 40px;
+}
+
+.register-shell-info-content {
+  padding: 20px;
+}
+
+.register-shell-form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.register-shell-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 20px;
+  width: 100%;
+}
+
+.formRow {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .register-shell-content {
+    flex-direction: row;
+  }
+
+  .register-shell-content {
+    width: 980px;
+  }
+
+  .register-shell-form {
+    width: 50%;
+  }
+
+  .register-shell-info {
+    width: 50%;
+  }
+}
