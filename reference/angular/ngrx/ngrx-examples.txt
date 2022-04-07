@@ -62,6 +62,23 @@ export class AppModule { }
 
 
 
+// ************* app/state/app.state.ts *************
+import { PostsState } from "../posts/state/posts.interface";
+import { UsersState } from "../users/state/users.interface";
+
+export interface State {
+    posts: PostsState;
+    users: UsersState;
+}
+
+
+
+
+
+
+
+
+
 
 
 // ************* app/app.routing.module.ts ************
@@ -575,7 +592,7 @@ import { NgModule } from "@angular/core";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import { UserEffects } from "./state/users.effect";
-import { userReducer } from "./state/users.reducer";
+import { userReducer } from "./state/users.reducer";   // Important - add this line for reducer !!!
 import { UserComponent } from "./user/user.component";
 import { UsersComponent } from "./users.component";
 import { UsersRoutingModule } from "./users.routing.module";
@@ -592,7 +609,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       HttpClientModule,
       UsersRoutingModule,
       ReactiveFormsModule,
-      StoreModule.forFeature('users', userReducer),
+      StoreModule.forFeature('users', userReducer),   // Important - add this line for reducer !!!
 
       // Lazily load our 'products effects' when we load our 'ProductModule'
       EffectsModule.forFeature([UserEffects])

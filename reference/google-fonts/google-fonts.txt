@@ -1,0 +1,46 @@
+*********** general information ***********
+1. link to site : https://fonts.google.com/
+2. add link to google font to your index.html file.
+3. in main style.css file add your 'css rules'
+4. here in index.html file you can also add link to 'google
+   materials icons'.
+
+   
+
+
+
+// Example:
+// ************ index.html *************
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pr5</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" />
+
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>
+
+
+
+
+// *********** style.css *************
+/* You can add global styles to this file, and also import other style files */
+
+html, body{
+    padding:0px;
+    margin:0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
