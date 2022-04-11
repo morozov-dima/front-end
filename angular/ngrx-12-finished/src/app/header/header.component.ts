@@ -27,6 +27,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .select('auth')
       .pipe(map(authState => authState.user))
       .subscribe(user => {
+        // ************************* !! **********************************
+        // !! we use this on order to check if our object is exist or null.
+        // Example 1:
+        // let obj = {x: 1};
+        // !obj => false
+        // !!obj => true
+        // 
+        // Example 2:
+        // let obj2 = null;
+        // !obj2 => true
+        // !!obj2 => false
         this.isAuthenticated = !!user;
         console.log(!user);
         console.log(!!user);

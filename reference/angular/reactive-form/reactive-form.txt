@@ -1,6 +1,11 @@
 
 
-// ################### Example 1: ####################
+
+
+// ################################################################################
+// ################################## Example 1: ##################################
+// ################################################################################
+
 // ************* contact-us.component.html **************
 <section class="my-form">
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -328,7 +333,10 @@ export class AppModule { }
 
 
 
-// ################### Example 2: ####################
+// ################################################################################
+// ################################## Example 2: ##################################
+// ################################################################################
+//
 // ************ contact-us.component.html **********
 <section class="contact-us">
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="!isSubmitted">
@@ -512,5 +520,25 @@ export class ApiDataService {
 
 
 
+// ****************** app.component.ts ******************
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
+import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+
+    // we need import this module for reactive forms.
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
 

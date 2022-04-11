@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { RegisterShellComponent } from "./register-shell/register-shell.component";
+import { AuthShellComponent } from "./auth-shell/auth-shell.component";
 
 const routes: Routes = [
-    { path: '', component: RegisterShellComponent }
+    { path: '', component: AuthShellComponent }
 ];
 
 @NgModule({
@@ -15,4 +15,4 @@ const routes: Routes = [
     ]
 })
 
-export class RegisterRoutingModule {}
+export class AuthRoutingModule {}

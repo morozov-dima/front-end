@@ -12,7 +12,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginInterceptor } from './auth/auth.interceptor';
+import { LoginInterceptor } from './auth/state/auth.interceptor';
+
 
 
 

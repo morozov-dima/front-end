@@ -7,7 +7,9 @@
              <li>
                 <a [routerLink]="['/promotions']" [routerLinkActive]="['active']" >Promotions</a>
             </li>
-            <li>
+            
+            <!-- show this pagr only for logged in users -->
+            <li *ngIf="isAuthenticated">
                 <a [routerLink]="['/users']" [routerLinkActive]="['active']" >Users</a>
             </li>
         </ul>
@@ -15,14 +17,12 @@
     <div class="header-right">
         <ul>
             <li>
-                <a href="">Login</a>
-            </li>
-            <li>
-                <a href="">Logout</a>
-            </li>
-            <li>
-                <a [routerLink]="['/join']" >Join</a>    
+                <a *ngIf="!isAuthenticated" [routerLink]="['/auth']" >Auth</a>  
+                <a class="logout-link" *ngIf="isAuthenticated" (click)="onLogout()" >Logout</a>    
             </li>
         </ul>
     </div>
 </section>
+
+
+

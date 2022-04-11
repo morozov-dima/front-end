@@ -18,9 +18,9 @@ const routes: Routes = [
       import('./users/users.module').then((m) => m.UsersModule),
   },
   {
-    path: 'join',
+    path: 'auth',
     loadChildren: () => 
-      import('./register/register.module').then((m) => m.RegisterModule)
+      import('./auth/auth.module').then((m) => m.AuthModule)
   },
   { path: '**', component: PageNotFoundComponent },
 ];

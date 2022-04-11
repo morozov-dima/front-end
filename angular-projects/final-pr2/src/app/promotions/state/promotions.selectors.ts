@@ -6,5 +6,10 @@ const getPromotionFeatureState = createFeatureSelector<PromotionState>('promotio
 
 export const getPromotions = createSelector(
     getPromotionFeatureState,
-    (state) => state.promotions
+    (state) => {
+       // console.log(state);
+        console.log(state.promotions);
+        
+        return state.promotions
+    }
 );
