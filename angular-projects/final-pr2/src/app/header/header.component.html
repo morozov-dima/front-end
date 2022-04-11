@@ -18,8 +18,23 @@
         <ul>
             <li>
                 <a *ngIf="!isAuthenticated" [routerLink]="['/auth']" >Auth</a>  
+            </li>
+
+
+            <li>
+                <a>Login</a>
+            </li>
+
+            <li>
+                <a>Join</a>
+            </li>
+
+
+            <li>
                 <a class="logout-link" *ngIf="isAuthenticated" (click)="onLogout()" >Logout</a>    
             </li>
+
+
         </ul>
     </div>
 </section>
