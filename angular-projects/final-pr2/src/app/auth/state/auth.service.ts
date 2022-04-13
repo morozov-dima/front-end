@@ -14,7 +14,7 @@ import { AuthResponseData } from "./auth-response.interface";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { State } from "src/app/state/app.state";
-import { AuthPageActions } from "./actions";
+import { AuthApiActions, AuthPageActions } from "./actions";
 
 
 @Injectable({
@@ -56,8 +56,10 @@ export class AuthService {
                         // where 'resData.expireIn' is data the we get from server.
                         // 5 min = 300000 milisec 
                         // 1 min = 60000 millisec
+                        
                         // 1 sec = 1000 millisec
-                        this.setLogoutTimer(60000) // logout aftert 1 min
+                        //this.setLogoutTimer(60000) // logout aftert 1 min
+                        this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -96,6 +98,10 @@ export class AuthService {
             this.clearLogoutTimer();
             // remove data from localStorage
             localStorage.removeItem('userData');
+
+            console.log('logout method ...');
+            
+
             // redirect to '/auth' page
             this.router.navigate(['/auth']);
         }
@@ -108,6 +114,7 @@ export class AuthService {
         setLogoutTimer(expirationDuration: number) {
             this.tokenExpirationTimer = setTimeout(() => {
                // call logout action 
+               console.log('logout ...');
                this.store.dispatch(AuthPageActions.Logout()); 
             }, expirationDuration);
         }
@@ -146,7 +153,8 @@ export class AuthService {
                         // 5 min = 300000 milisec 
                         // 1 min = 60000 millisec
                         // 1 sec = 1000 millisec
-                        this.setLogoutTimer(60000) // logout aftert 1 min
+                        //this.setLogoutTimer(60000) // logout aftert 1 min
+                        this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -160,8 +168,6 @@ export class AuthService {
                     expiresIn: 300, // 300 milliseconds
                     userId: '10111'
                 };
-
-     
                 
                 
 
@@ -190,60 +196,28 @@ export class AuthService {
 
 
 
-        autoLogin() {
-            console.log('autoLogin ...........');
+        // autoLogin() {
+        //     // get data from localStorage and save it into 'authResponseData' object of type 'AuthResponseData'
+        //     const authResponseData: AuthResponseData = JSON.parse(localStorage.getItem('userData') || '{}'); 
+        //     console.log(authResponseData);
+           
             
-           // const userData: User = JSON.parse(localStorage.getItem('userData'));
-           // console.log(JSON.parse(localStorage.getItem('userData'));
-           const authResponseData: AuthResponseData = {
-            idToken: 'FDGFGGFFHHGJHJKFG34343DFDFGFDHFGFDGSDFSADDDDDDDDDDDDDD',
-            email: 'new-signup-user@gmail.com',
-            expiresIn: 300, // 300 milliseconds
-            userId: '10111'
-        };
-        console.log(localStorage.getItem('userData'));
+        //     // set values to User class    
+        //     const loadedUser = new User(
+        //         authResponseData.email,
+        //         authResponseData.userId,
+        //         authResponseData.idToken,
+        //         new Date(authResponseData.expiresIn)
+        //     );
 
-        //const userData: User = JSON.parse(localStorage.getItem('userData') || '{}');
+        //     console.log(loadedUser);
+       
+            
+      
 
-        console.log(localStorage.getItem('userData'));
-    
-        const userDataJson = localStorage.getItem('userData');
-        if(userDataJson !== null) {
-            const userData : {
-                email: string;
-                id: string;
-                _token: string;
-                _tokenExpirationData: string;
-                } = JSON.parse(localStorage.getItem('userData') || '{}'); 
-        }
-        else {
-           // return {type: 'User already logged out'};
-        }
-
-
-   
-        
-
-
-       // console.log(userData);
-        
-        // if(userData) {
-        //     console.log('1');
+        //     return of(authResponseData);
+  
         // }
-        // else {
-        //     console.log('0');
-        // }
-        
-
-        this.handleAuthentication(
-            authResponseData.idToken,
-            authResponseData.email,
-            authResponseData.expiresIn,
-            authResponseData.userId
-            );
-
-            return of(authResponseData);
-        }
 
 
 
