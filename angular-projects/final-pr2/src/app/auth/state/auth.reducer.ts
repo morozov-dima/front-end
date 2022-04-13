@@ -22,15 +22,6 @@ export const authReducer = createReducer<AuthState>(
         } 
     ),
     on(
-       AuthApiActions.AuthenticateFail,
-       (state, action): AuthState => {
-           return {
-               ...state,
-               error: action.error
-           }
-       }
-    ),
-    on(
         AuthPageActions.Logout,
         (state): AuthState => {
             return {
@@ -38,5 +29,33 @@ export const authReducer = createReducer<AuthState>(
                 user: null
             }
         }
+    ),
+    on(
+        AuthPageActions.LoginStart,
+        (state): AuthState => {
+            return {
+                ...state,
+                error: ''
+            }
+        }
+    ),
+    on(
+        AuthPageActions.SignupStart,
+        (state): AuthState => {
+            return {
+                ...state,
+                error: ''
+            }
+        }
+    ),
+    on(
+       AuthApiActions.AuthenticateFail,
+       (state, action): AuthState => {
+           return {
+               ...state,
+               error: action.error
+           }
+       }
     )
+
 );

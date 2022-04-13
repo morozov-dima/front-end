@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, tap } from "rxjs";
+import { catchError, map, of, tap } from "rxjs";
 import { HandleErrorService } from "src/app/shared/error/error.service";
 
 
@@ -124,6 +124,130 @@ export class AuthService {
                 this.tokenExpirationTimer = null;
             }
         }
+
+
+        // register new user
+        signup(email: string, password: string) {
+            // const that declared in environment folder.
+            const apiKey = environment.apiKey;
+            const url = `https://jsonplaceholder.typicode.com/posts?${apiKey}`;
+            return this.http.post<any>(url, 
+                {
+                    email: email,
+                    password: password,
+                    // we need set 'returnSecureToken' to true according to firebase API.
+                    returnSecureToken: true
+                }
+            ).pipe(
+                tap(() => {
+                        // in case of real server we get 'expiresIn' from response
+                        // and instead of 300000 we will write '+resData.expireIn * 1000'
+                        // where 'resData.expireIn' is data the we get from server.
+                        // 5 min = 300000 milisec 
+                        // 1 min = 60000 millisec
+                        // 1 sec = 1000 millisec
+                        this.setLogoutTimer(60000) // logout aftert 1 min
+                    }
+                ),
+                map(() => {
+                // 1. here we will emulate server response.
+                //    this is response that we will get from real server.
+                // 2. with real back-end server we will get this response
+                //    (that include token) from server.
+                const authResponseData: AuthResponseData = {
+                    idToken: 'FDGFGGFFHHGJHJKFG34343DFDFGFDHFGFDGSDFSADDDDDDDDDDDDDD',
+                    email: 'new-signup-user@gmail.com',
+                    expiresIn: 300, // 300 milliseconds
+                    userId: '10111'
+                };
+
+     
+                
+                
+
+                this.handleAuthentication(
+                        authResponseData.idToken,
+                        authResponseData.email,
+                        authResponseData.expiresIn,
+                        authResponseData.userId
+                        );
+                        
+                // return updated response        
+                return authResponseData;
+                        
+                }),
+                catchError(this.handleErrorService.handleError)
+            );
+        }
+
+
+
+
+
+
+
+
+
+
+
+        autoLogin() {
+            console.log('autoLogin ...........');
+            
+           // const userData: User = JSON.parse(localStorage.getItem('userData'));
+           // console.log(JSON.parse(localStorage.getItem('userData'));
+           const authResponseData: AuthResponseData = {
+            idToken: 'FDGFGGFFHHGJHJKFG34343DFDFGFDHFGFDGSDFSADDDDDDDDDDDDDD',
+            email: 'new-signup-user@gmail.com',
+            expiresIn: 300, // 300 milliseconds
+            userId: '10111'
+        };
+        console.log(localStorage.getItem('userData'));
+
+        //const userData: User = JSON.parse(localStorage.getItem('userData') || '{}');
+
+        console.log(localStorage.getItem('userData'));
+    
+        const userDataJson = localStorage.getItem('userData');
+        if(userDataJson !== null) {
+            const userData : {
+                email: string;
+                id: string;
+                _token: string;
+                _tokenExpirationData: string;
+                } = JSON.parse(localStorage.getItem('userData') || '{}'); 
+        }
+        else {
+           // return {type: 'User already logged out'};
+        }
+
+
+   
+        
+
+
+       // console.log(userData);
+        
+        // if(userData) {
+        //     console.log('1');
+        // }
+        // else {
+        //     console.log('0');
+        // }
+        
+
+        this.handleAuthentication(
+            authResponseData.idToken,
+            authResponseData.email,
+            authResponseData.expiresIn,
+            authResponseData.userId
+            );
+
+            return of(authResponseData);
+        }
+
+
+
+
 
 
 

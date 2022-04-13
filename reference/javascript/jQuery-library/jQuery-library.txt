@@ -1,0 +1,72 @@
+// #####################################################################
+// #####################################################################
+// Example 1: (Add/remove elements example)
+// #####################################################################
+// #####################################################################
+
+
+// ******************** html ************************
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<input type="text">
+<button>Add Todo</button>
+<ul></ul>
+
+
+
+
+
+
+
+
+
+
+
+// ******************* js **************************
+// ############ Add/Remove elements example ################
+// In this example we can add elements.
+let inputEl = $('input');
+let buttonEl = $('button');
+let ulEl = $('ul');
+let todos = [];
+
+buttonEl.click(addTodo);
+
+
+function addTodo() {
+	let userInput = inputEl.val();
+  if (userInput.trim() == '') {
+  	return;
+  }
+  let newTodo = {
+  	id: Math.random(),
+    value: userInput
+  };
+  
+  // add new element to the end (right) of our main array.
+  todos.push(newTodo);
+  $('<li>' + userInput + '</li>')
+  	.appendTo(ulEl)
+    .attr('dataset-id', newTodo.id)
+    .click(removeTodo);
+
+   console.log(todos);
+}
+
+
+
+
+function removeTodo(event) {
+  // get element that was clicked with 'this'
+	let clickedLi = $(this);
+  let itemId = clickedLi.attr('dataset-id');
+  for(let i = 0; i < todos.length; i++) {
+  	if (todos[i].id == itemId) {
+    	// remove current one element from our array
+      todos.splice(i, 1);
+      break;
+    }
+  }  
+
+  clickedLi.remove();
+  console.log(todos);
+}

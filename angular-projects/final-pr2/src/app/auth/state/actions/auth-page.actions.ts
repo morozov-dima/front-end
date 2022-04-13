@@ -20,6 +20,18 @@ export const LoginStart = createAction(
   );
 
 
+ export const SignupStart = createAction(
+   '[Auth] Signup Start',
+   props<{ email: string; password: string }>()
+ );
+
+
+ export const AutoLogin = createAction(
+   '[Auth] Auto Login'
+ );
+
+
+
 
   
 

@@ -1,5 +1,8 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { State } from '../../state/app.state';
+import { Store } from '@ngrx/store';
+import * as AuthPageActions from '../state/actions/auth-page.actions';
 
 @Component({
     selector: 'app-join',
@@ -15,8 +18,17 @@ export class JoinComponent {
         passwordField: new FormControl('', Validators.required)
     })
 
+    constructor(
+        private store: Store<State>
+    ) {}
+
     onSubmit() {
         console.log(this.registerForm.value);
-
+        this.store.dispatch(AuthPageActions.SignupStart(
+            { 
+                email: this.registerForm.value.email,
+                password: this.registerForm.value.password
+            }
+        ));
     }
 }
