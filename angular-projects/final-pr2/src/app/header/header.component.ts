@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { map, Observable, Subscription } from "rxjs";
 import { AuthPageActions } from "../auth/state/actions";
-import { AuthResponseData } from "../auth/state/auth.interface";
+
 
 import { getUser, getAuthFeatureState } from "../auth/state/auth.selectors";
 import { AuthService } from "../auth/state/auth.service";

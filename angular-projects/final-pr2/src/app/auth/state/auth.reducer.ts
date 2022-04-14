@@ -17,7 +17,7 @@ export const authReducer = createReducer<AuthState>(
         (state, action): AuthState => {
             return {
                ...state,
-               user: action.authResponseData
+               user: action.user
             }
         } 
     ),

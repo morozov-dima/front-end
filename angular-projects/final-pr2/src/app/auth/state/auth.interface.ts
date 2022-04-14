@@ -1,6 +1,8 @@
+import { User } from "./auth-user.model";
+
  // In case user not logged in user will be null.
  export interface AuthState {
-  user: AuthResponseData | null;
+  user: User | null;
   error: string ;
 }
 

@@ -10,11 +10,12 @@ import { HandleErrorService } from "src/app/shared/error/error.service";
 import { environment } from 'src/environments/environment';
 
 import { User } from "./auth-user.model";
-import { AuthResponseData } from "./auth-response.interface";
+
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { State } from "src/app/state/app.state";
 import { AuthApiActions, AuthPageActions } from "./actions";
+import { AuthResponseData } from "./auth.interface";
 
 
 @Injectable({
@@ -31,6 +32,12 @@ export class AuthService {
             private router: Router,
             private store: Store<State> 
             ) {}
+
+
+
+
+
+
 
 
 
@@ -58,8 +65,8 @@ export class AuthService {
                         // 1 min = 60000 millisec
                         
                         // 1 sec = 1000 millisec
-                        //this.setLogoutTimer(60000) // logout aftert 1 min
-                        this.setLogoutTimer(600000) // logout aftert 60 min
+                        this.setLogoutTimer(60000) // logout aftert 1 min
+                        //this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -74,6 +81,17 @@ export class AuthService {
                     userId: '10200'
                 };
 
+                const expirationDate = new Date(new Date().getTime() + authResponseData.expiresIn * 1000);
+                // 1. create instance of new user.
+                // 2. we pass data to the 'User' class constaructor.
+                //    this way we can store data.
+                const user = new User(
+                    authResponseData.email,
+                    authResponseData.userId,
+                    authResponseData.idToken,
+                    expirationDate
+                );
+
                 this.handleAuthentication(
                         authResponseData.idToken,
                         authResponseData.email,
@@ -82,12 +100,25 @@ export class AuthService {
                         );
                         
                 // return updated response        
-                return authResponseData;
+                return user;
                         
                 }),
                 catchError(this.handleErrorService.handleError)
                 );
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -153,8 +184,8 @@ export class AuthService {
                         // 5 min = 300000 milisec 
                         // 1 min = 60000 millisec
                         // 1 sec = 1000 millisec
-                        //this.setLogoutTimer(60000) // logout aftert 1 min
-                        this.setLogoutTimer(600000) // logout aftert 60 min
+                        this.setLogoutTimer(60000) // logout aftert 1 min 
+                        //this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -171,6 +202,25 @@ export class AuthService {
                 
                 
 
+
+
+
+                const expirationDate = new Date(new Date().getTime() + authResponseData.expiresIn * 1000);
+                // 1. create instance of new user.
+                // 2. we pass data to the 'User' class constaructor.
+                //    this way we can store data.
+                const user = new User(
+                    authResponseData.email,
+                    authResponseData.userId,
+                    authResponseData.idToken,
+                    expirationDate
+                );
+
+
+
+
+
+
                 this.handleAuthentication(
                         authResponseData.idToken,
                         authResponseData.email,
@@ -179,46 +229,12 @@ export class AuthService {
                         );
                         
                 // return updated response        
-                return authResponseData;
+                return user;
                         
                 }),
                 catchError(this.handleErrorService.handleError)
             );
         }
-
-
-
-
-
-
-
-
-
-
-
-        // autoLogin() {
-        //     // get data from localStorage and save it into 'authResponseData' object of type 'AuthResponseData'
-        //     const authResponseData: AuthResponseData = JSON.parse(localStorage.getItem('userData') || '{}'); 
-        //     console.log(authResponseData);
-           
-            
-        //     // set values to User class    
-        //     const loadedUser = new User(
-        //         authResponseData.email,
-        //         authResponseData.userId,
-        //         authResponseData.idToken,
-        //         new Date(authResponseData.expiresIn)
-        //     );
-
-        //     console.log(loadedUser);
-       
-            
-      
-
-        //     return of(authResponseData);
-  
-        // }
-
 
 
 

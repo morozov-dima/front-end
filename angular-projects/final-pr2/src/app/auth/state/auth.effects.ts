@@ -5,8 +5,10 @@ import { AuthApiActions, AuthPageActions } from "./actions";
 import { map, mergeMap, catchError, of, tap, EMPTY, take } from "rxjs";
 import { Router } from "@angular/router";
 import { UserApiActions } from "src/app/users/state/actions";
+
 import { AuthResponseData } from "./auth.interface";
 import { User } from "./auth-user.model";
+
 
 
 @Injectable()
@@ -25,7 +27,7 @@ export class AuthEffects {
         ofType(AuthPageActions.LoginStart),
         mergeMap((action) => 
                this.authService.login(action.email, action.password).pipe(
-                 map((authResponseData) => AuthApiActions.AuthenticateSuccess({authResponseData})),
+                 map((user) => AuthApiActions.AuthenticateSuccess({user})),
                  catchError((error) => of(AuthApiActions.AuthenticateFail({ error })))
                )
         )
@@ -72,7 +74,7 @@ export class AuthEffects {
           ofType(AuthPageActions.SignupStart),
           mergeMap((action) =>
             this.authService.signup(action.email, action.password).pipe(
-              map((authResponseData) => AuthApiActions.AuthenticateSuccess({ authResponseData })),
+              map((user) => AuthApiActions.AuthenticateSuccess({ user })),
               catchError((error) => of(AuthApiActions.AuthenticateFail({ error })))
             )
           )
@@ -94,16 +96,18 @@ export class AuthEffects {
                   console.log(localStorage.getItem('userData'));
 
            
-                  const authResponseData: AuthResponseData = JSON.parse(localStorage.getItem('userData') || '{}'); 
-                  console.log(authResponseData);
-                  console.log(authResponseData.email);
-                  console.log(authResponseData.userId);
-                  console.log(authResponseData.idToken);
+                  const user: User = JSON.parse(localStorage.getItem('userData') || '{}'); 
+                  console.log(user);
+                  console.log(user.email);
+                  console.log(user.id);
+                  console.log(user.token);
+                  
+              
                     
-                  if(authResponseData.email) {
+                  if(user.id) {
                     console.log('11');
                    // return AuthApiActions.AuthenticateSuccess({ authResponseData });
-                   return AuthApiActions.AuthenticateSuccess({ authResponseData });
+                   return AuthApiActions.AuthenticateSuccess({ user });
                   } else {
                     console.log('00');
                     return { type: 'USER LOGOUT' };
