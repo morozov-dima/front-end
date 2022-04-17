@@ -1,4 +1,8 @@
-import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { PromotionsPageActions } from "./state/actions";
+import { getPosts } from "./state/promotions.selector";
 
 @Component({
     selector: 'app-promotions',
@@ -6,4 +10,23 @@ import { Component } from "@angular/core";
     styleUrls: ['./promotions.component.css']
 })
 
-export class PromotionsComponent {}
+export class PromotionsComponent implements OnInit {
+    constructor(
+        private http: HttpClient,
+        private store: Store
+    ) {}
+    
+
+     ngOnInit(): void {
+        this.store.dispatch(PromotionsPageActions.LoadPosts());
+
+
+        this.store.select(getPosts).subscribe(
+            (response) => {
+                console.log(response);
+            }
+        ); 
+     }   
+
+
+}
