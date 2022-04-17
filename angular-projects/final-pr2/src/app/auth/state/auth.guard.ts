@@ -9,7 +9,7 @@ import {
 import { Store } from '@ngrx/store';
 
 import { map, Observable, take } from 'rxjs';
-import { State } from 'src/app/state/app.state';
+import { State } from 'src/app/state/app.reducer';
 import { getAuthFeatureState, getUser } from './auth.selectors';
 import { AuthService } from './auth.service';
 

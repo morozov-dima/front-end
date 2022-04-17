@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { State } from "src/app/state/app.state";
+import { State } from "src/app/state/app.reducer";
 import { AuthService } from "../state/auth.service";
 import { Store } from '@ngrx/store';
 import { AuthPageActions } from "../state/actions";

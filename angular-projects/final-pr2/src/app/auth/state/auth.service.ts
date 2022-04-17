@@ -13,7 +13,7 @@ import { User } from "./auth-user.model";
 
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { State } from "src/app/state/app.state";
+import { State } from "src/app/state/app.reducer";
 import { AuthApiActions, AuthPageActions } from "./actions";
 import { AuthResponseData } from "./auth.interface";
 

@@ -17,7 +17,10 @@ import { FooterComponent } from './footer/footer.component';
 import { MaterialsModule } from './materials/materials.module';
 
 
-
+import * as fromApp from './state/app.reducer';
+import { AuthEffects } from './auth/state/auth.effects';
+import { PromotionEffects } from './promotions/state/promotions.effects';
+import { UserEffects } from './users/state/users.effects';
 
 @NgModule({
   declarations: [
@@ -31,9 +34,9 @@ import { MaterialsModule } from './materials/materials.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(fromApp.appReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects, PromotionEffects, UserEffects]),
     BrowserAnimationsModule,
     MaterialsModule
   ],

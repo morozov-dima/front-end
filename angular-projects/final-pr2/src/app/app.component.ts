@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { State } from './state/app.state';
+import { State } from './state/app.reducer';
 import { Store } from '@ngrx/store';
 import { AuthPageActions } from './auth/state/actions';
 import { getAuthFeatureState, getUser } from './auth/state/auth.selectors';
@@ -19,12 +19,8 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    setTimeout(() => {
-      this.store.dispatch(AuthPageActions.AutoLogin());
-      this.showLoader = false;
-    }, 1000);
-
+    this.store.dispatch(AuthPageActions.AutoLogin());
+    this.showLoader = false;
   }
 
 }

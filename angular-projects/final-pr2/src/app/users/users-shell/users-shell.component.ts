@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { State } from "src/app/state/app.state";
+import { State } from "src/app/state/app.reducer";
 import { UserPageActions } from "../state/actions";
 import { UsersService } from "../state/users.service";
 

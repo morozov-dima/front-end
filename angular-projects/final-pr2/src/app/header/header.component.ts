@@ -7,7 +7,7 @@ import { AuthPageActions } from "../auth/state/actions";
 
 import { getUser, getAuthFeatureState } from "../auth/state/auth.selectors";
 import { AuthService } from "../auth/state/auth.service";
-import { State } from "../state/app.state";
+import { State } from "../state/app.reducer";
 
 @Component({
     selector: 'app-header',

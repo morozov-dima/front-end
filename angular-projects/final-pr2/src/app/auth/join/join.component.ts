@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { State } from '../../state/app.state';
+import { State } from '../../state/app.reducer';
 import { Store } from '@ngrx/store';
 import * as AuthPageActions from '../state/actions/auth-page.actions';
 

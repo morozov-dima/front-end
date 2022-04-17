@@ -1,0 +1,24 @@
+.header {
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.header-items {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.header-item {
+    flex-direction: row;
+    padding: 10px;
+}
+
+.header-item a {
+    text-decoration: none;
+}
+
+.active {
+    font-weight: bold;
+}

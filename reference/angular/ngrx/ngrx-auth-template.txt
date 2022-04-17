@@ -8,11 +8,16 @@
 
 
 
+
+
+
+
 // ***************************************************
 // ***************** app.module.ts *******************
 // ***************************************************
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { StoreModule } from '@ngrx/store';
@@ -29,6 +34,11 @@ import { FooterComponent } from './footer/footer.component';
 import { MaterialsModule } from './materials/materials.module';
 
 
+import * as fromApp from './state/app.reducer';
+import { AuthEffects } from './auth/state/auth.effects';
+import { PromotionEffects } from './promotions/state/promotions.effects';
+import { UserEffects } from './users/state/users.effects';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,9 +51,9 @@ import { MaterialsModule } from './materials/materials.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(fromApp.appReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects, PromotionEffects, UserEffects]),
     BrowserAnimationsModule,
     MaterialsModule
   ],
@@ -57,6 +67,9 @@ import { MaterialsModule } from './materials/materials.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
 
 
 
@@ -99,10 +112,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-    setTimeout(() => {
-      this.store.dispatch(AuthPageActions.AutoLogin());
-      this.showLoader = false;
-    }, 1000);
+    this.store.dispatch(AuthPageActions.AutoLogin());
+    this.showLoader = false;
 
   }
 }
@@ -147,6 +158,41 @@ export class AppComponent implements OnInit {
 
 
 
+// ****************************************************************
+// *************** src/environments/environment.ts ****************
+// ****************************************************************
+
+export const environment = {
+  production: false,
+  apiKey : 'DFDFDF4343GHGHFDGFD1121W'
+};
+
+
+
+
+
+
+
+
+
+// ****************************************************************
+// *************** src/environments/environment.prod.ts ****************
+// ****************************************************************
+
+export const environment = {
+  production: true,
+  apiKey : 'DFDFDF4343GHGHFDGFD1121W'
+};
+
+
+
+
+
+
+
+
+
+
 
 // **************************************************
 // *************** app.component.css ****************
@@ -171,17 +217,30 @@ export class AppComponent implements OnInit {
 
 
 // *****************************************************
-// *************** app/state/app.state.ts **************
+// *************** app/state/app.reducer.ts **************
 // *****************************************************
+import { ActionReducerMap } from '@ngrx/store';
 import { AuthState } from '../auth/state/auth.interface';
 import { PromotionState } from '../promotions/state/promotions.interface';
 import { UserState } from '../users/state/users.interface';
+
+import * as fromAuth from '../auth/state/auth.reducer';
+import * as fromPromotions from '../promotions/state/promotions.reducer';
+import * as fromUsers from '../users/state/users.reducer';
+
 
 export interface State {
     promotions: PromotionState;
     users: UserState;
     auth: AuthState;
 }
+
+
+export const appReducer: ActionReducerMap<State> = {
+    users: fromUsers.userReducer,
+    auth: fromAuth.authReducer,
+    promotions: fromPromotions.promotionReducer
+  };
 
 
 
@@ -294,7 +353,7 @@ export class AuthRoutingModule {}
 // ************* app/auth/auth-shell/auth-shell.component.ts **************
 // ************************************************************************
 import { Component, OnInit } from "@angular/core";
-import { State } from "src/app/state/app.state";
+import { State } from "src/app/state/app.reducer";
 import { AuthService } from "../state/auth.service";
 import { Store } from '@ngrx/store';
 import { AuthPageActions } from "../state/actions";
@@ -392,7 +451,7 @@ export class AuthShellComponent implements OnInit {
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthPageActions } from "../state/actions";
-import { State } from "src/app/state/app.state";
+import { State } from "src/app/state/app.reducer";
 import { Store } from '@ngrx/store';
 
 
@@ -655,7 +714,7 @@ import { User } from "./auth-user.model";
 
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { State } from "src/app/state/app.state";
+import { State } from "src/app/state/app.reducer";
 import { AuthApiActions, AuthPageActions } from "./actions";
 import { AuthResponseData } from "./auth.interface";
 
