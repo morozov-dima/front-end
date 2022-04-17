@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, of, tap } from "rxjs";
+import { catchError, map, tap } from "rxjs";
 import { HandleErrorService } from "src/app/shared/error/error.service";
 
 
@@ -65,8 +65,8 @@ export class AuthService {
                         // 1 min = 60000 millisec
                         
                         // 1 sec = 1000 millisec
-                        this.setLogoutTimer(60000) // logout aftert 1 min
-                        //this.setLogoutTimer(600000) // logout aftert 60 min
+                        //this.setLogoutTimer(60000) // logout aftert 1 min
+                        this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -142,6 +142,8 @@ export class AuthService {
 
 
 
+
+
         setLogoutTimer(expirationDuration: number) {
             this.tokenExpirationTimer = setTimeout(() => {
                // call logout action 
@@ -155,6 +157,8 @@ export class AuthService {
 
 
 
+
+
         clearLogoutTimer() {
             console.log('Inside clearLogoutTimer ...');
             if (this.tokenExpirationTimer) {
@@ -162,6 +166,11 @@ export class AuthService {
                 this.tokenExpirationTimer = null;
             }
         }
+
+
+
+
+
 
 
         // register new user
@@ -184,8 +193,8 @@ export class AuthService {
                         // 5 min = 300000 milisec 
                         // 1 min = 60000 millisec
                         // 1 sec = 1000 millisec
-                        this.setLogoutTimer(60000) // logout aftert 1 min 
-                        //this.setLogoutTimer(600000) // logout aftert 60 min
+                        //this.setLogoutTimer(60000) // logout aftert 1 min 
+                        this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -201,10 +210,6 @@ export class AuthService {
                 };
                 
                 
-
-
-
-
                 const expirationDate = new Date(new Date().getTime() + authResponseData.expiresIn * 1000);
                 // 1. create instance of new user.
                 // 2. we pass data to the 'User' class constaructor.
@@ -215,10 +220,6 @@ export class AuthService {
                     authResponseData.idToken,
                     expirationDate
                 );
-
-
-
-
 
 
                 this.handleAuthentication(
@@ -262,15 +263,11 @@ export class AuthService {
         
                 // save data in local storage.   
                 localStorage.setItem('userData', JSON.stringify(user));   
+
         }
 
 
-
-
-
-
-
-   
+  
 
 
 }

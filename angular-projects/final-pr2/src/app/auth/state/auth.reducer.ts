@@ -17,7 +17,8 @@ export const authReducer = createReducer<AuthState>(
         (state, action): AuthState => {
             return {
                ...state,
-               user: action.user
+               user: action.user,
+               error: ''
             }
         } 
     ),
@@ -26,7 +27,8 @@ export const authReducer = createReducer<AuthState>(
         (state): AuthState => {
             return {
                 ...state,
-                user: null
+                user: null,
+                error: ''
             }
         }
     ),
@@ -57,5 +59,4 @@ export const authReducer = createReducer<AuthState>(
            }
        }
     )
-
 );

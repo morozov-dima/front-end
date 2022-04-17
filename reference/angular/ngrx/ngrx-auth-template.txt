@@ -1,0 +1,1433 @@
+// ***************************************************
+// Home | Promotions | Users               Auth/Logout 
+// ***************************************************   
+
+
+
+
+
+
+
+// ***************************************************
+// ***************** app.module.ts *******************
+// ***************************************************
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AppRoutingModule } from './app.routing.module';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginInterceptor } from './auth/state/auth.interceptor';
+import { FooterComponent } from './footer/footer.component';
+import { MaterialsModule } from './materials/materials.module';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    WelcomeComponent,
+    PageNotFoundComponent,
+    HeaderComponent,
+    FooterComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([]),
+    BrowserAnimationsModule,
+    MaterialsModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoginInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ********************************************************
+// ****************** app.component.ts ********************
+// ********************************************************
+import { Component, OnInit } from '@angular/core';
+import { State } from './state/app.state';
+import { Store } from '@ngrx/store';
+import { AuthPageActions } from './auth/state/actions';
+import { getAuthFeatureState, getUser } from './auth/state/auth.selectors';
+import { take } from 'rxjs';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  
+  showLoader: boolean = true;  
+
+  constructor(
+    private store: Store<State>  
+  ) {}
+
+  ngOnInit(): void {
+
+    setTimeout(() => {
+      this.store.dispatch(AuthPageActions.AutoLogin());
+      this.showLoader = false;
+    }, 1000);
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ********************************************************
+// ****************** app.component.html ******************
+// ********************************************************
+<div *ngIf="!showLoader">
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+</div>
+
+<div *ngIf="showLoader" class="loading">
+    <h1>
+        Loading...
+    </h1>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************
+// *************** app.component.css ****************
+// **************************************************
+.loading {
+    display: flex;
+    justify-content: center;
+    margin-top:50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************
+// *************** app/state/app.state.ts **************
+// *****************************************************
+import { AuthState } from '../auth/state/auth.interface';
+import { PromotionState } from '../promotions/state/promotions.interface';
+import { UserState } from '../users/state/users.interface';
+
+export interface State {
+    promotions: PromotionState;
+    users: UserState;
+    auth: AuthState;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *******************************************************
+// ************** app/auth/auth.module.ts  ***************
+// *******************************************************
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreModule } from "@ngrx/store";
+import { LoadingComponent } from "../loading/loading.component";
+import { MaterialsModule } from "../materials/materials.module";
+import { AuthShellComponent } from "./auth-shell/auth-shell.component";
+import { AuthTermsComponent } from "./auth-terms/auth-terms.component";
+import { AuthRoutingModule } from "./auth.routing.module";
+import { JoinComponent } from "./join/join.component";
+import { LoginComponent } from "./login/login.component";
+import { AuthEffects } from "./state/auth.effects";
+import { authReducer } from "./state/auth.reducer";
+
+@NgModule({
+    declarations: [
+        JoinComponent,
+        LoginComponent,
+        AuthShellComponent,
+        AuthTermsComponent,
+        LoadingComponent
+    ],
+    imports: [
+        MaterialsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        AuthRoutingModule,
+        HttpClientModule,
+        StoreModule.forFeature('auth', authReducer),
+        EffectsModule.forFeature([AuthEffects])
+    ]
+})
+
+export class AuthModule {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ***********************************************************
+// ************* app/auth/auth.routing.module.ts *************
+// ***********************************************************
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { AuthShellComponent } from "./auth-shell/auth-shell.component";
+
+const routes: Routes = [
+    { path: '', component: AuthShellComponent }
+];
+
+@NgModule({
+    imports: [
+        RouterModule.forChild(routes)
+    ],
+    exports: [
+        RouterModule
+    ]
+})
+
+export class AuthRoutingModule {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ************* app/auth/auth-shell/auth-shell.component.ts **************
+// ************************************************************************
+import { Component, OnInit } from "@angular/core";
+import { State } from "src/app/state/app.state";
+import { AuthService } from "../state/auth.service";
+import { Store } from '@ngrx/store';
+import { AuthPageActions } from "../state/actions";
+
+
+@Component({
+    selector: 'app-auth-shell',
+    templateUrl: './auth-shell.component.html',
+    styleUrls: ['./auth-shell.component.css']
+})
+
+export class AuthShellComponent implements OnInit {
+    constructor(private authService: AuthService, private store: Store<State>) {}
+    ngOnInit(): void {
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ************ app/auth/auth-shell/auth-shell.component.html *************
+// ************************************************************************
+<section class="auth-shell">
+  <div class="auth-shell-content">
+    <mat-tab-group>
+      <mat-tab label="Login">
+        <app-login></app-login>
+      </mat-tab>
+      <mat-tab label="Join">
+        <app-join></app-join>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *************************************************************************
+// ************* app/auth/auth-shell/auth-shell.component.css **************
+// *************************************************************************
+.auth-shell {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px 20px 100px 20px;
+}
+
+.auth-shell-content {
+    background-color: #ffffff;
+    border-radius:8px;
+    width: 980px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************************
+// ************** app/auth/login/login.component.ts ****************
+// *****************************************************************
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { AuthPageActions } from "../state/actions";
+import { State } from "src/app/state/app.state";
+import { Store } from '@ngrx/store';
+
+
+@Component({
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
+})
+
+export class LoginComponent implements OnInit {
+    isSubmitted: boolean = false;
+
+    loginForm = new FormGroup({
+        emailField: new FormControl('', [Validators.required, Validators.email]),
+        passwordField: new FormControl('', Validators.required)
+    });
+
+    constructor(private store: Store<State>) {}
+
+    ngOnInit(): void {
+        
+    }
+
+    onSubmit() {
+        this.isSubmitted = true;
+        this.loginForm.reset();
+        console.log(this.loginForm.value);
+        const email = this.loginForm.value.emailField;
+        const password = this.loginForm.value.passwordField;
+
+        this.store.dispatch(AuthPageActions.LoginStart({ email: email, password: password }));
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ******************************************************************
+// ************* app/auth/login/login.component.html ****************
+// ******************************************************************
+<section class="login-content">
+    <p *ngIf="isSubmitted" class="form-was-submitted">
+      Form was submitted
+    </p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!isSubmitted">
+        <div class="formRow">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Enter your email:</mat-label>
+                <input type="email" formControlName="emailField" matInput placeholder="" value="">
+            </mat-form-field>
+          </div>
+
+
+          <div class="formRow">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Enter your password:</mat-label>
+                <input type="password" formControlName="passwordField" matInput placeholder="" value="">
+            </mat-form-field>
+          </div>
+
+          <div class="formRow">
+            <button type="submit" [disabled]="!loginForm.valid" mat-raised-button color="primary">Primary</button>
+          </div>  
+    </form>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************************
+// ************* app/auth/login/login.component.css *************
+// **************************************************************
+.login-content {
+    margin:20px;
+    color:#000000; 
+    display: flex;
+    justify-content: center;
+}
+
+.form-was-submitted {
+    color: green;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************************
+// ************** app/auth/join/join.component.ts ***************
+// **************************************************************
+import { Component } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { State } from '../../state/app.state';
+import { Store } from '@ngrx/store';
+import * as AuthPageActions from '../state/actions/auth-page.actions';
+
+@Component({
+    selector: 'app-join',
+    templateUrl: './join.component.html',
+    styleUrls: ['./join.component.css']
+})
+
+export class JoinComponent {
+    isSubmitted: boolean = false;
+
+    registerForm = new FormGroup({
+        emailField: new FormControl('', [Validators.required, Validators.email]),
+        passwordField: new FormControl('', Validators.required)
+    })
+
+    constructor(
+        private store: Store<State>
+    ) {}
+
+    onSubmit() {
+        console.log(this.registerForm.value);
+        this.store.dispatch(AuthPageActions.SignupStart(
+            { 
+                email: this.registerForm.value.email,
+                password: this.registerForm.value.password
+            }
+        ));
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************************
+// ************* app/auth/join/join.component.html **************
+// **************************************************************
+<section class="register-shell">
+    <div class="register-shell-content">
+        <div class="register-shell-form">
+            <div class="register-shell-form-content">
+
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"  *ngIf="!isSubmitted" >
+
+                    <div class="formRow">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label for="emailField">Enter your email:</mat-label>
+                            <input name="emailField" formControlName="emailField" id="emailField" type="email" matInput>
+                          </mat-form-field>
+                    </div>   
+                                        
+                    <div class="formRow">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label for="passwordField">Enter your password:</mat-label>
+                            <input formControlName="passwordField" name="passwordField" id="passwordField" type="password" matInput>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="formRow">
+                        <button type="submit" [disabled]="!registerForm.valid" mat-raised-button color="primary">Submit</button>
+                    </div>
+                </form>
+
+                <div class="submitted-form-message" *ngIf="isSubmitted">
+                    You form was submitted
+                </div>
+
+            </div>
+        </div>
+        <div class="register-shell-info">
+            <div class="register-shell-info-content">
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+            </p>
+            <p>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. A, laboriosam.
+            </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ****************************************************************************
+// ********************* app/auth/state/auth.service.ts ***********************
+// ****************************************************************************
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, map, tap } from "rxjs";
+import { HandleErrorService } from "src/app/shared/error/error.service";
+
+
+// here we need import just 'environment' and not 'environment.prod'
+// this will be swapped automatically for you by the Angular CLI
+// when you build for production.
+import { environment } from 'src/environments/environment';
+
+import { User } from "./auth-user.model";
+
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { State } from "src/app/state/app.state";
+import { AuthApiActions, AuthPageActions } from "./actions";
+import { AuthResponseData } from "./auth.interface";
+
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class AuthService {
+
+        private tokenExpirationTimer: any;
+
+        constructor(
+            private http: HttpClient,
+            private handleErrorService: HandleErrorService,
+            private router: Router,
+            private store: Store<State> 
+            ) {}
+
+
+
+
+        login(email: string, password: string) {
+            // const that declared in environment folder.
+            const apiKey = environment.apiKey;
+            const url = `https://jsonplaceholder.typicode.com/posts?${apiKey}`;
+            return this.http.post<any>(url, 
+                {
+                    email: email,
+                    password: password,
+                    // we need set 'returnSecureToken' to true according to firebase API.
+                    returnSecureToken: true
+                }
+            ).pipe(
+                tap(() => {
+                        // in case of real server we get 'expiresIn' from response
+                        // and instead of 300000 we will write '+resData.expireIn * 1000'
+                        // where 'resData.expireIn' is data the we get from server.
+                        // 5 min = 300000 milisec 
+                        // 1 min = 60000 millisec
+                        
+                        // 1 sec = 1000 millisec
+                        //this.setLogoutTimer(60000) // logout aftert 1 min
+                        this.setLogoutTimer(600000) // logout aftert 60 min
+                    }
+                ),
+                map(() => {
+                // 1. here we will emulate server response.
+                //    this is response that we will get from real server.
+                // 2. with real back-end server we will get this response
+                //    (that include token) from server.
+                const authResponseData: AuthResponseData = {
+                    idToken: 'FDGFGGFFHHGJHJKFG34343DFDFGFDHFGFDGSDFSADSAFGFHGJHJKHG',
+                    email: 'md123@gmail.com',
+                    expiresIn: 300, // 300 milliseconds
+                    userId: '10200'
+                };
+
+                const expirationDate = new Date(new Date().getTime() + authResponseData.expiresIn * 1000);
+                // 1. create instance of new user.
+                // 2. we pass data to the 'User' class constaructor.
+                //    this way we can store data.
+                const user = new User(
+                    authResponseData.email,
+                    authResponseData.userId,
+                    authResponseData.idToken,
+                    expirationDate
+                );
+
+                this.handleAuthentication(
+                        authResponseData.idToken,
+                        authResponseData.email,
+                        authResponseData.expiresIn,
+                        authResponseData.userId
+                        );
+                        
+                // return updated response        
+                return user;
+                        
+                }),
+                catchError(this.handleErrorService.handleError)
+                );
+        }
+
+
+
+
+        logout() {
+            this.clearLogoutTimer();
+            // remove data from localStorage
+            localStorage.removeItem('userData');
+
+            console.log('logout method ...');
+            
+            // redirect to '/auth' page
+            this.router.navigate(['/auth']);
+        }
+
+
+
+
+        setLogoutTimer(expirationDuration: number) {
+            this.tokenExpirationTimer = setTimeout(() => {
+               // call logout action 
+               console.log('logout ...');
+               this.store.dispatch(AuthPageActions.Logout()); 
+            }, expirationDuration);
+        }
+
+
+
+
+
+        clearLogoutTimer() {
+            console.log('Inside clearLogoutTimer ...');
+            if (this.tokenExpirationTimer) {
+                clearTimeout(this.tokenExpirationTimer);
+                this.tokenExpirationTimer = null;
+            }
+        }
+
+
+
+
+
+        // register new user
+        signup(email: string, password: string) {
+            // const that declared in environment folder.
+            const apiKey = environment.apiKey;
+            const url = `https://jsonplaceholder.typicode.com/posts?${apiKey}`;
+            return this.http.post<any>(url, 
+                {
+                    email: email,
+                    password: password,
+                    // we need set 'returnSecureToken' to true according to firebase API.
+                    returnSecureToken: true
+                }
+            ).pipe(
+                tap(() => {
+                        // in case of real server we get 'expiresIn' from response
+                        // and instead of 300000 we will write '+resData.expireIn * 1000'
+                        // where 'resData.expireIn' is data the we get from server.
+                        // 5 min = 300000 milisec 
+                        // 1 min = 60000 millisec
+                        // 1 sec = 1000 millisec
+                        //this.setLogoutTimer(60000) // logout aftert 1 min 
+                        this.setLogoutTimer(600000) // logout aftert 60 min
+                    }
+                ),
+                map(() => {
+                // 1. here we will emulate server response.
+                //    this is response that we will get from real server.
+                // 2. with real back-end server we will get this response
+                //    (that include token) from server.
+                const authResponseData: AuthResponseData = {
+                    idToken: 'FDGFGGFFHHGJHJKFG34343DFDFGFDHFGFDGSDFSADDDDDDDDDDDDDD',
+                    email: 'new-signup-user@gmail.com',
+                    expiresIn: 300, // 300 milliseconds
+                    userId: '10111'
+                };
+                
+                
+                const expirationDate = new Date(new Date().getTime() + authResponseData.expiresIn * 1000);
+                // 1. create instance of new user.
+                // 2. we pass data to the 'User' class constaructor.
+                //    this way we can store data.
+                const user = new User(
+                    authResponseData.email,
+                    authResponseData.userId,
+                    authResponseData.idToken,
+                    expirationDate
+                );
+
+
+                this.handleAuthentication(
+                        authResponseData.idToken,
+                        authResponseData.email,
+                        authResponseData.expiresIn,
+                        authResponseData.userId
+                        );
+                        
+                // return updated response        
+                return user;
+                        
+                }),
+                catchError(this.handleErrorService.handleError)
+            );
+        }
+
+
+
+
+        private handleAuthentication(
+            token: string,
+            email: string,
+            expiresIn: number,
+            userId: string
+            ) {
+                const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+                // 1. create instance of new user.
+                // 2. we pass data to the 'User' class constaructor.
+                //    this way we can store data.
+                const user = new User(
+                    email,
+                    userId,
+                    token,
+                    expirationDate
+                );
+        
+                // save data in local storage.   
+                localStorage.setItem('userData', JSON.stringify(user));   
+
+        }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **********************************************************************************
+// *********************** app/auth/state/auth.selectors.ts *************************
+// **********************************************************************************
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { AuthState } from './auth.interface';
+
+export const getAuthFeatureState = createFeatureSelector<AuthState>('auth');
+
+export const getUser = createSelector(
+  getAuthFeatureState,
+  (state) => {
+     return state.user
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ******************** app/auth/state/auth.reducer.ts ********************
+// ************************************************************************
+import { createReducer, on } from "@ngrx/store";
+import { AuthApiActions, AuthPageActions } from "./actions";
+import { AuthState } from "./auth.interface";
+
+//initial State (default value) for users slice
+const initialState: AuthState = {
+    user: null,
+    error: ''
+};
+
+
+// reducer function for auth slice
+export const authReducer = createReducer<AuthState>(
+    initialState,
+    on(
+        AuthApiActions.AuthenticateSuccess, 
+        (state, action): AuthState => {
+            return {
+               ...state,
+               user: action.user,
+               error: ''
+            }
+        } 
+    ),
+    on(
+        AuthPageActions.Logout,
+        (state): AuthState => {
+            return {
+                ...state,
+                user: null,
+                error: ''
+            }
+        }
+    ),
+    on(
+        AuthPageActions.LoginStart,
+        (state): AuthState => {
+            return {
+                ...state,
+                error: ''
+            }
+        }
+    ),
+    on(
+        AuthPageActions.SignupStart,
+        (state): AuthState => {
+            return {
+                ...state,
+                error: ''
+            }
+        }
+    ),
+    on(
+       AuthApiActions.AuthenticateFail,
+       (state, action): AuthState => {
+           return {
+               ...state,
+               error: action.error
+           }
+       }
+    )
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ******************** app/auth/state/auth.interface.ts ******************
+// ************************************************************************
+import { User } from "./auth-user.model";
+
+ // In case user not logged in user will be null.
+ export interface AuthState {
+  user: User | null;
+  error: string 
+}
+
+
+export interface AuthResponseData {
+  idToken: string;
+  email: string;
+  expiresIn: number;
+  userId: string;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ******************** app/auth/state/auth.interceptor.ts ****************
+// ************************************************************************
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class LoginInterceptor implements HttpInterceptor {
+
+  constructor() {}
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    
+
+    // ***************** we can interact with requests ****************
+    const modifiedRequest = request.clone({
+      // you can add new headers to existing headers
+      // we will see this information in our 'request headers' in chrom network tab.
+      // our interceptop will add this header for all outgoing requests,
+      headers: request.headers.append('Auth', 'xyzxyzxyzxyz')
+    });
+    // ***************** we can interact with requests ****************
+
+
+
+    // ***************** we can interact with response ****************
+    // we add pipe if we need do something with response.
+    return next.handle(modifiedRequest);
+    // ***************** we can interact with response ****************
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ************************ app/auth/state/auth.guard.ts ******************
+// ************************************************************************
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { map, Observable, take } from 'rxjs';
+import { State } from 'src/app/state/app.state';
+import { getAuthFeatureState, getUser } from './auth.selectors';
+import { AuthService } from './auth.service';
+
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class AuthGuard implements CanActivate {
+
+  // user not logged in  
+  isAuthenticated: boolean = false;  
+
+  constructor(
+      private authService: AuthService,
+      private store: Store<State>,
+      private router: Router
+  ) {}  
+
+  canActivate(route: ActivatedRouteSnapshot,  state: RouterStateSnapshot ):
+    | boolean
+    | UrlTree
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree> {
+
+
+        this.store.select('auth')
+        .pipe(
+            take(1)
+        )
+        .subscribe(
+            response => {
+                if(response) {
+                    this.isAuthenticated = !!response.user;
+                }    
+            }
+        );
+
+
+        // check if user authenticated    
+        if(this.isAuthenticated) {
+            // in case user logged in and can visit current page.
+            return true;
+        } else {
+            // in case user not logged in and can't visit current page.
+            return this.router.createUrlTree(['/auth']);
+        }    
+
+   
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ************************ app/auth/state/auth.effects.ts ****************
+// ************************************************************************
+import { Injectable } from "@angular/core";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { AuthService } from "./auth.service";
+import { AuthApiActions, AuthPageActions } from "./actions";
+import { map, mergeMap, catchError, of, tap } from "rxjs";
+import { Router } from "@angular/router";
+import { User } from "./auth-user.model";
+
+
+
+@Injectable()
+
+export class AuthEffects {
+    constructor(
+        private actions$: Actions,
+        private authService: AuthService,
+        private router: Router
+    ) {}
+
+
+ 
+    LoginStart$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(AuthPageActions.LoginStart),
+        mergeMap((action) => 
+               // call 'login' method from 'authService' service. 
+               this.authService.login(action.email, action.password).pipe(
+                 map((user) => AuthApiActions.AuthenticateSuccess({user, redirect: true})),
+                 catchError((error) => of(AuthApiActions.AuthenticateFail({ error })))
+               )
+        )
+      );
+    });
+
+
+
+    Logout$ = createEffect(() =>
+        this.actions$.pipe(
+          ofType(AuthPageActions.Logout),
+          tap(() => {
+            // call to 'logout' method from 'authService' service.
+            this.authService.logout();
+          })
+        ),
+      { dispatch: false }
+    );
+
+
+
+
+     // 1. current effect will run when 'AuthenticateSuccess' action
+     //    will be applied. 
+     // 2. we apply 'AuthenticateSuccess' action in 'LoginStart$' effect.
+     AuthRedirect$ = createEffect(() =>
+        this.actions$.pipe(
+          ofType(AuthApiActions.AuthenticateSuccess),
+          tap((action) => {
+             if(action.redirect) {
+               // navigate to home page
+               this.router.navigate(['/']);
+             }
+          })
+        ),
+        { dispatch: false }
+     );     
+
+
+
+
+
+    AuthSignup$ = createEffect(() => {
+        return this.actions$.pipe(
+          ofType(AuthPageActions.SignupStart),
+          mergeMap((action) =>
+            this.authService.signup(action.email, action.password).pipe(
+              map((user) => AuthApiActions.AuthenticateSuccess({ user, redirect: true })),
+              catchError((error) => of(AuthApiActions.AuthenticateFail({ error })))
+            )
+          )
+        );
+    });  
+
+
+
+
+
+
+    AutoLogin$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(AuthPageActions.AutoLogin),
+        tap(() => {
+          console.log('auto login effect test !!!');
+        }),
+         map(() => {
+                  const localStorageData = localStorage.getItem('userData');
+                  if (localStorageData) {
+                    const user: User = JSON.parse(localStorage.getItem('userData') || '{}'); 
+                    const isRedirect = (this.router.url).includes('auth') ? true : false; 
+                    return AuthApiActions.AuthenticateSuccess({ user, redirect: isRedirect });
+                  } else {
+                    return { type: 'USER LOGOUT' };
+                  }
+            }
+         )
+      )
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ********************** app/auth/state/auth-user.model.ts ***************
+// ************************************************************************
+export class User {
+    constructor(
+        public email: string,
+        public id: string,
+        private _token: string,
+        private _tokenExpirationData: Date
+    ) {}
+
+    get token() {
+        // if our token is expired we will retrn 'null'
+        if (!this._tokenExpirationData || new Date() > this._tokenExpirationData) {
+            return null;
+        }
+        // return token in case our token is not expired
+        return this._token;
+    }    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// *********************** app/auth/state/actions/index.ts ****************
+// ************************************************************************
+import * as AuthPageActions from './auth-page.actions';
+import * as AuthApiActions from './auth-api.actions';
+
+export { AuthApiActions, AuthPageActions }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ************** app/auth/state/actions/auth-page.actions.ts *************
+// ************************************************************************
+import { createAction, props } from '@ngrx/store';
+
+
+export const LoginStart = createAction(
+  '[Auth] Login Start',
+  props<{ email: string; password: string }>()
+  );
+  
+
+  export const Logout = createAction(
+    '[Auth] Logout'
+  );
+
+  export const LogoutSuccess = createAction(
+    '[Auth] Logout Success'
+  );
+
+  export const LogoutFail = createAction(
+    '[Auth] Logout Fail'
+  );
+
+
+ export const SignupStart = createAction(
+   '[Auth] Signup Start',
+   props<{ email: string; password: string }>()
+ );
+
+
+ export const AutoLogin = createAction(
+   '[Auth] Auto Login'
+ );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ************** app/auth/state/actions/auth-api.actions.ts *************
+// ************************************************************************
+import {createAction, props } from '@ngrx/store';
+import { User } from '../auth-user.model';
+
+
+export const AuthenticateSuccess = createAction(
+    '[Auth] Login Success',
+    props<{
+        user: User,
+        redirect: boolean
+     }>()
+);
+
+
+export const AuthenticateFail = createAction(
+    '[Auth] Login Fail',
+    props<{ error: string }>()
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

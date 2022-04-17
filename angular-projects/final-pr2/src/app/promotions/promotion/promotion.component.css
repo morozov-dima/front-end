@@ -25,6 +25,7 @@
 .promotions-items img {
     max-height: 100px;
     width: auto;
+    display:block;
 }
 
 

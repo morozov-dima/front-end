@@ -14,8 +14,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginInterceptor } from './auth/state/auth.interceptor';
 import { FooterComponent } from './footer/footer.component';
-
-
+import { MaterialsModule } from './materials/materials.module';
 
 
 
@@ -35,7 +34,8 @@ import { FooterComponent } from './footer/footer.component';
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialsModule
   ],
   providers: [
     {

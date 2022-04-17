@@ -1,17 +1,20 @@
 import {createAction, props } from '@ngrx/store';
 import { User } from '../auth-user.model';
-import { AuthResponseData } from '../auth.interface';
 
 
 export const AuthenticateSuccess = createAction(
     '[Auth] Login Success',
-    props<{user: User }>()
+    props<{
+        user: User,
+        redirect: boolean
+     }>()
 );
 
 
 export const AuthenticateFail = createAction(
-    '[Auth] Login Success',
+    '[Auth] Login Fail',
     props<{ error: string }>()
 );
+
 
 

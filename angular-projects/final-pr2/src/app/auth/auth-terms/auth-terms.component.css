@@ -6,3 +6,7 @@
 table {
     width: 100%;
   }
+
+.mat-table-content {
+   border:1px solid red;
+}
