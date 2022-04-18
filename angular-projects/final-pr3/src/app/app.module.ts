@@ -14,18 +14,23 @@ import { environment } from '../environments/environment';
 import * as fromApp from './state/app.state';
 import { PromotionsEffects } from './promotions/state/promotions.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([PromotionsEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })

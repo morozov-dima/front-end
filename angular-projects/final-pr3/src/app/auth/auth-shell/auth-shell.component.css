@@ -1,0 +1,73 @@
+.auth {
+    width: 100%;
+}
+
+.auth-content {
+    flex-direction: row;
+    justify-content: center;
+    display: flex;
+    padding: 20px;
+}
+
+.auth-content-row {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    padding:10px;
+}
+
+.auth-content-row input {
+    height: 30px;
+    width: 200px;
+    border:none;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.auth-content-row button {
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.auth-content-row h3 {
+    margin:0px;
+}
+
+
+.formLabel {
+    width: 100px;
+    padding:10px 0px 10px 0px;
+}
+.authForm {
+    background-color: rgb(201 201 201);
+    padding:20px;
+}
+
+
+
+
+
+input.ng-invalid.ng-touched {
+    border:1px solid red;
+}
+
+input.ng-valid.ng-touched {
+    border:1px solid green;
+}
+
+.error-field {
+    color:red;
+    font-size: 12px;
+    padding:10px 0px 10px 0px;
+}
+
+
+
+
+
+@media screen and (min-width: 576px) {
+    .authForm {
+        border-radius: 8px;
+    } 
+}
