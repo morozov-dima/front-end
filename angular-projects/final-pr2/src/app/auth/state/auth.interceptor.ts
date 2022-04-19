@@ -2,34 +2,50 @@ import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpParams
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { exhaustMap, map, take } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../state/app.reducer';
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(
+    private store: Store<fromApp.State>
+  ) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
     
+    return this.store.select('auth').pipe(
+      take(1),
+      map(authState => {
+        return authState.user;
+      }),
+      exhaustMap(user => {
+        if (!user) {
+          return next.handle(request);
+        }
 
-    // ***************** we can interact with requests ****************
-    const modifiedRequest = request.clone({
-      // you can add new headers to existing headers
-      // we will see this information in our 'request headers' in chrom network tab.
-      // our interceptop will add this header for all outgoing requests,
-      headers: request.headers.append('Auth', 'xyzxyzxyzxyz')
-    });
-    // ***************** we can interact with requests ****************
+        let userToken: any;
+        userToken = user?.token;
 
+        const modifiedReq = request.clone({
+          params: new HttpParams().set('auth', userToken), // add params to request URL
 
+          // you can add new headers to existing headers
+          // we will see this information in our 'request headers' in chrom network tab.
+          // our interceptop will add this header for all outgoing requests,
+          headers: request.headers.append('Auth', 'xyzxyzxyzxyznewwwwwwwwww') // add headers to request URL
+        });
 
-    // ***************** we can interact with response ****************
-    // we add pipe if we need do something with response.
-    return next.handle(modifiedRequest);
-    // ***************** we can interact with response ****************
+        // we add pipe if we need do something with response.
+        return next.handle(modifiedReq);
+
+      })
+    );
+
     
   }
 }

@@ -21,7 +21,7 @@ export class UsersShellComponent implements OnInit {
     ngOnInit(): void {
         this.usersService.getUsers().subscribe(
             (usersResponse) => {
-                //console.log(usersResponse);
+                console.log(usersResponse);
                 
             }
         );

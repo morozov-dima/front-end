@@ -6,7 +6,7 @@
     flex-direction: row;
     justify-content: center;
     display: flex;
-    padding: 20px;
+    padding: 0px;
 }
 
 .auth-content-row {
@@ -18,7 +18,7 @@
 
 .auth-content-row input {
     height: 30px;
-    width: 200px;
+    width: 100%;
     border:none;
     font-size: 16px;
     padding: 5px;
@@ -70,4 +70,10 @@ input.ng-valid.ng-touched {
     .authForm {
         border-radius: 8px;
     } 
+    .auth-content-row input {
+        width: 200px;
+    }
+    .auth-content {
+        padding: 20px;
+    }
 }

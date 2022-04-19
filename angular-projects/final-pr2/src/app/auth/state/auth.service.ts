@@ -48,7 +48,7 @@ export class AuthService {
         login(email: string, password: string) {
             // const that declared in environment folder.
             const apiKey = environment.apiKey;
-            const url = `https://jsonplaceholder.typicode.com/posts?${apiKey}`;
+            const url = `https://jsonplaceholder.typicode.com/posts?${apiKey}&a=1`;
             return this.http.post<any>(url, 
                 {
                     email: email,
@@ -65,8 +65,8 @@ export class AuthService {
                         // 1 min = 60000 millisec
                         
                         // 1 sec = 1000 millisec
-                        //this.setLogoutTimer(60000) // logout aftert 1 min
-                        this.setLogoutTimer(600000) // logout aftert 60 min
+                        this.setLogoutTimer(600000) 
+                        //this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -91,6 +91,7 @@ export class AuthService {
                     authResponseData.idToken,
                     expirationDate
                 );
+
 
                 this.handleAuthentication(
                         authResponseData.idToken,
@@ -193,8 +194,8 @@ export class AuthService {
                         // 5 min = 300000 milisec 
                         // 1 min = 60000 millisec
                         // 1 sec = 1000 millisec
-                        //this.setLogoutTimer(60000) // logout aftert 1 min 
-                        this.setLogoutTimer(600000) // logout aftert 60 min
+                        this.setLogoutTimer(600000) // logout aftert 1 min 
+                        //this.setLogoutTimer(600000) // logout aftert 60 min
                     }
                 ),
                 map(() => {
@@ -250,6 +251,7 @@ export class AuthService {
             expiresIn: number,
             userId: string
             ) {
+                
                 const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
                 // 1. create instance of new user.
                 // 2. we pass data to the 'User' class constaructor.
@@ -260,14 +262,11 @@ export class AuthService {
                     token,
                     expirationDate
                 );
-        
+
                 // save data in local storage.   
                 localStorage.setItem('userData', JSON.stringify(user));   
 
         }
-
-
-  
 
 
 }

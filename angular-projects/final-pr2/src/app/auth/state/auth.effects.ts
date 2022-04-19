@@ -109,10 +109,30 @@ export class AuthEffects {
         }),
          map(() => {
                   const localStorageData = localStorage.getItem('userData');
+                     
                   if (localStorageData) {
-                    const user: User = JSON.parse(localStorage.getItem('userData') || '{}'); 
+                    
+                    const userData: {
+                      email: string;
+                      id: string;
+                      _token: string;
+                      _tokenExpirationDate: string;
+                    } = JSON.parse(localStorage.getItem('userData') || '{}');
+       
+
+                    const loadedUser = new User(
+                      userData.email,
+                      userData.id,
+                      userData._token,
+                      new Date(userData._tokenExpirationDate)
+                    );
+
+
+                    this.authService.setLogoutTimer(600000);
+                    
                     const isRedirect = (this.router.url).includes('auth') ? true : false; 
-                    return AuthApiActions.AuthenticateSuccess({ user, redirect: isRedirect });
+                    
+                    return AuthApiActions.AuthenticateSuccess({ user: loadedUser, redirect: isRedirect });
                   } else {
                     return { type: 'USER LOGOUT' };
                   }

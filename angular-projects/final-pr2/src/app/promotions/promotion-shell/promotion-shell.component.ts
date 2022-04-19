@@ -24,6 +24,14 @@ export class PromotionShellComponent implements OnInit {
        this.store.dispatch(PromotionPageActions.loadPromotions());
         this.promotions$ = this.store.select(getPromotions);
 
+
+
+
+
+
+
+
+
      }
 
 }

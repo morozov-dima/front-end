@@ -21,6 +21,8 @@ import * as fromApp from './state/app.reducer';
 import { AuthEffects } from './auth/state/auth.effects';
 import { PromotionEffects } from './promotions/state/promotions.effects';
 import { UserEffects } from './users/state/users.effects';
+import { WelcomeLoginComponent } from './welcome/welcome-login/welcome-login.component';
+import { WelcomeLogoutComponent } from './welcome/welcome-logout/welcome-logout.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { UserEffects } from './users/state/users.effects';
     WelcomeComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    WelcomeLoginComponent,
+    WelcomeLogoutComponent
   ],
   imports: [
     BrowserModule,

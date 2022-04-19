@@ -4,11 +4,10 @@
              <li>
                 <a [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" >Home</a>
             </li>
-             <li>
+             <li *ngIf="isAuthenticated">
                 <a [routerLink]="['/promotions']" [routerLinkActive]="['active']" >Promotions</a>
             </li>
             
-            <!-- show this pagr only for logged in users -->
             <li *ngIf="isAuthenticated">
                 <a [routerLink]="['/users']" [routerLinkActive]="['active']" >Users</a>
             </li>

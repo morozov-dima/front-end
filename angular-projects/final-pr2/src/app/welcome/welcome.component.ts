@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
-import { Posts } from "../shared/general-data/general-data.interface";
-import { GeneralDataService } from "../shared/general-data/general-data.service";
+import { Component, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { getAuthFeatureState } from "../auth/state/auth.selectors";
+import { State } from "../state/app.reducer";
 
 @Component({
     selector: 'app-welcome',
@@ -9,36 +9,23 @@ import { GeneralDataService } from "../shared/general-data/general-data.service"
     styleUrls: ['welcome.component.css']
 })
 
-export class WelcomeComponent implements OnInit, OnDestroy {
-    longText: string = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
-    from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-    originally bred for hunting.`;
-    posts: Posts[] = [];
-    postsSubscription!: Subscription;
-    showError: boolean = false;
-
+export class WelcomeComponent implements OnInit {
     constructor(
-        private generalDataService: GeneralDataService
+        private store: Store<State>
     ) {}
 
+    isAuthenticated: boolean = false;
 
-        ngOnInit(): void {
-            this.postsSubscription = this.generalDataService.getPosts().subscribe({
-                next: response => {
-                    this.posts = response;
-                },
-                error: () => {
-                   this.showError = true;
-                },
-                complete: () => {
-                    console.log('get posts completed !!!');
-                }
-            });
-        }
+    ngOnInit(): void {
+        this.store.select(getAuthFeatureState).subscribe(
+            (response) => {
+                // this way we can check of user logged in/ not logged in
+                this.isAuthenticated = !!response.user;
+            }
+        );
+    }
 
-        ngOnDestroy(): void {
-            this.postsSubscription.unsubscribe();
-        }
+
 
 
 }

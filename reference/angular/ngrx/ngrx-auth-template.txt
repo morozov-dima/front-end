@@ -38,6 +38,8 @@ import * as fromApp from './state/app.reducer';
 import { AuthEffects } from './auth/state/auth.effects';
 import { PromotionEffects } from './promotions/state/promotions.effects';
 import { UserEffects } from './users/state/users.effects';
+import { WelcomeLoginComponent } from './welcome/welcome-login/welcome-login.component';
+import { WelcomeLogoutComponent } from './welcome/welcome-logout/welcome-logout.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { UserEffects } from './users/state/users.effects';
     WelcomeComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    WelcomeLoginComponent,
+    WelcomeLogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -130,8 +134,6 @@ export class AppComponent implements OnInit {
 
 
 
-
-
 // ********************************************************
 // ****************** app.component.html ******************
 // ********************************************************
@@ -202,6 +204,130 @@ export const environment = {
     justify-content: center;
     margin-top:50px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *******************************************************
+// *********** app/header/header.component.ts  ***********
+// *******************************************************
+
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { map, Observable, Subscription } from "rxjs";
+import { AuthPageActions } from "../auth/state/actions";
+
+
+import { getUser, getAuthFeatureState } from "../auth/state/auth.selectors";
+import { AuthService } from "../auth/state/auth.service";
+import { State } from "../state/app.reducer";
+
+@Component({
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css']
+})
+
+export class HeaderComponent implements OnInit {
+    constructor(
+            private store: Store<State>,
+            private authService: AuthService,
+            private router: Router) {}
+
+
+    isAuthenticated: boolean = false;
+
+    ngOnInit(): void {
+        
+
+        // ####### option 1: ##################################
+        // ####### this is solution with out selectors ######## 
+        // this.store.select('auth')
+        // .subscribe(userData => {
+        //    if(userData) {
+        //        this.isAuthenticated = !!userData.user;
+        //    }
+        // });
+        // #################################################### 
+
+     
+
+        // ####### option 2: ###############################################
+        // ####### this is solution with 'FeatureState' selector ###########
+        this.store.select(getAuthFeatureState).subscribe(
+            (userResponse) => {
+                if (userResponse) {
+                    this.isAuthenticated = !!userResponse.user;
+                }
+            }
+        );
+        // #################################################################    
+
+    }
+
+
+    onLogout() {
+          this.store.dispatch(AuthPageActions.Logout());
+         // this.authService.logout();
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// *******************************************************
+// *********** app/header/header.component.html  ***********
+// *******************************************************
+<section class="header">
+    <div class="header-left">
+        <ul>
+             <li>
+                <a [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" >Home</a>
+            </li>
+             <li *ngIf="isAuthenticated">
+                <a [routerLink]="['/promotions']" [routerLinkActive]="['active']" >Promotions</a>
+            </li>
+            
+            <li *ngIf="isAuthenticated">
+                <a [routerLink]="['/users']" [routerLinkActive]="['active']" >Users</a>
+            </li>
+        </ul>
+    </div>
+    <div class="header-right">
+        <ul>
+            <li>
+                <a *ngIf="!isAuthenticated" [routerLink]="['/auth']" >Auth</a>  
+            </li>
+            <li>
+                <a class="logout-link" *ngIf="isAuthenticated" (click)="onLogout()" >Logout</a>    
+            </li>
+        </ul>
+    </div>
+</section>
+
+
+
+
 
 
 
@@ -1093,39 +1219,53 @@ import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpParams
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { exhaustMap, map, take } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../state/app.reducer';
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(
+    private store: Store<fromApp.State>
+  ) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
     
+    return this.store.select('auth').pipe(
+      take(1),
+      map(authState => {
+        return authState.user;
+      }),
+      exhaustMap(user => {
+        if (!user) {
+          return next.handle(request);
+        }
 
-    // ***************** we can interact with requests ****************
-    const modifiedRequest = request.clone({
-      // you can add new headers to existing headers
-      // we will see this information in our 'request headers' in chrom network tab.
-      // our interceptop will add this header for all outgoing requests,
-      headers: request.headers.append('Auth', 'xyzxyzxyzxyz')
-    });
-    // ***************** we can interact with requests ****************
+        let userToken: any;
+        userToken = user?.token;
 
+        const modifiedReq = request.clone({
+          params: new HttpParams().set('auth', userToken), // add params to request URL
 
+          // you can add new headers to existing headers
+          // we will see this information in our 'request headers' in chrom network tab.
+          // our interceptop will add this header for all outgoing requests,
+          headers: request.headers.append('Auth', 'xyzxyzxyzxyznewwwwwwwwww') // add headers to request URL
+        });
 
-    // ***************** we can interact with response ****************
-    // we add pipe if we need do something with response.
-    return next.handle(modifiedRequest);
-    // ***************** we can interact with response ****************
+        // we add pipe if we need do something with response.
+        return next.handle(modifiedReq);
+
+      })
+    );
+
     
   }
 }
-
-
 
 
 
@@ -1317,10 +1457,29 @@ export class AuthEffects {
         }),
          map(() => {
                   const localStorageData = localStorage.getItem('userData');
+                  console.log(localStorageData);
+                     
                   if (localStorageData) {
-                    const user: User = JSON.parse(localStorage.getItem('userData') || '{}'); 
+                    
+                    const userData: {
+                      email: string;
+                      id: string;
+                      _token: string;
+                      _tokenExpirationDate: string;
+                    } = JSON.parse(localStorage.getItem('userData') || '{}');
+
+                    const loadedUser = new User(
+                      userData.email,
+                      userData.id,
+                      userData._token,
+                      new Date(userData._tokenExpirationDate)
+                    );
+
+                    this.authService.setLogoutTimer(600000);
+                    
                     const isRedirect = (this.router.url).includes('auth') ? true : false; 
-                    return AuthApiActions.AuthenticateSuccess({ user, redirect: isRedirect });
+                    
+                    return AuthApiActions.AuthenticateSuccess({ user: loadedUser, redirect: isRedirect });
                   } else {
                     return { type: 'USER LOGOUT' };
                   }

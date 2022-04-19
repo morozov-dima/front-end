@@ -14,4 +14,9 @@ export class User {
         // return token in case our token is not expired
         return this._token;
     }    
+
+
+    get tokenExpirationData() {
+        return this._tokenExpirationData;
+    }
 }

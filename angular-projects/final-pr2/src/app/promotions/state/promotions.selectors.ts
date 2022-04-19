@@ -8,7 +8,7 @@ export const getPromotions = createSelector(
     getPromotionFeatureState,
     (state) => {
        // console.log(state);
-        console.log(state.promotions);
+       // console.log(state.promotions);
         
         return state.promotions
     }
