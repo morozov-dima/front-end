@@ -1,0 +1,132 @@
+<div class="user-desc" *ngIf="showUserDetails">
+    <div class="user-desc-header">
+        <h3>Edit User: {{currentUser.username}}</h3>
+    </div>
+
+    <form 
+        [formGroup]="userForm"
+        (ngSubmit)="onSaveUser(currentUser)" >
+    <div class="user-desc-content">
+
+
+
+        <!-- email begin -->
+        <div class="user-desc-content-row">
+            <div class="user-desc-content-name">
+                <span>User Email</span>
+            </div>
+            <div class="user-desc-content-input">
+                <input
+                 type="text"
+                 formControlName="emailInput" >
+                 <span 
+                    class="error-block"
+                    *ngIf="!emailInput.valid && emailInput.touched" >
+                     Please enter a valid email !
+                 </span>
+            </div>
+        </div>
+        <!-- email end -->
+
+
+
+        <!-- phone begin -->
+        <div class="user-desc-content-row">
+            <div class="user-desc-content-name">
+                <span>User Phone</span>
+            </div>
+            <div class="user-desc-content-input">
+                <input 
+                    type="text"
+                    formControlName="phoneInput" >
+                <span 
+                    *ngIf="!phoneInput.valid && phoneInput.touched"
+                    class="error-block" >
+                    please enter a valid user phone !
+                </span>    
+            </div>
+        </div>
+        <!-- phone end -->
+
+
+
+        <!-- website begin -->
+        <div class="user-desc-content-row">
+            <div class="user-desc-content-name">
+                <span>User Website</span>
+            </div>
+            <div class="user-desc-content-input">
+                <input 
+                    type="text"
+                    formControlName="websiteInput" >
+                    <span 
+                        *ngIf="!websiteInput.valid && websiteInput.touched"
+                        class="error-block" >
+                        please enter a valid website !
+                    </span>
+            </div>
+        </div>
+        <!-- website end -->
+
+
+
+
+        <!-- network begin -->
+        <div class="user-desc-content-row">
+            <div class="user-desc-content-name">
+                <span>User Network</span>
+            </div>
+            <div class="user-desc-content-input">
+                <input 
+                    type="text"
+                    formControlName="networkInput" >
+                    <span 
+                        *ngIf="!networkInput.valid && networkInput.touched"
+                        class="error-block" >
+                        please enter a valid network !
+                    </span>
+            </div>
+        </div>
+        <!-- network end -->
+
+
+
+        <!-- street begin -->
+        <div class="user-desc-content-row">
+            <div class="user-desc-content-name">
+                <span>User Address (Street)</span>
+            </div>
+            <div class="user-desc-content-input">
+                <textarea 
+                    formControlName="streetInput"
+                    name="streetInput" id="" cols="30" rows="10"></textarea>
+                    <span
+                        *ngIf="!streetInput.valid && streetInput.touched" 
+                        class="error-block" >
+                        please enter a valid street !
+                    </span>
+            </div>
+        </div>
+        <!-- street end -->
+
+
+
+    </div>
+    <div class="user-desc-footer">
+        <div class="buttons">
+            <button type="submit" mat-raised-button color="primary">Save</button>
+            <button type="button" (click)="onCancelEdit(currentUser)" mat-stroked-button>Cancel</button>
+            <button type="button" (click)="onDeleteUser(currentUser)" mat-raised-button color="warn">Delete</button>
+        </div>
+    </div>
+    </form>
+
+
+</div>
+
+
+<div class="choose-user" *ngIf="!showUserDetails">
+    <h3>Choose your user</h3>
+</div>
+
+

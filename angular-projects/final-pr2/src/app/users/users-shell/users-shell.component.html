@@ -1,12 +1,23 @@
-<section class="users-shell">
-<div class="users-shell-content">
-        <div class="user-list">
-            <div class="user-list-content">
-    ffffffffffffff
-            </div>
-        </div>
-        <div class="user-description">
-    ddddddddddddd
-        </div>
-</div>
+<section class="users">
+    <div class="users-content">
+
+        <mat-card class="users-list">
+            <app-users-list
+             (currentUserEvent)="getCurrentUser($event)"
+             (dispatchEmailEvent)="toggleEmailInUsersList()"
+             [users]="users"
+             [displayEmail]="displayEmail$ | async"
+             ></app-users-list> 
+        </mat-card>
+
+        <mat-card class="users-details">
+           <app-users-description
+
+           ></app-users-description>
+        </mat-card>
+        
+    </div>
 </section>
+
+
+

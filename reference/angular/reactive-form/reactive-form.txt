@@ -17,7 +17,7 @@
                 type="text" 
                 class="form-control" 
                 name="fullNameInput"
-                formControlName="fullNameInput"
+                formControlName="fullNameInput" 
                 id="fullNameInput" >
                 <span 
                   *ngIf="!fullNameInput.valid && fullNameInput.touched"

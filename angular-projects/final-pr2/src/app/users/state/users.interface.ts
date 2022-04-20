@@ -1,5 +1,7 @@
 export interface UserState {
     users: User[],
+    displayEmail: boolean,
+    currentUserId: number | null;
     error: string;
 }
 
@@ -26,5 +28,5 @@ export interface User {
         catchPhrase: string;
         bs: string;
     }
-    network: string;
+    network?: string;
 }

@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit } from "@angular/core";
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { map, Observable, Subscription } from "rxjs";
@@ -15,12 +15,14 @@ import { State } from "../state/app.reducer";
     styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
     constructor(
             private store: Store<State>,
             private authService: AuthService,
             private router: Router) {}
+
     isAuthenticated: boolean = false;
+    userDataSubscription!: Subscription;
 
     ngOnInit(): void {
         
@@ -39,7 +41,7 @@ export class HeaderComponent implements OnInit {
 
         // ####### option 2: ###############################################
         // ####### this is solution with 'FeatureState' selector ###########
-        this.store.select(getAuthFeatureState).subscribe(
+        this.userDataSubscription = this.store.select(getAuthFeatureState).subscribe(
             (userResponse) => {
                 if (userResponse) {
                     this.isAuthenticated = !!userResponse.user;
@@ -54,6 +56,9 @@ export class HeaderComponent implements OnInit {
     }
 
 
+    ngOnDestroy(): void {
+        this.userDataSubscription.unsubscribe();
+    }
 
 
     onLogout() {

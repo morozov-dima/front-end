@@ -34,5 +34,37 @@ export class UsersService {
         );
     }
 
+
+
+
+
+
+    updateUser(currentUser: User) {
+       const url = `https://jsonplaceholder.typicode.com/users/${currentUser.id}/?_limit5`;
+       const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json'
+            })
+        };
+        // we use 'put' method when we need update some data in server.
+        return this.http.put<User>(url, currentUser, httpOptions)
+            .pipe(
+                map((responseData) => {
+                    console.log(responseData);
+                    responseData.network = 'best games updated'
+                    return responseData;
+                }),
+                catchError(this.handleErrorService.handleError)
+            )
+    }
+
+
+
+
+
+
+    
+
+
 }
 

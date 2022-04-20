@@ -23,6 +23,7 @@ import { PromotionEffects } from './promotions/state/promotions.effects';
 import { UserEffects } from './users/state/users.effects';
 import { WelcomeLoginComponent } from './welcome/welcome-login/welcome-login.component';
 import { WelcomeLogoutComponent } from './welcome/welcome-logout/welcome-logout.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { WelcomeLogoutComponent } from './welcome/welcome-logout/welcome-logout.
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),

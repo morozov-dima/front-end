@@ -1,7 +1,10 @@
+import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
+import { ReactiveFormsModule } from "@angular/forms";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
+import { MaterialsModule } from "../materials/materials.module";
 import { UserEffects } from "./state/users.effects";
 import { userReducer } from "./state/users.reducer";
 import { UsersDescriptionComponent } from "./users-description/users-description.component";
@@ -18,6 +21,9 @@ import { UsersRoutingModule } from "./users.routing.module";
     imports: [
         UsersRoutingModule,
         HttpClientModule,
+        CommonModule,
+        MaterialsModule,
+        ReactiveFormsModule,
         StoreModule.forFeature('users', userReducer),
         EffectsModule.forFeature([UserEffects])
     ],

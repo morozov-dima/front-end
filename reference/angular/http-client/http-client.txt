@@ -136,8 +136,9 @@ export class AppModule { }
 
 
 
-
-// ################## Example 2: #####################
+// ###############################################################
+// ######################### Example 2: ##########################
+// ###############################################################
 // ************ data.model.ts *************
 export interface UsersModel {
     id: number;
@@ -327,8 +328,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
 
-
-// ################## Example 3: #####################
+// #################################################################
+// ########################## Example 3: ###########################
+// #################################################################
 // ************ products.service.ts *************
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
@@ -658,8 +660,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
 
-
-// ################## Example 5: #####################
+// ###############################################################
+// ######################### Example 5: ##########################
+// ###############################################################
 // ************** users.service.ts ***************
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -742,7 +745,7 @@ export class UsersShellComponent implements OnInit {
 
 
 
-// ################## Example 5: #####################
+// ################## Example 6: #####################
 // ************ user-data.service.ts *************
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';

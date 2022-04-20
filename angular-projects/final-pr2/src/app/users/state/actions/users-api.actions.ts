@@ -10,3 +10,13 @@ export const loadUsersFailure = createAction(
   '[Users Page] Load Failure',
   props<{ error: string }>()
 );
+
+export const updateCurrentUserSuccess = createAction(
+  '[Users Page] Update User Success',
+  props<{ currentUser: User }>()
+);
+
+export const updateCurrentUserFailure = createAction(
+  '[Users Page] Update User Failure',
+  props<{ error: string }>()
+);

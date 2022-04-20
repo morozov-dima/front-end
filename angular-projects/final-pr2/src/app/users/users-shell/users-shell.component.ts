@@ -1,8 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
+import { Observable, Subscription } from "rxjs";
 import { State } from "src/app/state/app.reducer";
 import { UserPageActions } from "../state/actions";
-import { UsersService } from "../state/users.service";
+import { User } from "../state/users.interface";
+import { getUsers, toggleEmail } from "../state/users.selectors";
 
 @Component({
     selector: 'app-users-shell',
@@ -10,27 +12,49 @@ import { UsersService } from "../state/users.service";
     styleUrls: ['./users-shell.component.css']
 })
 
-export class UsersShellComponent implements OnInit {
-
+export class UsersShellComponent implements OnInit, OnDestroy {
+    users: User[] = [];
+    usersSubscription!: Subscription;
+    displayEmail$!: Observable<boolean>;
 
 
     constructor(
-        private usersService: UsersService, 
         private store: Store<State> ) {}
 
+
+
     ngOnInit(): void {
-        this.usersService.getUsers().subscribe(
-            (usersResponse) => {
-                console.log(usersResponse);
-                
-            }
-        );
+       // get users from back-end
+       this.store.dispatch(UserPageActions.loadUsers());   
+  
+       // get users from sotre
+       this.usersSubscription = this.store.select(getUsers)
+       .subscribe( usersResponse => this.users = usersResponse );
 
 
-         this.store.dispatch(UserPageActions.loadUsers());   
+        // get 'toggleEmail' boolean value from store
+        this.displayEmail$ = this.store.select(toggleEmail);
+    }
 
 
 
+
+    getCurrentUser(currentUser: User) {
+        // update store with current (selected) user
+        this.store.dispatch(UserPageActions.setCurrentUser({userId: currentUser.id}));
+    }
+
+
+
+
+    toggleEmailInUsersList() {
+        this.store.dispatch(UserPageActions.toggleEmail());
+    }
+
+    
+
+    ngOnDestroy(): void {
+        this.usersSubscription.unsubscribe();
     }
 
 }

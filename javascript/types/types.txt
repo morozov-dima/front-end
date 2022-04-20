@@ -1,0 +1,122 @@
+
+
+// **************************************************************
+// *************************** Types ****************************
+// **************************************************************
+// Example 1
+// null, undefined, boolean, number, string, object, symbol
+
+console.log(typeof 0); // number
+console.log(typeof true); // boolean
+console.log(typeof 'JavaScript'); // string
+console.log(typeof undefined); // undefined
+console.log(typeof Math); // object
+console.log(typeof Symbol('JS')); // symbol
+
+
+
+// result will be 'object' (this is javascript issue)
+// because it should be of type 'null.'
+// this is not correct behavior of javascript typeof operator.
+console.log(typeof null); 
+
+
+
+// result will be 'function', this is javascript issue)
+// because we have no type 'function' and functions are objects.
+console.log(typeof function() {});
+
+
+console.log(NaN); // number
+console.log(undefined * 1); // NaN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************************
+// ************************ Boolean class ***********************
+// **************************************************************
+// Values that return false : '', 0, null, undefined, NaN, false
+// Example 1
+let language = 'JavaScript';
+if (language) {
+	console.log('The best language is: ', language);
+}
+
+
+// with global class 'Boolean' we can check if our value is true/false
+console.log(Boolean('')); // false
+console.log(Boolean('Hello')); // true
+console.log(Boolean(' ')); // true
+console.log(Boolean('0')); // true
+console.log(Boolean(0)); // false
+console.log(Boolean(null)); // false
+console.log(Boolean([])); // true !!!
+console.log(Boolean({})) // true !!!
+console.log(Boolean(function() {})) // true !!!
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************** 
+// ********************* string and numbers *********************
+// **************************************************************
+console.log(1 + '2'); // 12
+console.log('' + 1 + 0); //10 
+console.log('' - 1 + 0); // -1
+console.log('3' * '8'); // 24
+console.log(4 + 10 + 'px'); // 14px
+console.log('px' + 5 + 10); // px510
+console.log('42' - 40); // 2
+console.log('42px' - 2); // NaN
+console.log(null + 2); // 2 (null converted to 0)
+console.log(undefined + 42) // NaN (undefined can't be converted to number)
+
+
+
+
+
+
+
+
+
+// ************************************************************** 
+// ************************ == vs === ***************************
+// **************************************************************
+1. if we use '==' JS will try convert types.
+2. if we use '===' JS will not try convert types.
+
+// in this example JS will try convert different types to one type.
+console.log(2 == '2'); // true
+
+
+console.log(2 === '2'); // false
+console.log(undefined == null); // true
+console.log(undefined === null); //false
+
+// '0' will converted to false  
+// false will converted to 0
+console.log('0' == false); // true
+
+console.log('0' == 0); // true
+console.log(0 == 0); // true
