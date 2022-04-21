@@ -18,10 +18,10 @@
             <div class="user-desc-content-input">
                 <input
                  type="text"
-                 formControlName="emailInput" >
+                 formControlName="email" >
                  <span 
                     class="error-block"
-                    *ngIf="!emailInput.valid && emailInput.touched" >
+                    *ngIf="!email.valid && email.touched" >
                      Please enter a valid email !
                  </span>
             </div>
@@ -38,9 +38,9 @@
             <div class="user-desc-content-input">
                 <input 
                     type="text"
-                    formControlName="phoneInput" >
+                    formControlName="phone" >
                 <span 
-                    *ngIf="!phoneInput.valid && phoneInput.touched"
+                    *ngIf="!phone.valid && phone.touched"
                     class="error-block" >
                     please enter a valid user phone !
                 </span>    
@@ -58,9 +58,9 @@
             <div class="user-desc-content-input">
                 <input 
                     type="text"
-                    formControlName="websiteInput" >
+                    formControlName="website" >
                     <span 
-                        *ngIf="!websiteInput.valid && websiteInput.touched"
+                        *ngIf="!website.valid && website.touched"
                         class="error-block" >
                         please enter a valid website !
                     </span>
@@ -79,9 +79,9 @@
             <div class="user-desc-content-input">
                 <input 
                     type="text"
-                    formControlName="networkInput" >
+                    formControlName="network" >
                     <span 
-                        *ngIf="!networkInput.valid && networkInput.touched"
+                        *ngIf="!network.valid && network.touched"
                         class="error-block" >
                         please enter a valid network !
                     </span>
@@ -98,10 +98,10 @@
             </div>
             <div class="user-desc-content-input">
                 <textarea 
-                    formControlName="streetInput"
-                    name="streetInput" id="" cols="30" rows="10"></textarea>
+                    formControlName="street"
+                    name="street" id="" cols="30" rows="10"></textarea>
                     <span
-                        *ngIf="!streetInput.valid && streetInput.touched" 
+                        *ngIf="!street.valid && street.touched" 
                         class="error-block" >
                         please enter a valid street !
                     </span>
@@ -114,8 +114,10 @@
     </div>
     <div class="user-desc-footer">
         <div class="buttons">
-            <button type="submit" mat-raised-button color="primary">Save</button>
-            <button type="button" (click)="onCancelEdit(currentUser)" mat-stroked-button>Cancel</button>
+            <button 
+                type="submit" 
+                [disabled]="!userForm.valid || !userForm.dirty"
+                mat-raised-button color="primary" >Save</button>
             <button type="button" (click)="onDeleteUser(currentUser)" mat-raised-button color="warn">Delete</button>
         </div>
     </div>

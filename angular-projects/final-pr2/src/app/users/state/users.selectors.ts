@@ -1,5 +1,6 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { UserState } from '../state/users.interface';
+import { map } from 'rxjs';
 
 const getUserFeatureState = createFeatureSelector<UserState>('users');
 
@@ -17,6 +18,7 @@ export const getCurrentUserId = createSelector(
     getUserFeatureState,
     (state) => state.currentUserId
 );
+
 
 
 export const getCurrentUser = createSelector(

@@ -59,6 +59,9 @@ export const userReducer = createReducer<UserState>(
                 user => action.currentUser.id === user.id ? action.currentUser : user 
             );
 
+            console.log(updatedUsers);
+            
+
             return {
                 ...state,
                 users: updatedUsers,
@@ -75,7 +78,58 @@ export const userReducer = createReducer<UserState>(
                 error: action.error
             }
         }   
-    ) 
+    ),
+    on(
+        UserApiActions.deleteCurrentUserSuccess,
+        (state, action): UserState =>  {
+            return {
+                ...state,
+                users: state.users.filter(user => user.id !== action.userId),
+                currentUserId: null,
+                error: ''
+            }
+        }
+    ),
+    on(
+        UserApiActions.deleteCurrentUserFailure,
+        (state, action): UserState => {
+            return {
+                ...state,
+                error: action.error
+            }
+        }
+    ),
+    on(
+        UserPageActions.initializeCurrentUser,
+        (state): UserState => {
+            return {
+                ...state,
+                currentUserId: 0
+            }
+        }
+    ),
+    // After a create, the currentProduct is the new product.
+    on(
+        UserApiActions.createUserSuccess,
+        (state, action): UserState => {
+            return {
+                ...state,
+                // add new user to the end of rest users.
+                users: [...state.users, action.user], 
+                currentUserId: action.user.id,
+                error: ''
+            }
+        }
+    ),
+    on(
+        UserApiActions.createUserFailure,
+        (state, action): UserState => {
+            return {
+                ...state,
+                error: action.error
+            }
+        }
+    )
 
 
 

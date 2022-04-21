@@ -4,7 +4,7 @@ import { Observable, Subscription } from "rxjs";
 import { State } from "src/app/state/app.reducer";
 import { UserPageActions } from "../state/actions";
 import { User } from "../state/users.interface";
-import { getUsers, toggleEmail } from "../state/users.selectors";
+import { getCurrentUser, getUsers, toggleEmail } from "../state/users.selectors";
 
 @Component({
     selector: 'app-users-shell',
@@ -16,7 +16,7 @@ export class UsersShellComponent implements OnInit, OnDestroy {
     users: User[] = [];
     usersSubscription!: Subscription;
     displayEmail$!: Observable<boolean>;
-
+    selectedUser$!: Observable<User | null | undefined>;
 
     constructor(
         private store: Store<State> ) {}
@@ -31,9 +31,10 @@ export class UsersShellComponent implements OnInit, OnDestroy {
        this.usersSubscription = this.store.select(getUsers)
        .subscribe( usersResponse => this.users = usersResponse );
 
-
         // get 'toggleEmail' boolean value from store
         this.displayEmail$ = this.store.select(toggleEmail);
+
+        this.selectedUser$ = this.store.select(getCurrentUser);
     }
 
 
@@ -52,6 +53,9 @@ export class UsersShellComponent implements OnInit, OnDestroy {
     }
 
     
+    initializeNewUser() {
+       this.store.dispatch(UserPageActions.initializeCurrentUser()); 
+    }
 
     ngOnDestroy(): void {
         this.usersSubscription.unsubscribe();

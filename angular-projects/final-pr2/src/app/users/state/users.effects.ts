@@ -35,7 +35,8 @@ export class UserEffects {
         return this.actions$.pipe(
               ofType(UserPageActions.loadUsers),
               mergeMap(() => 
-                this.usersService.getUsers().pipe(
+                this.usersService.getUsers()
+                .pipe(
                     map((users) => UserApiActions.loadUsersSuccess({ users })),
                     catchError((error) => of(UserApiActions.loadUsersFailure({ error })))
                 )
@@ -49,7 +50,8 @@ export class UserEffects {
         return this.actions$.pipe(
             ofType(UserPageActions.updateCurrentUser),
             mergeMap((action) => 
-                this.usersService.updateUser(action.currentUser).pipe(
+                this.usersService.updateUser(action.currentUser)
+                .pipe(
                     map((currentUser) => UserApiActions.updateCurrentUserSuccess({ currentUser })),
                     catchError((error) => of(UserApiActions.updateCurrentUserFailure({ error })))
                 )
@@ -58,7 +60,37 @@ export class UserEffects {
     });
 
 
-    
+
+    deleteUser$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(UserPageActions.deleteCurrentUser),
+            mergeMap((action) => 
+                this.usersService.deleteUser(action.userId)
+                .pipe(
+                    map((userId) => UserApiActions.deleteCurrentUserSuccess({ userId })),
+                    catchError((error) => of(UserApiActions.deleteCurrentUserFailure({ error })))
+                )
+            )
+        )
+    });
+
+
+
+
+    createUser$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(UserPageActions.createUser),
+            mergeMap((action) =>
+                this.usersService.createUser(action.currentUser)
+                .pipe(
+                    map((user) => UserApiActions.createUserSuccess({ user })),
+                    catchError((error) => of(UserApiActions.createUserFailure({ error })))
+                )
+            )
+        )
+    });
+
+
 
 
     constructor(

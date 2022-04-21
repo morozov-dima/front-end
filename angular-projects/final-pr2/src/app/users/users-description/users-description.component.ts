@@ -25,16 +25,16 @@ export class UsersDescriptionComponent implements OnInit {
 
 
     userForm = new FormGroup({
-        emailInput: new FormControl('', [
+        email: new FormControl('', [
             Validators.required,
             Validators.email,
             Validators.minLength(3),
             Validators.maxLength(50)
         ]),
-        phoneInput: new FormControl('', Validators.required),
-        websiteInput: new FormControl('', Validators.required),
-        networkInput: new FormControl('', Validators.required),
-        streetInput: new FormControl('', Validators.required)
+        phone: new FormControl('', Validators.required),
+        website: new FormControl('', Validators.required),
+        network: new FormControl('', Validators.required),
+        street: new FormControl('', Validators.required)
     });    
 
 
@@ -55,43 +55,67 @@ export class UsersDescriptionComponent implements OnInit {
     displayUserDetails(currentUser: User | null) {
         // update form inputs from ts code.
         this.userForm.patchValue({
-            emailInput: currentUser?.email,
-            phoneInput: currentUser?.phone,
-            websiteInput: currentUser?.website,
-            networkInput: currentUser?.network,
-            streetInput: currentUser?.address.street
+            email: currentUser?.email,
+            phone: currentUser?.phone,
+            website: currentUser?.website,
+            network: currentUser?.network,
+            street: currentUser?.address.street
         });
     }
 
 
 
 
-    onSaveUser(currentUser: User){
-        console.log(currentUser);
-        this.store.dispatch(UserPageActions.updateCurrentUser({currentUser: currentUser}))
+    onSaveUser(originalUser: User){
+
+       // this object include updated form values and part of original values
+       const partOfUsrDataObj = {
+            email: this.userForm.value.email,
+            phone: this.userForm.value.phone,
+            website: this.userForm.value.website,
+            network: this.userForm.value.network,
+            address: {
+                street: this.userForm.value.street,
+                suite: originalUser.address.suite,
+                city: originalUser.address.city,
+                zipcode: originalUser.address.zipcode,
+                geo: {
+                    lat: originalUser.address.geo.lat,
+                    lng: originalUser.address.geo.lng,
+                }
+            }
+       };
+
+        // Merge objects using the spread operator (...)
+        const user = {... originalUser, ...partOfUsrDataObj};
+        if (user.id === 0) {
+            this.store.dispatch(UserPageActions.createUser({currentUser: user}));
+        } else {
+            this.store.dispatch(UserPageActions.updateCurrentUser({currentUser: user}))
+        }
+
+
     }
 
 
 
-    onCancelEdit(currentUser: User) {
-        console.log(currentUser);
-    }
 
 
 
 
     onDeleteUser(currentUser: User) {
         console.log(currentUser);
+        this.store.dispatch(UserPageActions.deleteCurrentUser({ userId: currentUser.id }));
     }
 
 
 
 
-    get emailInput() { return this.userForm.get('emailInput')!; }
-    get phoneInput() { return this.userForm.get('phoneInput')!; }
-    get websiteInput() { return this.userForm.get('websiteInput')!; }
-    get streetInput() { return this.userForm.get('streetInput')!; }
-    get networkInput() { return this.userForm.get('networkInput')!; }
+    get email() { return this.userForm.get('email')!; }
+    get phone() { return this.userForm.get('phone')!; }
+    get website() { return this.userForm.get('website')!; }
+    get street() { return this.userForm.get('street')!; }
+    get network() { return this.userForm.get('network')!; }
 
 
 

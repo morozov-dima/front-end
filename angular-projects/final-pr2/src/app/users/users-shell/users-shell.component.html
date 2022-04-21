@@ -5,6 +5,8 @@
             <app-users-list
              (currentUserEvent)="getCurrentUser($event)"
              (dispatchEmailEvent)="toggleEmailInUsersList()"
+             (initializeNewUser)="initializeNewUser()"
+             [selectedUser]="selectedUser$ | async"
              [users]="users"
              [displayEmail]="displayEmail$ | async"
              ></app-users-list> 

@@ -18,3 +18,23 @@ export const updateCurrentUser = createAction(
     '[Users Page] Update Current User',
     props<{ currentUser: User }>()
 );
+
+export const createUser = createAction(
+    '[Users Page] Create User',
+    props<{ currentUser: User }>()
+);
+
+export const deleteCurrentUser = createAction(
+    '[Users Page] Delete Current User',
+    props<{ userId: number }>()
+);
+
+
+export const initializeCurrentUser = createAction(
+    '[Users Page] Initialize Current User'
+);
+
+
+
+
+

@@ -20,3 +20,24 @@ export const updateCurrentUserFailure = createAction(
   '[Users Page] Update User Failure',
   props<{ error: string }>()
 );
+
+export const createUserSuccess = createAction(
+  '[Users Page] Create User Success',
+  props<{ user: User }>()
+);
+
+export const createUserFailure = createAction(
+  '[User Page] Create User Failure',
+  props<{ error: string }>()
+);
+
+export const deleteCurrentUserSuccess = createAction(
+  '[Users Page] Delete User Success',
+  props<{ userId: number }>()
+);
+
+export const deleteCurrentUserFailure = createAction(
+  '[Users Page] Delete User Failure',
+  props<{ error: string }>()
+);
+

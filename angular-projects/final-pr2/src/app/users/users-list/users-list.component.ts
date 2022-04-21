@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { User } from "../state/users.interface";
 
 
@@ -8,11 +8,13 @@ import { User } from "../state/users.interface";
     styleUrls: ['./users-list.component.css']
 })
 
-export class UsersListComponent implements OnInit, OnDestroy {
+export class UsersListComponent implements OnInit {
     @Input() users!: User[];
     @Input() displayEmail!: boolean | null;
+    @Input() selectedUser: User | null | undefined;
     @Output() currentUserEvent = new EventEmitter<User>();
     @Output() dispatchEmailEvent = new EventEmitter<boolean>();
+    @Output() initializeNewUser = new EventEmitter<void>();
 
     constructor(
  
@@ -31,8 +33,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.currentUserEvent.emit(user);
     }
 
-    ngOnDestroy(): void {
-
+    addUser() {
+        this.initializeNewUser.emit();
     }
+
 
 }

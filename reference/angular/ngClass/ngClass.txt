@@ -1,0 +1,48 @@
+// Example 1
+// ******************** html ***********************
+    <div class="users-list">
+        <button 
+            (click)="onChooseCurrentUser(user)" 
+            *ngFor="let user of users"
+            [ngClass]="{ 'active': user?.id ===  selectedUser?.id}" 
+            class="list-group-item">
+            <div class="button-texts">
+                {{user.username}}
+                <span *ngIf="displayEmail" class="button-email">({{user.email}})</span>
+            </div>
+        </button>
+    </div>
+
+
+
+
+
+// ***************** js *********************
+import { Component, Input, OnInit} from "@angular/core";
+import { User } from "../state/users.interface";
+
+@Component({
+    selector: 'app-users-list',
+    templateUrl: './users-list.component.html',
+    styleUrls: ['./users-list.component.css']
+})
+
+export class UsersListComponent implements OnInit, OnDestroy {
+    @Input() users!: User[];
+    @Input() selectedUser: User | null | undefined;
+
+    constructor() {}
+
+    ngOnInit(): void {}
+
+}
+
+
+
+
+
+// ********************* css ***********************
+.active {
+    background-color: #3f51b5;
+    color:#ffffff;
+}
