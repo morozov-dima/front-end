@@ -1,3 +1,7 @@
+// *********************************************************
+// ********************** Example 1 ************************
+// *********************************************************
+
 // *********** html file ************
 <table class="table">
     <thead>
@@ -7,11 +11,6 @@
       </tr>
     </thead>
     <tbody>
-      <!-- 
-        1. list of commentItems. here we use 'i' as index.
-        2. 'commentItems' is object. 
-        3. 'commentItem.name' key of current object.
-      -->
       <tr *ngFor="let commentItem of commentItems; index as i;">
         <th scope="row">{{i+1}}</th>
         <td>{{commentItem.name}}</td>
@@ -36,29 +35,18 @@ import { UserDataService } from '../shared/user-data.service';
   styleUrls: ['./promotion.component.css']
 })
 export class PromotionComponent implements OnInit, OnDestroy {
-
-  // 1. we delcare property of type Comments.
-  // 2. 'Comments' this is interface that we use.
   commentItems: Comments[] = [];
-
-  // 1. here we use 'Subscription' as type. 
-  // 2. this is rxjs feature.
   commentItemsSubscription!: Subscription;
 
   constructor(private userDataService : UserDataService) { }
 
   ngOnInit(): void {
-    // 1. load comments data from service
-    // 2. we need subscribe to our 'observables' and order to get stream data.
-    // 'getComments' this is method in service that we declare in constructor.
     this.commentItemsSubscription = this.userDataService.getComments().subscribe(comments => {
       this.commentItems = comments;
     });
   }
 
   ngOnDestroy(): void {
-      // 1. we need unsubscribe from our subscription in
-      //    'ngOnDestroy' method.
       this.commentItemsSubscription.unsubscribe();
   }
 

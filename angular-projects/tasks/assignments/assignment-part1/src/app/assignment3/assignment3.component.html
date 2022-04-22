@@ -1,0 +1,38 @@
+<h3>assignment 3 - Directives</h3>
+<ol>
+    <li>Add A button which says 'Display Details'</li>
+    <li>Add a paragraph with any content of your choice (e.g. 'Secret Password = tuna')</li>
+    <li>Toggle the displaying of that paragraph with the button created in the first step</li>
+    <li>Log all button clicks in an array and output that array below the secret paragraph (maybe log a timestamp or simply an incrementing number)</li>
+    <li>Starting at the 5th log item, give all future log items a blue background (via ngStyle) and white color (ngClass)</li>
+  </ol>
+  
+
+
+
+<section class="assignment3">
+  <button (click)="toggleText()">Display Details</button>
+  <p *ngIf="showText">Secret Password = tuna</p>
+
+  <br>
+  <br>
+
+  <ul *ngIf="clicks">
+    <li 
+      *ngFor="let click of clicks; index as i"
+      [ngStyle]="{
+          'background-color' : i > 5 ? 'blue' : 'none',
+          'color' : i > 5 ? 'white' : 'black'
+        }"
+        [ngClass]="{
+          'bold' : i > 5
+        }"
+        >
+      {{click}} - {{i}}
+    </li>
+  </ul>
+
+
+
+</section>
+

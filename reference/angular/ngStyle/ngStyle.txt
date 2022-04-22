@@ -1,26 +1,20 @@
 
-// Example 1:
+// *********************************************************
+// ********************** Example 1 ************************
+// *********************************************************
+
 // *********** html file ***********
-<section class="box">
-    <div class="box-view">
-        <!--
-          1. here we use [ngStyle] directive. with this directive we can 
-             change style property of element.
-        -->
-        <div [ngStyle]="{
-                backgroundColor: changeBg ? 'blue' : 'unset',
-                color: changeBg ? 'white' : 'blue'
-            }"
-            class="box-view-bg">box</div>
+
+    <div [ngStyle]="{
+            backgroundColor: changeBg ? 'blue' : 'unset',
+            color: changeBg ? 'white' : 'blue'
+        }"
+        class="box-view-bg">
+        box
     </div>
-    <div class="button">
-        <!--
-          1. here we use 'toggle' changes. When user click current button,
-             booleat value of 'changeBg' changes to opposite.
-        -->
-        <button (click)="changeBg = !changeBg">Change Background</button>
-    </div>
-</section>
+  
+   <button (click)="changeBg = !changeBg">Change Background</button>
+
 
 
 
@@ -37,12 +31,76 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./background.component.css']
 })
 export class BackgroundComponent implements OnInit {
-  // we declare new boolean property, with 'false' default value.
   changeBg: boolean = false;
   
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *********************************************************
+// ********************** Example 2 ************************
+// *********************************************************
+
+
+// ********************* html file **************************
+<section class="assignment3">
+  <button (click)="toggleText()">Display Details</button>
+  <p *ngIf="showText">Secret Password = tuna</p>
+
+  <ul *ngIf="clicks">
+    <li 
+      *ngFor="let click of clicks; index as i"
+      [ngStyle]="{
+          'background-color' : i > 5 ? 'blue' : 'none',
+          'color' : i > 5 ? 'white' : 'black'
+        }" >
+      {{click}} - {{i}}
+    </li>
+  </ul>
+
+</section>
+
+
+
+
+
+// ******************** js file ***********************
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-assignment3',
+  templateUrl: './assignment3.component.html',
+  styleUrls: ['./assignment3.component.css']
+})
+export class Assignment3Component {
+  showText: boolean = false;
+  clicks: number[] = [];
+
+
+  toggleText() {
+    this.showText = !this.showText
+    const currentDate = Date.now();
+    this.clicks.push(currentDate);
   }
 
 }

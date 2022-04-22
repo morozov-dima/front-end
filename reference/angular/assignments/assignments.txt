@@ -1,0 +1,313 @@
+// *********************************************************
+// **************** assignment 1 - ngModel *****************
+// *********************************************************
+
+// Assignment 1 - databinding
+// ****************** app.component.html *******************
+   <h3>assignment-databinding-example1</h3>
+    <ol>
+      <li>Add a Input field which updates a property ('username') via Two-Way-Binding</li>
+      <li>Output the username property via String Interpolation (in a paragraph below the input)</li>
+      <li>Add a button which may only be clicked if the username is NOT an empty string</li>
+      <li>Upon clicking the button, the username should be reset to an empty string</li>
+    </ol>
+
+    <br>
+    <br>
+    <br>
+
+
+    <section class="main-content">
+      <form>
+          <input 
+            name="username"
+            class="username"
+            #usernameRef="ngModel"
+            [(ngModel)]="username"
+              type="text">
+            <p>
+              {{ username }}
+            </p>
+            <button (click)="resetUser()" [disabled]="!usernameRef.value">Click</button>
+        </form>
+    </section>
+
+
+
+
+
+// **************** app.component.ts *******************
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  username: string = 'enyter your username';
+
+  resetUser() {
+    this.username = '';
+  }
+
+}
+
+
+
+
+
+
+// ****************** app.module.ts ********************
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule // add this module in order to use 'ngModel' directive. <= ################
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *********************************************************
+// **************** assignment 2 - TD Form *****************
+// *********************************************************
+
+// Assignment 2
+// ****************** app.component.html *******************
+<h3>assignment 2 - TD Form</h3>
+<ol>
+  <li>Add a Form inputs firstName and lastName</li>
+  <li>submit form, use TD form </li>
+  <li>Dislay below form submitted values</li>
+  <li>Below each field add error if current fiest is empty</li>
+  <li>Add Validators for input fields</li>
+</ol>
+
+<br>
+<br>
+<br>
+
+<section class="assignment2">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+        <div class="row">
+            <input
+                name="firstName"
+                class="firstName"
+                required
+                [(ngModel)]="firstNameValue"
+                #firstNameRef="ngModel"
+                type="text">
+                <span *ngIf="!firstNameRef.valid">Enter your first name</span>
+        </div>
+
+        <div class="row">
+        <input
+            name="lastName"
+            class="lastName"
+            ngModel
+            required
+            #lastNameRef="ngModel"
+            type="text">
+            <span *ngIf="!lastNameRef.valid">Enter your last name</span> 
+        </div>       
+            
+        <div class="row">
+            <button type="submit">Submit</button>    
+        </div>
+    </form>    
+
+    <p>
+        FirstName: {{firstNameRef.value}}
+        <br>
+        LastName: {{lastNameRef.value}}
+    </p>
+
+</section>
+
+
+
+
+
+
+
+
+// ****************** app.component.ts **********************
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+@Component({
+  selector: 'app-assignment2',
+  templateUrl: './assignment2.component.html',
+  styleUrls: ['./assignment2.component.css']
+})
+export class Assignment2Component implements OnInit {
+
+  firstNameValue: string = 'First Name';
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  onSubmit(myForm: NgForm) {
+    console.log(myForm.value);
+    
+  }
+
+}
+
+
+
+
+
+
+// ****************** app.module.ts ********************
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule // add this module in order to use 'ngModel' directive. <= ################
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *********************************************************
+// **************** assignment 3  **************************
+// *********************************************************
+
+// ****************** app.component.html *******************
+<h3>assignment 3 - Directives</h3>
+<ol>
+    <li>Add A button which says 'Display Details'</li>
+    <li>Add a paragraph with any content of your choice (e.g. 'Secret Password = tuna')</li>
+    <li>Toggle the displaying of that paragraph with the button created in the first step</li>
+    <li>
+        Log all button clicks in an array and output that array below the secret paragraph
+        (maybe log a timestamp or simply an incrementing number)
+    </li>
+    <li>Starting at the 5th log item, give all future log items a blue background (via ngStyle) and white color (ngClass)</li>
+  </ol>
+  
+
+<section class="assignment3">
+  <button (click)="toggleText()">Display Details</button>
+  <p *ngIf="showText">Secret Password = tuna</p>
+
+  <br>
+  <br>
+
+  <ul *ngIf="clicks">
+    <li 
+      *ngFor="let click of clicks; index as i"
+      [ngStyle]="{
+          'background-color' : i > 5 ? 'blue' : 'none',
+          'color' : i > 5 ? 'white' : 'black'
+        }"
+        [ngClass]="{
+          'bold' : i > 5
+        }"
+        >
+      {{click}} - {{i}}
+    </li>
+  </ul>
+
+</section>
+
+
+
+
+
+
+// ****************** app.module.ts ********************
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-assignment3',
+  templateUrl: './assignment3.component.html',
+  styleUrls: ['./assignment3.component.css']
+})
+export class Assignment3Component {
+  showText: boolean = false;
+  clicks: number[] = [];
+
+
+  toggleText() {
+    this.showText = !this.showText
+    const currentDate = Date.now();
+    this.clicks.push(currentDate);
+  }
+
+}
+
+
+
+
+
+
