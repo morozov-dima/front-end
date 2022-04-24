@@ -1,1 +1,84 @@
-app-assignment5
+<h3>assignment 5 - Add a Form with the following Inputs (and Validators) </h3>
+<ol>
+    <li>Mail address (should not be empty and should be an email address)</li>
+    <li>
+        A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
+        Set "Advanced" as Default
+    </li>
+    <li>
+        A Password field (should not be empty)
+    </li>
+    <li>A Submit Button</li>
+    <li>Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.</li>
+    <li>
+        Upon submitting the form, you should simply print the Value of the Form to the Console.
+        Optionally, display it in your template.
+    </li>
+  </ol>
+
+    <br>
+    <br>
+
+  <section class="assignment4">
+    <form [formGroup]="userForm"  (ngSubmit)="onSubmitForm()" >
+
+        <!-- email begin -->
+        <div class="row">
+            <label 
+                for="userEmail">Enter your Email:</label>
+            <input 
+                name="userEmail" 
+                formControlName="userEmail"
+                type="email" >
+                <span *ngIf="!getUserEmail.valid && getUserEmail.touched" class="error">Please enter correct password</span>
+        </div>
+        <!-- email end -->
+
+        <!-- subscription begin -->
+        <div class="row">
+            <label for="userEmail">Choose your subscriptions:</label>
+            <select
+                name="userSub" 
+                formControlName="userSub"
+                class="subscriptions">
+                <option value="">Choose your subscription:</option>
+                <option value="advanced">Advanced</option>
+                <option value="basic">Basic</option>
+                <option value="pro">Pro</option>
+            </select>
+            <span *ngIf="!getUserSub.valid && getUserSub.touched" class="error">please choose your subscription</span>
+        </div>
+        <!-- subscription end -->
+
+
+        <!-- password begin -->
+        <div class="row">
+            <label for="userPassword">Enter your password:</label>
+            <input 
+                formControlName="userPassword"
+                class="userPassword"
+                type="password" >
+                <span *ngIf="!getUserPassword.valid && getUserPassword.touched" class="error">please enter your password</span>
+        </div>
+        <!-- password end -->
+
+
+        <!-- submit button begin -->
+        <div class="row">
+            <button [disabled]="!userForm.valid" type="submit">Submit form</button>
+        </div>
+        <!-- submit button end -->
+
+    </form>
+
+
+    <br>
+    <br>
+
+    <p>
+
+    </p>
+
+  </section>
+
+

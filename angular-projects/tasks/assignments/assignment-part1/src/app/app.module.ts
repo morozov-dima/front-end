@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -11,6 +11,7 @@ import { GameControlComponent } from './assignment4/game-control/game-control.co
 import { OddComponent } from './assignment4/odd/odd.component';
 import { EvenComponent } from './assignment4/even/even.component';
 import { Assignment5Component } from './assignment5/assignment5.component';
+import { Assignment6Component } from './assignment6/assignment6.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,13 @@ import { Assignment5Component } from './assignment5/assignment5.component';
     Assignment5Component,
     GameControlComponent,
     OddComponent,
-    EvenComponent
+    EvenComponent,
+    Assignment6Component
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

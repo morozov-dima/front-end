@@ -333,6 +333,16 @@ export class AppModule { }
 
 
 
+
+
+
+
+
+
+
+
+
+
 // ################################################################################
 // ################################## Example 2: ##################################
 // ################################################################################
@@ -541,4 +551,144 @@ import { ReactiveFormsModule } from '@angular/forms';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ################################################################################
+// ################################## Example 3: ##################################
+// ################################################################################
+
+
+// ************************ app.component.html **************************
+    <form [formGroup]="userForm"  (ngSubmit)="onSubmitForm()" >
+
+        <!-- email begin -->
+        <div class="row">
+            <label 
+                for="userEmail">Enter your Email:</label>
+            <input 
+                name="userEmail" 
+                formControlName="userEmail"
+                type="email" >
+                <span *ngIf="!getUserEmail.valid && getUserEmail.touched" class="error">
+                  Please enter correct password
+                </span>
+        </div>
+        <!-- email end -->
+
+        <!-- subscription begin -->
+        <div class="row">
+            <label for="userEmail">Choose your subscriptions:</label>
+            <select
+                name="userSub" 
+                formControlName="userSub"
+                class="subscriptions">
+                <option value="">Choose your subscription:</option>
+                <option value="advanced">Advanced</option>
+                <option value="basic">Basic</option>
+                <option value="pro">Pro</option>
+            </select>
+            <span *ngIf="!getUserSub.valid && getUserSub.touched" class="error">
+              Please choose your subscription
+            </span>
+        </div>
+        <!-- subscription end -->
+
+
+        <!-- password begin -->
+        <div class="row">
+            <label for="userPassword">Enter your password:</label>
+            <input 
+                formControlName="userPassword"
+                class="userPassword"
+                type="password" >
+                <span *ngIf="!getUserPassword.valid && getUserPassword.touched" class="error">
+                  Please enter your password
+                </span>
+        </div>
+        <!-- password end -->
+
+
+        <!-- submit button begin -->
+        <div class="row">
+            <button [disabled]="!userForm.valid" type="submit">Submit form</button>
+        </div>
+        <!-- submit button end -->
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+    // ************************ app.component.ts **************************
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+
+@Component({
+    selector: 'app-assignment5',
+    templateUrl: './assignment5.component.html',
+    styleUrls: ['./assignment5.component.css']
+})
+
+export class Assignment5Component implements OnInit {
+
+    userForm = new FormGroup({
+        userEmail: new FormControl('', [Validators.required, Validators.email]),
+        userSub: new FormControl('', Validators.required),
+        userPassword: new FormControl('', Validators.required) 
+    })
+
+    ngOnInit(): void {      
+    }
+
+    onSubmitForm() {
+        console.log(this.userForm.value);
+    }
+
+
+    get getUserEmail() { return this.userForm.get('userEmail')!; }
+    get getUserPassword() { return this.userForm.get('userPassword')!; }
+    get getUserSub() { return this.userForm.get('userSub')!; }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
 

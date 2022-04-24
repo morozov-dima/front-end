@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NumbersService } from '../events.service';
  
 
 @Component({
@@ -8,7 +9,12 @@ import { Component } from '@angular/core';
 })
 export class GameControlComponent  {
 
-  constructor() { }
+  constructor(
+        private numbersService: NumbersService
+      ) { }
 
+  onStartGame() {
+    this.numbersService.startCounter();
+  }
 
 }

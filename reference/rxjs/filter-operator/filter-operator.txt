@@ -3,95 +3,6 @@
 // ************************************************************************
 
 
-// ************ training.service.ts **************
-import { Subject } from 'rxjs';
-import { Exercise } from './exercise.model';
-
-export class TrainingService {
-  exerciseChanged = new Subject<Exercise | null>();
-
-  private runningExercise: any;
-
-  startExercise(selectedId: string) {
-    // we send data with next (we use copy of our object)
-    // we send 'this.runningExercise' to our Subject
-    this.exerciseChanged.next({ ...this.runningExercise });
-  }
-
-}
-
-
-
-
-// ************* training.component.ts *****************
-import { OnDestroy } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { TrainingService } from './training.service';
-
-
-@Component({
-  selector: 'app-training',
-  templateUrl: './training.component.html',
-  styleUrls: ['./training.component.css']
-})
-
-export class TrainingComponent implements OnInit, OnDestroy {
-  ongoingTraining: boolean = false;
-  exerciseSubscription!: Subscription;
-
-  constructor(private trainingService: TrainingService) { }
-
-  ngOnInit(): void {
-    this.exerciseSubscription = this.trainingService.exerciseChanged.subscribe(
-      exercise => {
-        if (exercise) {
-          this.ongoingTraining = true;
-        } else {
-          this.ongoingTraining = false;
-        }
-      }
-    );
-  }
-
-
-  ngOnDestroy(): void {
-    if (this.exerciseSubscription) {
-      this.exerciseSubscription.unsubscribe();
-    }
-  }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ************************************************************************
-// ***************************** Example 2 ********************************
-// ************************************************************************
-
-
 
 // ******************** game-control.component.html ***********************
 <button (click)="onStartGame()">Start Game</button>
@@ -298,10 +209,3 @@ export class OddComponent implements OnInit, OnDestroy {
     }" >
     {{ oddNumber }}
 </p>
-
-
-
-
-
-
-

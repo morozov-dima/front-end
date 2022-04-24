@@ -1,5 +1,9 @@
-// Example 1:
-// *********** shorten.pipe.ts ************
+// **********************************************************************
+// **************************** Example 1 *******************************
+// **********************************************************************
+
+
+// ********************** shorten.pipe.ts ***********************
 import { Pipe, PipeTransform } from "@angular/core";
 @Pipe({
     name: 'shorten'
@@ -11,8 +15,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 */
 export class ShortenPipe implements PipeTransform {
     transform(value: any, limit: number) {
-        // here we check if value lenght is greater than 10
-        // characters.
+        // here we check if value lenght is greater than 10 characters.
         if (value.length > limit) {
             return value.substr(0, limit) + ' ...';
         }
@@ -26,7 +29,20 @@ export class ShortenPipe implements PipeTransform {
 
 
 
-// ************* app.module.ts **************
+
+
+
+// ********************* app.component.html **************************
+<strong>{{ server.name | shorten:10 }}</strong> | 
+
+
+
+
+
+
+
+
+// *********************** app.module.ts *************************
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -50,9 +66,6 @@ export class AppModule { }
 
 
 
-
-// *********** app.component.html ************
-<strong>{{ server.name | shorten:10 }}</strong> | 
 
 
 
