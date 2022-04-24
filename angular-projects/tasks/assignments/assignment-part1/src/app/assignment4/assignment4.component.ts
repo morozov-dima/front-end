@@ -10,6 +10,13 @@ export class Assignment4Component implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+
+  incrementNumbers(incNumbers: number) {
+    //console.log(incNumbers);
+    
+    
   }
 
 }
