@@ -13,10 +13,6 @@ export class Assignment4Component implements OnInit {
 
   }
 
-  incrementNumbers(incNumbers: number) {
-    //console.log(incNumbers);
-    
-    
-  }
+
 
 }
