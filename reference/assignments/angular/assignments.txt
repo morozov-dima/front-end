@@ -506,3 +506,301 @@ export class OddComponent implements OnInit {
 }" >{{ oddNumber }}</p>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *************************************************************************
+// **************************** assignment 5  ******************************
+// *************************************************************************
+
+
+// *************** assignment5.component.html *************
+
+<h3>assignment 5 - Add a Form with the following Inputs (and Validators) </h3>
+<ol>
+    <li>Mail address (should not be empty and should be an email address)</li>
+    <li> A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")  Set "Advanced" as Default </li>
+    <li> A Password field (should not be empty) </li>
+    <li> A Submit Button</li>
+    <li> Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid. </li>
+    <li> Upon submitting the form, you should simply print the Value of the Form to the Console. Optionally, display it in your template. </li>
+  </ol>
+
+
+  <section class="assignment4">
+    <form [formGroup]="userForm"  (ngSubmit)="onSubmitForm()" >
+
+        <!-- email begin -->
+        <div class="row">
+            <label 
+                for="userEmail">Enter your Email:</label>
+            <input 
+                name="userEmail" 
+                formControlName="userEmail"
+                type="email" >
+                <span *ngIf="!getUserEmail.valid && getUserEmail.touched" class="error">Please enter correct password</span>
+        </div>
+        <!-- email end -->
+
+        <!-- subscription begin -->
+        <div class="row">
+            <label for="userEmail">Choose your subscriptions:</label>
+            <select
+                name="userSub" 
+                formControlName="userSub"
+                class="subscriptions">
+                <option value="">Choose your subscription:</option>
+                <option value="advanced">Advanced</option>
+                <option value="basic">Basic</option>
+                <option value="pro">Pro</option>
+            </select>
+            <span *ngIf="!getUserSub.valid && getUserSub.touched" class="error">please choose your subscription</span>
+        </div>
+        <!-- subscription end -->
+
+
+        <!-- password begin -->
+        <div class="row">
+            <label for="userPassword">Enter your password:</label>
+            <input 
+                formControlName="userPassword"
+                class="userPassword"
+                type="password" >
+                <span *ngIf="!getUserPassword.valid && getUserPassword.touched" class="error">please enter your password</span>
+        </div>
+        <!-- password end -->
+
+
+        <!-- submit button begin -->
+        <div class="row">
+            <button [disabled]="!userForm.valid" type="submit">Submit form</button>
+        </div>
+        <!-- submit button end -->
+
+    </form>
+  </section>
+
+
+
+
+
+
+
+// *************** assignment5.component.ts *************
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+
+@Component({
+    selector: 'app-assignment5',
+    templateUrl: './assignment5.component.html',
+    styleUrls: ['./assignment5.component.css']
+})
+
+export class Assignment5Component implements OnInit {
+
+    userForm = new FormGroup({
+        userEmail: new FormControl('', [Validators.required, Validators.email]),
+        userSub: new FormControl('', Validators.required),
+        userPassword: new FormControl('', Validators.required) 
+    })
+
+    ngOnInit(): void {
+        
+    }
+
+    onSubmitForm() {
+        console.log(this.userForm.value);
+    }
+
+    get getUserEmail() { return this.userForm.get('userEmail')!; }
+    get getUserPassword() { return this.userForm.get('userPassword')!; }
+    get getUserSub() { return this.userForm.get('userSub')!; }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ***************************************************************************
+// **************** assignment 6 - get top 3 users  **************************
+// ***************************************************************************
+
+// ***************** assignment6.component.html ***************
+
+  <h3>assignment 6 - Http request </h3>
+  <ol>
+      <li>get top 3 users with biggest id from server </li>
+  </ol>
+
+
+  <section class="assignment6">
+    <form [formGroup]="userForm" class="userForm" (ngSubmit)="onSubmitForm()" >
+
+        <div class="row">
+            <label for="userEmail">Please enter user email</label>
+            <input 
+                type="email" 
+                formControlName="userEmail"
+                name="userEmail" 
+                id="userEmail">
+            <span *ngIf="!getUserEmail.valid && getUserEmail.touched" class="error">enter valid email</span>    
+        </div>
+
+        <div class="row">
+            <label for="userPassword">Please enter password</label>
+            <input 
+                type="password" 
+                formControlName="userPassword"
+                name="userPassword" 
+                id="userPassword">
+            <span *ngIf="!getUserPassword.valid && getUserPassword.touched" class="error">enter valid password</span>    
+        </div>
+
+        <div class="row">
+            <button [disabled]="!userForm.valid" type="submit">Submit</button>
+        </div>
+
+    </form>
+  </section>
+
+
+
+
+
+
+// ***************** assignment6.component.ts ***************
+
+import { Component, OnInit } from '@angular/core';
+import { UserDataService } from './user-data.service';
+
+@Component({
+  selector: 'app-assignment6',
+  templateUrl: './assignment6.component.html',
+  styleUrls: ['./assignment6.component.css']
+})
+export class Assignment6Component implements OnInit {
+
+  constructor(
+    private userDataService: UserDataService
+  ) { }
+
+
+  ngOnInit(): void {
+    this.userDataService.getTop3Users()
+    .subscribe((response) => {
+      console.log(response);
+    });
+  }
+
+}
+
+
+
+
+
+
+
+// ***************** user-data.service.ts ***************
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { map } from "rxjs";
+
+
+interface Todos {
+    userId: number;
+    id: number;
+    title: string;
+    completed: string;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class UserDataService {
+    constructor(private http: HttpClient) {}
+
+
+    getTop3Users() {
+        
+        const url = 'https://jsonplaceholder.typicode.com/todos/?_limit=10';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'key': 'DGDFDFDUIOILJGHDGRR4545454'
+            })
+        };
+        return this.http.get<Todos[]>(url, httpOptions).pipe(
+            // ************** get top 3 users **************
+            map((usersData) => {
+                // list of top 3 users
+                const usersDataTop3: Todos[] = []; 
+
+                // we will compare each user id with this value
+                let currentIndex: number = 0;
+
+                // in this empty array we will save list of indexes
+                let listOfIndexes: number[] = [];
+   
+                // loop over top 3 users
+                for (let index = 0; index < 3; index++) {
+                    // loop over array of objects
+                    for (const userData of usersData) {
+                        // if current user id bigger that 'currentIndex'
+                        // or this user already appear in our 'listOfIndexes' array.
+                        if((userData.id > currentIndex) && (listOfIndexes.indexOf(userData.id) === -1)) {
+                            currentIndex = userData.id;
+                        }
+                    }
+        
+                    // add big index to 'listOfIndexes' array
+                    listOfIndexes.push(currentIndex)
+                
+                    // find current object from array of objects according to 'currentIndex'
+                    let getUserDataByIndex: any = usersData.find(el => el.id === currentIndex );
+
+                    // add object with big id to output array.
+                    usersDataTop3.push(getUserDataByIndex);
+
+                    currentIndex = 0;
+                }
+
+                // return new updated array of objects
+                return usersDataTop3;
+            })
+        );
+    }
+
+}

@@ -1,1 +1,49 @@
-https://www.youtube.com/watch?v=LFDrDnKPOTg
+
+
+// ************************* Jenkins online course *******************************
+https://www.youtube.com/watch?v=cyb10iplv7U&list=PLg5SS_4L6LYvQbMrSuOjTL1HOiDhUE_5a
+
+
+
+
+
+
+
+
+// *********************** CI - Continuous Interration ***************************
+This is DEvOps model, where programmers create commits of code in repository
+and automatically run 'Build' and 'Compilation of this code'.
+After this automatically run 'Unit Tests, Integration Tests, Functionality Tests'.
+
+1. Commit to source Control (GIT and Bitbucket).
+2. Build/Compile.
+3. Test of our code (optional).
+
+
+
+
+
+
+
+
+
+// ******************* CD - Continuous Delivery and Deployment ********************
+This is DEvOps model, where programmers create commits of code in repository
+and automatically run 'Build' and 'Compilation of this code'.
+After this automatically runs code tests and compiled code uploaded to stage/production.
+
+1. Commit to source Control (GIT and Bitbucket).
+2. Build/Compile.
+3. Test of our code (optional).
+4. Deploy our files to server (for example to AWS - Amazon Web Services or Google Cloud)
+
+
+
+
+
+
+
+
+
+
+

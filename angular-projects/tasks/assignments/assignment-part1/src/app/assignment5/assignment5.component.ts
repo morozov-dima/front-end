@@ -23,10 +23,8 @@ export class Assignment5Component implements OnInit {
         console.log(this.userForm.value);
     }
 
-
     get getUserEmail() { return this.userForm.get('userEmail')!; }
     get getUserPassword() { return this.userForm.get('userPassword')!; }
     get getUserSub() { return this.userForm.get('userSub')!; }
-    
 
 }

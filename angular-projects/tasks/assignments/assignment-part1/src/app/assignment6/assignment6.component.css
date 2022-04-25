@@ -1,0 +1,16 @@
+.error {
+    color:red;
+    font-size: 12px;
+}
+
+.userForm {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
