@@ -21,13 +21,13 @@ export class Assignment6Component implements OnInit {
   ngOnInit(): void {
     this.userDataService.getTop3Users()
     .subscribe((response) => {
-      console.log(response);
+     // console.log(response);
     });
   }
 
 
   onSubmitForm() {
-    console.log(this.userForm.value);
+   // console.log(this.userForm.value);
 
   }
 

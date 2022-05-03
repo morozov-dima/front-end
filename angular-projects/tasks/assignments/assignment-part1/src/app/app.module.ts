@@ -13,6 +13,7 @@ import { EvenComponent } from './assignment4/even/even.component';
 import { Assignment5Component } from './assignment5/assignment5.component';
 import { Assignment6Component } from './assignment6/assignment6.component';
 import { HttpClientModule } from '@angular/common/http';
+import { Assignment7Component } from './assignment7/assignment7.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     GameControlComponent,
     OddComponent,
     EvenComponent,
-    Assignment6Component
+    Assignment6Component,
+    Assignment7Component
   ],
   imports: [
     BrowserModule,

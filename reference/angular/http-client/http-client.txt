@@ -996,3 +996,115 @@ export class Assignment6Component implements OnInit {
 
 
 
+
+
+
+
+
+
+
+
+
+
+// **************************************************************************
+// ****************************** Example 8: ********************************
+// ******************** Get only part of data from json *********************
+// **************************************************************************
+// 1. in this example we send data to 'https://swapi.dev/api/people/' free online REST API
+
+
+
+// ************************* get-data.service.ts ****************************
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { UserData } from './user-data.interface';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GetDataService {
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+
+    getData() {
+      const url = 'https://swapi.dev/api/people/';
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      return this.http.get<any>(url, httpOptions).pipe(
+        map((response) => {
+          const responseResults = response.results;
+          
+          // we can filter our response with js .map method
+          const outputResult = responseResults.map((data: any, index: number) => { // <- #################### map() js method #####################
+            return { userId: index + 1, userName: data.name}
+          });
+
+          return outputResult;
+        })
+      );
+    }
+
+}
+
+
+
+
+
+// *********************** user-data.interface.ts ***********************
+export interface UserData {
+    userId: number;
+    userName: string;
+}
+
+
+
+
+
+
+// *********************** assignment1.component.ts *********************
+import { Component, OnInit } from '@angular/core';
+import { GetDataService } from '../shared/get-data.service';
+
+@Component({
+  selector: 'app-assignment1',
+  templateUrl: './assignment1.component.html',
+  styleUrls: ['./assignment1.component.css']
+})
+export class Assignment1Component implements OnInit {
+
+  constructor(
+    private getDataService: GetDataService
+  ) { }
+
+  ngOnInit(): void {
+    this.getDataService.getData().subscribe({
+      next: (response) => {
+        console.log('Observer got a next value: ' + response);
+        console.log(response);
+      },
+      error: (err) => {
+        console.log('Observer got an error:' + err);
+      },
+      complete: () => {
+        console.log('Observer got a complete notification');
+      }
+    });
+  }
+
+}
+
+
+
+
+
+
+
+
+

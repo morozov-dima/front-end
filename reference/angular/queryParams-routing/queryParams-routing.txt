@@ -1,0 +1,134 @@
+// ************************************************************
+// ************************* Example 1 ************************
+// ************************************************************
+
+
+// ****************** user-data.component.ts ******************
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs';
+import { GetDataService } from '../shared/get-data.service';
+import { UserDataInterface } from '../shared/user-data-interface';
+
+@Component({
+  selector: 'app-user-data',
+  templateUrl: './user-data.component.html',
+  styleUrls: ['./user-data.component.css']
+})
+export class UserDataComponent implements OnInit, OnDestroy {
+
+  constructor(
+    private route: ActivatedRoute,
+    private getDataService: GetDataService
+  ) { }
+
+  userDataSub!: Subscription;
+  userData!: string | null;
+  aTracker: string = '';
+  bTracker: string = '';
+
+  userForm = new FormGroup({
+    userEmail: new FormControl('', [Validators.email, Validators.required]),
+    userPassword: new FormControl('', Validators.required)
+  });
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.aTracker = params['a'];
+      this.bTracker = params['b'];
+    });
+  }
+
+  onSubmit() {
+    const requestData: UserDataInterface = { 
+      email: this.userForm.value.email,
+      password: this.userForm.value.password,
+      a: this.aTracker,
+      b: this.bTracker
+     };
+
+    this.userDataSub = this.getDataService.sendUserData(requestData).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.userData = response.data;
+        },
+        error: (err) => {
+          console.log('Observer got an error: ' + err)
+        },
+        complete: () => {
+          console.log('Observable got a complete notification');
+        } 
+      });
+  }
+
+
+  ngOnDestroy(): void {
+    this.userDataSub.unsubscribe();
+  }
+
+
+  get getUserEmail() { return this.userForm.get('userEmail')! };
+  get getUserPassword() { return this.userForm.get('userPassword')! };
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// *********************** user-data.component.html ***********************
+<section class="user-data">
+    <div class="user-data-content">
+        <!-- Reactive form approach -->
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="user-data-row">
+                <label for="userEmail">Please enter your email :</label>
+                <input 
+                    formControlName="userEmail"
+                    name="userEmail"
+                    id="userEmail"
+                    type="email">
+                    <span 
+                        *ngIf="getUserEmail.invalid && (getUserEmail.dirty || getUserEmail.touched)" 
+                         class="user-data-error">please enter correct email</span>
+            </div>
+            <div class="user-data-row">
+                <label for="userPassword">Please enter your password</label>
+                <input 
+                    formControlName="userPassword"
+                    name="userPassword"
+                    id="userPassword"
+                    type="password" >
+                    <span
+                        *ngIf="getUserPassword.invalid && (getUserPassword.dirty || getUserPassword.touched)" 
+                        class="user-data-error">please enter password</span>
+            </div>
+            <div class="user-data-row">
+                <button
+                    [disabled]="!userForm.valid" 
+                    type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<section class="user-info">
+    <!-- if 'userData' not null, this mean form was sent -->
+    <p *ngIf="userData">
+       Response:  {{userData}}
+    </p>
+</section>
+
+
+
