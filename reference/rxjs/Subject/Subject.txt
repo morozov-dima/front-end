@@ -285,10 +285,6 @@ export class OddComponent implements OnInit, OnDestroy {
 
 
 
-
-
-
-
 // *********************** odd.component.html **************************
 <p>odd number</p>
 
@@ -305,3 +301,145 @@ export class OddComponent implements OnInit, OnDestroy {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************
+// ***************************** Example 3 ********************************
+// ************************************************************************
+
+// Passing data between two components
+// We send data from 'users.component.ts' to 'getUsers.service.ts' service
+// And them 'user.component.ts' component get data from 'getUsers.service.ts' service
+
+
+
+// ************************ users.component.ts ********************
+import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { GetUsersInterface } from '../shared/getUsers.interface';
+import { UsersService } from '../shared/getUsers.service';
+
+@Component({
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
+})
+export class UsersComponent {
+
+  constructor(private usersService: UsersService) { }
+
+  onSendData() {
+    const number = 100;
+    this.usersService.userData.next(number); // <= ##################### send data with Subject ######################
+  }
+
+}
+
+
+
+
+
+
+
+// ********************* getUsers.service.ts **********************
+import { Injectable } from "@angular/core";
+import { GetUsersInterface } from "./getUsers.interface";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, pipe } from "rxjs";
+import { Subject } from 'rxjs';
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class UsersService {
+    userData = new Subject<number>(); // <= ###################### connection of data #########################
+
+    constructor(
+        private http: HttpClient
+    ) {}
+
+
+
+    getUsers() {
+        const url = 'https://swapi.dev/api/people/';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        };
+        return this.http.get<any>(url, httpOptions).pipe(
+            map(response => {
+                const listOfUsers = response.results;
+                const newUsersArray = listOfUsers.map((user: any, index: number) => {
+                    return { userId: index + 1, userName: user.name}
+                });
+                
+                return newUsersArray;
+            })
+        );
+    }
+    
+}
+
+
+
+
+
+
+
+// ************************** user.component.ts ***********************
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { filter, find, map, Subscription } from 'rxjs';
+import { GetUsersInterface } from 'src/app/shared/getUsers.interface';
+import { UsersService } from 'src/app/shared/getUsers.service';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
+export class UserComponent implements OnInit {
+
+  constructor(
+    private route: ActivatedRoute,
+    private usersService: UsersService
+  ) { }
+  userId: string = '';
+  paramsSub!: Subscription;
+
+  ngOnInit(): void {
+    console.log(this.userId);
+    // subscribe to page params,  if page url : 'http://localhost:4200/users/1'
+    // result will be : {id: '1'}
+    this.route.params.subscribe(
+      (pageParamsResponse) => {
+        console.log(pageParamsResponse);
+        this.userId = pageParamsResponse['id'];
+      }
+    );
+
+    this.usersService.userData.subscribe(
+      (response) => {
+        console.log(response);
+      }
+    );
+
+
+  }
+
+
+
+
+}

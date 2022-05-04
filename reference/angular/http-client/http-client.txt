@@ -1041,7 +1041,7 @@ export class GetDataService {
         map((response) => {
           const responseResults = response.results;
           
-          // we can filter our response with js .map method
+          // we can take part of our response with js .map method
           const outputResult = responseResults.map((data: any, index: number) => { // <- #################### map() js method #####################
             return { userId: index + 1, userName: data.name}
           });
