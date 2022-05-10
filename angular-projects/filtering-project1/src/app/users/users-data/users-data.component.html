@@ -1,0 +1,47 @@
+
+<div class="users-content">
+    <div class="users-block">
+        <mat-card class="user-desc">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil soluta placeat
+            unde quae, alias doloremque delectus eveniet modi optio excepturi facilis
+            nostrum in natus ea veniam corrupti voluptate earum eaque minima iste est
+            totam provident odio. Tempore ducimus officia voluptatibus itaque repellendus
+            magnam assumenda modi eaque, ullam nostrum natus eius dolores fuga ea corrupti
+            veritatis autem nesciunt. Aspernatur voluptate perspiciatis adipisci quod
+            eaque molestias, incidunt odio voluptatem minima quia. Atque cumque provident
+            veniam, nam fuga aliquid itaque, numquam eum corrupti nemo, quibusdam id
+            asperiores perspiciatis architecto nesciunt reprehenderit quidem ipsum sint
+            debitis quia dolores laborum. Provident nam in ipsa magnam!
+        </mat-card>
+
+
+
+    </div>
+    
+    <div class="users-block">
+        <mat-tab-group (selectedTabChange)="switchTabs($event)">
+
+            <mat-tab label="All">
+                <app-users-list [filteredUsers]="filteredUsers"></app-users-list>
+            </mat-tab>
+
+            <mat-tab label="Beginner">
+                <app-users-list [filteredUsers]="filteredUsers"></app-users-list>
+            </mat-tab>
+
+            <mat-tab label="Intermediate">
+                <app-users-list [filteredUsers]="filteredUsers"></app-users-list>
+            </mat-tab>
+
+            <mat-tab label="Advanced">
+              <app-users-list [filteredUsers]="filteredUsers"></app-users-list>
+            </mat-tab>
+            
+          </mat-tab-group>
+    </div>
+
+</div>
+
+
+
+

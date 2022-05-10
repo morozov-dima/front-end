@@ -1,0 +1,340 @@
+
+
+
+
+// **********************************************************************
+// **************************** Example 1 *******************************
+// **********************************************************************
+
+//we can filter data inside our component.
+
+
+// ***************** event-details.component.html ******************
+<div>
+  <button  [class.active]="sortBy==='name'" (click)="sortBy='name'">Sort By Name</button>  
+  <button  [class.active]="sortBy==='votes'" (click)="sortBy='votes'">Sort By Votes</button>  
+
+</div>
+
+
+<session-list  [sortBy]="sortBy"></session-list>
+
+
+
+// ***************** event-details.component.ts ******************
+export class EventDetailsComponent implements OnInit {
+  sortBy: string = 'votes'; // default value
+
+}
+
+
+
+
+
+
+// ****************** session-list.component.html ****************
+<div class="row" *ngFor="let session of visibleSessions">
+  <h6>{{session.name}}</h6>
+</div>
+
+
+
+
+// ****************** session-list.component.ts ****************
+
+// filtering Data - without pipes
+// we will do this inside component
+// we get data from parent component with @Input() decorator.
+
+export class SessionListComponent implements OnChanges {
+  @Input() sessions: ISession[];
+  @Input() sortBy: string;
+  visibleSessions: ISession[] = [];
+
+  ngOnChnages() {
+    if(this.sessions) {
+      this.sortBy === 'name' ? this.visibleSessions.sort
+        (sortByNameAsc) : this.visibleSessions.sort(sortByVotesDesc);
+    }
+  }
+
+  function sortByNameAsc(s1: ISession, s2: ISession) {
+      if (s1.name > s2.name) {
+          return 1;
+      } else if (s1.name === s2.name) {
+          return 0;
+      } else {
+          return -1;
+      }
+  }
+
+
+    function sortByVotesDesc(s1: ISession, s2: ISession) {
+        return s2.voters.length - s1.voters.length;
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **********************************************************************
+// **************************** Example 2 *******************************
+// **********************************************************************
+
+
+// ********************* users.module.ts ***********************
+import { NgModule } from "@angular/core";
+import { MaterialsModule } from "../materials/materials.module";
+import { UsersDataComponent } from "./users-list/users-data/users-data.component";
+import { UsersListComponent } from "./users-list/users-list.component";
+import { UsersRoutingModule } from "./users.routing.module";
+
+@NgModule({
+    declarations: [
+        UsersListComponent,
+        UsersDataComponent
+    ],
+    imports: [
+        UsersRoutingModule,
+        MaterialsModule
+    ]
+})
+
+export class UsersModule {
+
+}
+
+
+
+
+
+// ************************ users-list.component.html **************************
+<section class="users">
+    <div class="users-content">
+
+        <mat-tab-group mat-align-tabs="center" (selectedTabChange)="onSelecterTab($event)">
+            <mat-tab label="All">
+                <app-users-data [users]="usersSorted"></app-users-data>
+            </mat-tab>
+            <mat-tab label="By Name">
+              <app-users-data [users]="usersSorted"></app-users-data>
+            </mat-tab>
+            <mat-tab label="By Age">
+              <app-users-data [users]="usersSorted"></app-users-data>
+            </mat-tab>
+          </mat-tab-group>
+
+    </div>
+</section>
+
+
+
+
+
+
+
+// *********************** users-list.component.ts ***************************
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subscription } from "rxjs";
+import { UsersDataService } from "src/app/shared/users-data.service";
+import { UsersList } from "src/app/shared/users-interface";
+
+
+@Component({
+    selector: 'app-users-list',
+    templateUrl: './users-list.component.html',
+    styleUrls: ['./users-list.component.css']
+})
+
+export class UsersListComponent implements OnInit, OnDestroy {
+    constructor(
+        private usersDataService: UsersDataService
+    ) {}
+
+
+    usersSub!: Subscription;
+    users: UsersList[] = [];
+    usersSorted: UsersList[] = [];
+
+    ngOnInit(): void {
+        this.usersSub = this.usersDataService.getUsers().subscribe({
+            next: (response) => {
+                this.users = response;
+                console.log(this.users);
+                this.showAllUsers();
+            },
+            error: () => {
+                console.log('error in getUsers');
+            },
+            complete: () => {
+                console.log('getUsers completed ...');
+            }
+        })
+    }  
+
+    onSelecterTab(MatTabChangeEventObject: any) {
+        console.log(MatTabChangeEventObject.index);
+        this.sortata(MatTabChangeEventObject.index);
+    }
+
+    sortata(labelIndex: number) {
+        console.log(labelIndex);
+        console.log(this.usersSorted);
+        
+        switch (labelIndex) {
+            case 0:
+                this.showAllUsers();
+                break;
+            case 1:
+                this.filterByName();
+                break;
+            case 2:
+                this.filterByAge();  
+                return;  
+            default:
+                this.showAllUsers();
+                break;
+        }
+    }
+
+    filterByName() {
+        this.usersSorted = this.users.slice(0);
+        this.usersSorted.sort((a:any, b: any) => {
+            // 'a' and 'b' - returns user object
+            const nameA = a.name.toUpperCase();
+            const nameB = b.name.toUpperCase();
+    
+            if(nameA < nameB) {
+                return -1;
+            }
+
+            if (nameA > nameB) {
+                return 1;
+            }
+
+            // name must be equal
+            return 0;
+        });
+        
+    }
+
+    filterByAge() {
+        this.usersSorted = this.users.slice(0);
+        this.usersSorted.sort((a: any, b: any) => {
+          return a.age - b.age;
+        } );
+    }
+
+    showAllUsers() {
+        this.usersSorted = this.users.slice(0); // copy object
+    }
+
+    
+    ngOnDestroy(): void {
+        this.usersSub.unsubscribe();
+    }
+
+}
+
+
+
+
+
+
+
+
+// **************************** users-data.component.ts ************************
+import { Component, Input } from "@angular/core";
+import { UsersList } from "src/app/shared/users-interface";
+
+@Component({
+    selector: 'app-users-data',
+    templateUrl: './users-data.component.html',
+    styleUrls: ['./users-data.component.css']
+})
+
+export class UsersDataComponent {
+    @Input() users!: UsersList[];
+    displayedColumns: string[] = ['id', 'name', 'age', 'email', 'phoneNumber'];
+
+    constructor() {}
+
+}
+
+
+
+
+
+
+
+
+
+// ************************** users-data.component.html **********************
+<div class="table-data">
+    <table mat-table [dataSource]="users" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+    
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th  mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+    
+      <!-- Weight Column -->
+      <ng-container matColumnDef="age">
+        <th mat-header-cell *matHeaderCellDef> Age </th>
+        <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+      </ng-container>
+    
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="phoneNumber">
+          <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+          <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+
+
+
+
+
+
+
+  
+
+
+

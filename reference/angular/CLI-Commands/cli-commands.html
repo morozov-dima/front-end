@@ -1,0 +1,301 @@
+<!-- 
+    ******************* new project ********************
+    1. create new project with CLI.
+    2. '--defaults' use defaults settings for our new project.
+    3. '--routing' create routing module for our app.
+    4. '--skip-tests' skip tests in our app.
+    5. '--dry-run' run our CLI commant in preview.
+    6. 'myapp' name of our app.
+    7. 'ng new' create new app commant in CLI.
+    8. run again current command but without '--dry-run',
+       you can also use '-d'.
+    9. this CLI command will crate our project and install
+       all the dependencies it needs.
+ -->
+ng new myapp --defaults --routing --skip-tests --dry-run
+ng new myapp --defaults --routing --skip-tests --d
+
+
+
+
+
+
+
+<!-- 
+    ***************** production build ********************
+    1. after current build result files will be in 'dist' folder.
+    2. 'ng build --prod' for old Angular versions.
+    3. 'ng build --configuration production' for new Angular versions.
+    4. current build will optimize our code for production.
+    5. this build use AOT compilation ,which means it will already pass
+       all the angular templates and turn them into 'vanilla JS'.
+    6. 'dist' forlder will be created. This content will be uploaded to server.
+    7. By default, the ng build command uses the production configuration
+       so this is default: 'ng build --configuration=production' and 
+       you can use just 'ng build'.
+    8. you need update base from index.html with CLI when you upload files to production.
+ -->
+ ng build
+ ng build --configuration=production --base-href /my-cool-app/
+
+
+
+
+
+<!-- 
+    ***************** run Angular project locally ********************
+    1. you can add '--live-reload false' this will disable live reload
+       when we save our code.
+ -->
+ ng serve
+ ng serve --live-reload false
+
+
+
+
+
+
+
+<!-- 
+    ***************** add new directive ********************
+    1. you can create your own directives.
+    2. CLI will automaticly add our directives to declarations array in app.module.ts
+ -->
+ ng g directive directive-name
+
+
+
+
+
+
+<!-- 
+    ***************** Module ********************
+    1. 'ng g module posts/posts-routing --flat -d'
+       create routing module for already existing module.
+ -->
+ ng generate module posts --dry-run
+ ng g module posts -d
+ ng g module posts/posts-routing --flat -d
+
+
+
+ 
+
+<!-- 
+    ***************** new component ********************
+    1. 'g' this is alias of 'generate'.
+    2. 'c' this is alias of 'component'.
+    3. '--skip-tests' skip tests in our app.
+    4. '--dry-run' run our CLI commant in preview.
+    5. 'products' name of our component.
+    6. run again current command but without '--dry-run',
+       you can also use '-d'.
+    7. we can see example where we create new component
+       in case we have more then one module in our app.
+       this is command that we need to run:
+       'ng g c auth/signup --module app.module -d'   
+ -->
+ng generate component  products --skip-tests  --dry-run
+ng g c products --skip-tests -d
+ng g c auth/signup --module app.module -d
+ng g c page-not-found --module app.module --skip-tests -d
+
+
+
+
+
+<!-- 
+    ***************** new service ********************
+ -->
+ng generate service shared/products --skip-tests --dry-run
+ng g service shared/products --skip-tests -d
+
+
+
+
+
+<!-- 
+    ***************** new interface ********************
+ -->
+ng g interface shared/data-model -d
+
+
+
+
+
+<!-- 
+    ***************** Add Angular Material ********************
+    1. you can ass Angular Material to your project.
+    2. 'https://material.angular.io/' link to site
+ -->
+ng add @angular/material
+
+
+
+
+
+
+<!-- 
+    ***************** Add Angular Bootstrap ********************
+ -->
+ng add @ng-bootstrap/ng-bootstrap
+
+
+
+
+
+
+<!-- 
+    ***************** Add bootstrap ********************
+    1. instead install bootstrap with CLI you can just add
+       css to your project 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
+       in 'angular.json' in styles block. 
+    2. instead install bootstrap with CLI you can just add
+       js to your project 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js'
+       in 'angular.json' in scripts block. 
+    3. link to bootstrap: https://getbootstrap.com/   
+ -->
+npm install bootstrap
+
+
+
+
+
+
+
+
+<!-- 
+    ***************** Add Service Workers ********************
+    1. you can add 'service workers' to your app for offline work.
+    2. First run 'ng add @angular/pwa'
+    3. Then run 'npm install -g http-server'
+    4. Then go to 'cd dist/angular-pwa/'
+    5. Then run 'http-server -p 8081'
+    6. Open your App in 'http://127.0.0.1:8081/'
+    7. We also can create production build: 'ng build --prod'
+ -->
+ng add @angular/pwa
+npm install -g http-server
+cd dist/angular-pwa/
+http-server -p 8081
+
+
+
+
+
+
+
+
+<!-- 
+    ******************** Unit tests ***********************
+    1. Runs unit tests in a project.
+ -->
+ ng test
+ 
+ 
+
+
+
+
+
+ 
+
+<!-- 
+    ********************AngularFire ***********************
+    1. Install AngularFire
+    2. Link to site : https://github.com/angular/angularfire
+ -->
+ npm i @angular/fire
+
+
+
+
+
+
+<!-- 
+    ******************** Git ***********************
+ -->
+ git status
+ git add .
+ git status
+ git commit -m "file updates"
+ git push morozov-dima/front-end 
+
+
+
+
+
+<!-- 
+    ******************** NgRx ***********************
+ -->
+ ng add @ngrx/store@latest 
+ ng add @ngrx/effects@latest
+ ng add @ngrx/store-devtools@latest
+
+
+
+
+<!-- 
+    ***************  CLI ******************
+    1. Install angular CLI
+    2. Before we install 'angular CLI' we need download
+       latest version on 'node'.
+ -->
+npm install -g @angular/cli
+
+
+
+
+
+
+
+<!-- 
+    *************** Install node_modules ******************
+    1. add '--force' if you have some problem with
+       instalation.
+ -->
+npm install --force
+
+
+
+
+
+
+
+
+<!-- 
+    *************** Install ngx-bootstrap ******************
+    1. https://ng-bootstrap.github.io/#/home
+    2. you can install it with ng add.
+    https://ng-bootstrap.github.io/#/home
+ -->
+ ng add ngx-bootstrap
+
+
+
+
+
+
+
+
+
+
+<!-- 
+    *************** Install Bootstrap widgets ******************
+    1.  https://ng-bootstrap.github.io/#/home
+    2. https://www.youtube.com/watch?v=nZbZ5AHZJnc
+    3. TO DO - try install and run
+ -->
+ ng add @ng-bootstrap/ng-bootstrap
+
+
+
+
+
+
+<!-- 
+    *************** Install Lodash JavaScript utility library ******************
+    // this is external JavaScript package.
+ -->
+ npm i --save lodash
+ npm install --save @types/lodash

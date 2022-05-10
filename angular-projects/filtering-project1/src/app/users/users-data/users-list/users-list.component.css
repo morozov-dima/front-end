@@ -1,0 +1,10 @@
+.table-content {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    width: 100%;
+}
+
+.table-content table {
+    width: 100%;
+}

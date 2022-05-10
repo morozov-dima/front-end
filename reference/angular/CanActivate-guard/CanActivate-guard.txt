@@ -1,0 +1,99 @@
+
+
+
+// ################################################################################
+// ################################## Example 1: ##################################
+// ################################################################################
+
+
+
+
+// **************************** auth.guard.ts *****************************
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { Observable } from "rxjs";
+import { map, take } from "rxjs/operators";
+import { AuthService } from "./auth.service";
+
+// you could also add it to providers app module.
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+
+    constructor(private authService: AuthService, private router: Router) {}
+
+    // we will use this 'canActivate' guard in front of the routes that we want to protect.
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+       return this.authService.user.pipe(
+           // we will use 'take(1)' to make shure that we always just take the
+           // latest user value and then unsubscribe for this guard execution
+           take(1),
+           map(user => {
+               // convert a tru-ish value, like an object, so anything that is not null or undefines to 'true'
+               // so to real booleat.
+               // or that converts false-ish value like 'null' or 'undefined' to a true boolean.
+               const isAuth = !!user;
+               if (isAuth) {
+                return true;
+               }
+               // otherwise we will return 'UrlTree'. redirect to current path.
+               return this.router.createUrlTree(['/auth']);
+           })
+       ); 
+    }
+}
+
+
+
+
+
+
+
+
+// ***************************** recipes-routing.module.ts  **********************************
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth/auth.guard';
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
+import { RecipeStartComponent } from './recipe-start/recipe-start.component';
+import { RecipesResolverService } from './recipes-resolver.service';
+import { RecipesComponent } from './recipes.component';
+
+
+// constant with our 'recipes' routes.
+const routes: Routes = [
+  {
+    // here we use '' because we load our module lazy load.
+    // and we already have 'recipes' path in 'app-routing.module.ts'
+    path: '',
+    component: RecipesComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', component: RecipeStartComponent },
+      { path: 'new', component: RecipeEditComponent },
+      {
+        path: ':id',
+        component: RecipeDetailComponent,
+        resolve: [RecipesResolverService]
+      },
+      {
+        path: ':id/edit',
+        component: RecipeEditComponent,
+        resolve: [RecipesResolverService]
+      }
+    ]
+  }
+];
+
+
+
+// for each new feature module we add 'NgModule' decorator.
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+
+  // we need export 'RouterModule' module
+  exports: [RouterModule]
+})
+export class RecipesRoutingModule {}

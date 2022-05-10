@@ -1,0 +1,28 @@
+header {
+    width:100%;
+}
+
+header .header-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.header-content-items {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.header-content-item {
+    padding:10px;
+    list-style: none;
+}
+
+.header-content-item a {
+    text-decoration: none;
+}
+
+.header-content-item a:hover {
+    text-decoration: underline;
+}
