@@ -1,3 +1,9 @@
+// **********************************************************************
+// **************************** Example 1 *******************************
+// **********************************************************************
+
+
+
 import { createReducer, on } from "@ngrx/store";
 import * as usersActions from './users.actions';
 import { UsersState } from "./users.interface";
