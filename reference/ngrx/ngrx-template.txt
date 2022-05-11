@@ -1,4 +1,11 @@
-// Exaample 1:
+// **********************************************************************
+// **************************** Example 1 *******************************
+// **********************************************************************
+
+
+
+
+
 
 // *****************************************
 // ************ app.module.ts **************
@@ -346,6 +353,11 @@ export class ProductEffects {
       )
     );
   });
+
+
+
+
+  
 }
 
 
@@ -841,6 +853,415 @@ export const getShowUserName = createSelector(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **********************************************************************
+// **************************** Example 2 *******************************
+// **********************************************************************
+
+// In this example we can see two feature modules that lazy loaded + preloaded.
+// effect connect to lazy-loaded module.
+
+// *********************** app.module.ts ***********************
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing.module';
+import { HeaderComponent } from './header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HeaderComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+
+// ********************** app/state/app.state.ts **************************
+import { UsersState } from "../users/state/users.interface";
+
+export interface State {
+    users: UsersState
+}
+
+
+
+
+// ******************** app/users/users.module.ts **********************
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { StoreModule } from "@ngrx/store";
+import { UsersShellComponent } from "./users-shell/users-shell.component";
+import { UsersRoutingModule } from "./users.routing.module";
+import { HttpClientModule } from '@angular/common/http';
+
+import { usersReducer } from './state/users.reducer';
+import { EffectsModule } from "@ngrx/effects";
+import { UsersEffect } from "./state/users.effect";
+import { UsersDataService } from "./state/users.service";
+
+
+@NgModule({
+    declarations: [
+        UsersShellComponent
+    ],
+    providers: [
+        UsersDataService 
+    ],
+    imports: [
+        CommonModule,
+        UsersRoutingModule,
+        HttpClientModule,
+        StoreModule.forFeature('users', usersReducer),
+        EffectsModule.forFeature([
+            UsersEffect
+        ])
+    ]
+})
+
+export class UsersModule {}
+
+
+
+
+
+
+// *********************** app/users/users.routing.module.ts *******************
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { UsersShellComponent } from "./users-shell/users-shell.component";
+
+const routes: Routes = [
+    { path: '', component: UsersShellComponent }
+];
+
+@NgModule({
+    imports: [
+       RouterModule.forChild(routes)     
+    ],
+    exports: [
+
+    ]
+})
+
+export class UsersRoutingModule {
+
+}
+
+
+
+
+
+// ******************** app/users/users-shell/users-shell.component.ts ***********************
+import { Component, OnInit } from "@angular/core";
+
+import { Store } from '@ngrx/store';
+import { State } from '../../state/app.state';
+
+import * as UsersActions from '../state/users.actions';
+import { Users } from '../state/users.interface';
+import { UsersDataService } from "../state/users.service";
+
+@Component({
+    selector: 'app.users-shell',
+    templateUrl: './users-shell.component.html',
+    styleUrls: ['./users-shell.component.css']
+})
+
+export class UsersShellComponent implements OnInit {
+    constructor(
+        private store: Store<State>
+    ) {}
+
+    
+
+    ngOnInit(): void {  
+        this.store.dispatch(UsersActions.loadUsers());     
+   
+    }
+
+}
+
+
+
+
+
+
+// **************************** app/users/state/users.actions.ts **********************
+import { createAction, props } from '@ngrx/store';
+import { Users } from './users.interface';
+
+export const loadUsers = createAction(
+    '[Users Page] Load Users'
+);
+
+export const loadUsersSuccess = createAction(
+    '[Users Page] Load Users Success',
+    props<{ users: Users[] }>()
+);
+
+export const loadUsersFailure = createAction(
+    '[Users Page] Load Users Failure',
+    props<{ error: string }>()
+);
+
+
+
+
+
+
+
+// **************************** app/users/state/users.effect.ts **********************
+import { Injectable } from "@angular/core";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { UsersDataService } from "./users.service";
+import { catchError, map, mergeMap, of } from "rxjs";
+
+import * as UsersAction from './users.actions';
+
+@Injectable()
+
+export class UsersEffect {
+
+
+    constructor(
+        private actions$: Actions,
+        private usersDataService: UsersDataService
+    ) {}
+
+    loadUsers$ = createEffect(() => {
+            return this.actions$.pipe(
+                ofType(UsersAction.loadUsers),
+                mergeMap(() => 
+                this.usersDataService.getUsers().pipe(
+                    map((users) => UsersAction.loadUsersSuccess( {users} )),
+                    catchError((error) =>
+                        of(UsersAction.loadUsersFailure({ error }))
+                    )
+                )
+            )
+          );
+       }
+    );
+
+}
+
+
+
+
+
+
+// **************************** app/users/state/users.interface.ts **********************
+export interface UsersState {
+    users: Users[];
+    error: string;
+}
+
+
+export interface Users {
+    id: number;
+    name: string;
+    username: string;
+    email: string;
+    phone: string;
+    website: string;
+    type: string;
+}
+
+
+
+
+// **************************** app/users/state/users.reducer.ts **********************
+import { createReducer, on } from "@ngrx/store";
+import * as usersActions from './users.actions';
+import { UsersState } from "./users.interface";
+
+
+const initialState: UsersState = {
+    users: [],
+    error: ''
+};
+
+export const usersReducer = createReducer(
+    initialState,
+    on(
+        usersActions.loadUsersSuccess,
+        (state, action): UsersState => {
+            return {
+                ...state,
+                users: action.users,
+                error: ''
+            }
+        }
+    ),
+    on(
+       usersActions.loadUsersFailure,
+       (state, action): UsersState => {
+           return {
+               ...state,
+               users: [],
+               error: action.error
+           }
+       }
+    )
+);
+
+
+
+
+
+
+
+// **************************** app/users/state/users.selectors.ts **********************
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UsersState } from './users.interface';
+
+
+const getUsersFeatureState = createFeatureSelector<UsersState>('users');
+
+
+export const getAllUsers = createSelector(
+    getUsersFeatureState,
+    state => state.users
+);
+
+
+
+
+
+
+// **************************** app/users/state/users.service.ts **********************
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, Observable, throwError } from "rxjs";
+import { Users } from "./users.interface";
+
+@Injectable()
+
+export class UsersDataService {
+    constructor(
+        private http: HttpClient
+    ) {}
+
+
+     getUsers(): Observable<Users[]> {
+        const url = '../../../assets/json-file.json'; 
+        return this.http.get<Users[]>(url).pipe(
+            catchError(this.handleError)
+        );
+     }
+     
+     
+
+     private handleError(error: HttpErrorResponse) {
+        if (error.status === 0) {
+            console.log('An error occured:', error.error);
+        } else {
+            console.log(`Backend returned code ${error.status}, body was: `, error.error);
+        }
+        return throwError(() => new Error('Something bad happend; please try again later.'));
+     }   
+
+}
+
+
+
+
+
+// ************************* assests/json-file.json *************************
+[
+    {
+      "id": 1,
+      "name": "Leanne Graham",
+      "username": "Bret",
+      "email": "Sincere@april.biz",
+      "phone": "1-770-736-8031 x56442",
+      "website": "hildegard.org",
+      "type": "beginner"
+    },
+    {
+      "id": 2,
+      "name": "Ervin Howell",
+      "username": "Antonette",
+      "email": "Shanna@melissa.tv",
+      "phone": "010-692-6593 x09125",
+      "website": "anastasia.net",
+      "type": "beginner"
+    },
+    {
+      "id": 3,
+      "name": "Clementine Bauch",
+      "username": "Samantha",
+      "email": "Nathan@yesenia.net",
+      "phone": "1-463-123-4447",
+      "website": "ramiro.info",
+      "type": "intermediate"
+    }
+  ]
 
 
 

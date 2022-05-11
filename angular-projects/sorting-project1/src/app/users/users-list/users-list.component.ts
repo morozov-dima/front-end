@@ -38,10 +38,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     onSelecterTab(MatTabChangeEventObject: any) {
         console.log(MatTabChangeEventObject.index);
-        this.sortata(MatTabChangeEventObject.index);
+        this.sortData(MatTabChangeEventObject.index);
     }
 
-    sortata(labelIndex: number) {
+    sortData(labelIndex: number) {
         console.log(labelIndex);
         console.log(this.usersSorted);
         
