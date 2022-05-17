@@ -22,10 +22,5 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('sorting-filtering-ngrx-pr1');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('sorting-filtering-ngrx-pr1 app is running!');
-  });
+
 });

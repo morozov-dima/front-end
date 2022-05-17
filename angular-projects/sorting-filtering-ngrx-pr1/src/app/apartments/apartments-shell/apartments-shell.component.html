@@ -46,13 +46,13 @@
             <mat-tab label="All"> 
               <!-- list of apartments begin -->
               <div class="apartments-result">
-                <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
-                    <mat-card-title>{{filteredApartment.name}}</mat-card-title>
-                    <p>Price: {{filteredApartment.price}}</p>
-                    <p>reviewScore : {{filteredApartment.reviewScore}}</p>
-                    <p>starRating : {{filteredApartment.starRating}}</p>
-                    <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
-                    <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                <mat-card class="apartment-card" *ngFor="let apartment of apartments">
+                    <mat-card-title>{{apartment.name}}</mat-card-title>
+                    <p>Price: {{apartment.price}}</p>
+                    <p>reviewScore : {{apartment.reviewScore}}</p>
+                    <p>starRating : {{apartment.starRating}}</p>
+                    <p>freeCancellation: {{apartment.freeCancellation}}</p>
+                    <p>distanceFromClosestBeach : {{apartment.distanceFromClosestBeach}}</p>
                 </mat-card>
               </div>
               <!-- list of apartments end -->
@@ -60,13 +60,13 @@
             <mat-tab label="Price (highest first) "> 
               <!-- list of apartments begin -->
               <div class="apartments-result">
-                <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
-                    <mat-card-title>{{filteredApartment.name}}</mat-card-title>
-                    <p>Price: {{filteredApartment.price}}</p>
-                    <p>reviewScore : {{filteredApartment.reviewScore}}</p>
-                    <p>starRating : {{filteredApartment.starRating}}</p>
-                    <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
-                    <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                <mat-card class="apartment-card" *ngFor="let apartment of apartments">
+                    <mat-card-title>{{apartment.name}}</mat-card-title>
+                    <p>Price: {{apartment.price}}</p>
+                    <p>reviewScore : {{apartment.reviewScore}}</p>
+                    <p>starRating : {{apartment.starRating}}</p>
+                    <p>freeCancellation: {{apartment.freeCancellation}}</p>
+                    <p>distanceFromClosestBeach : {{apartment.distanceFromClosestBeach}}</p>
                 </mat-card>
               </div>
               <!-- list of apartments end -->
@@ -74,13 +74,13 @@
             <mat-tab label="Distance from closest beach">
                 <!-- list of apartments begin -->
                 <div class="apartments-result">
-                  <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
-                      <mat-card-title>{{filteredApartment.name}}</mat-card-title>
-                      <p>Price: {{filteredApartment.price}}</p>
-                      <p>reviewScore : {{filteredApartment.reviewScore}}</p>
-                      <p>starRating : {{filteredApartment.starRating}}</p>
-                      <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
-                      <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                  <mat-card class="apartment-card" *ngFor="let apartment of apartments">
+                      <mat-card-title>{{apartment.name}}</mat-card-title>
+                      <p>Price: {{apartment.price}}</p>
+                      <p>reviewScore : {{apartment.reviewScore}}</p>
+                      <p>starRating : {{apartment.starRating}}</p>
+                      <p>freeCancellation: {{apartment.freeCancellation}}</p>
+                      <p>distanceFromClosestBeach : {{apartment.distanceFromClosestBeach}}</p>
                   </mat-card>
                 </div>
                 <!-- list of apartments end -->
@@ -89,13 +89,13 @@
             <mat-tab label="Stars (highest first) "> 
                 <!-- list of apartments begin -->
                 <div class="apartments-result">
-                  <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
-                      <mat-card-title>{{filteredApartment.name}}</mat-card-title>
-                      <p>Price: {{filteredApartment.price}}</p>
-                      <p>reviewScore : {{filteredApartment.reviewScore}}</p>
-                      <p>starRating : {{filteredApartment.starRating}}</p>
-                      <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
-                      <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                  <mat-card class="apartment-card" *ngFor="let apartment of apartments">
+                      <mat-card-title>{{apartment.name}}</mat-card-title>
+                      <p>Price: {{apartment.price}}</p>
+                      <p>reviewScore : {{apartment.reviewScore}}</p>
+                      <p>starRating : {{apartment.starRating}}</p>
+                      <p>freeCancellation: {{apartment.freeCancellation}}</p>
+                      <p>distanceFromClosestBeach : {{apartment.distanceFromClosestBeach}}</p>
                   </mat-card>
                 </div>
                 <!-- list of apartments end -->

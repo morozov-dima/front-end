@@ -1,0 +1,1394 @@
+
+
+// *****************************************************************
+// *************************** Example  ****************************
+// *****************************************************************
+
+
+// ********************* apartments-service.ts *********************
+
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, map, Observable, throwError } from "rxjs";
+import { Apartment } from "./apartments-interface";
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class ApartmentsService {
+
+    constructor(
+        private http: HttpClient
+    ) {}
+
+    getApartments(): Observable<Apartment[]> {
+        const url = '../../../assets/apartments-data.json';
+        return this.http.get<Apartment[]>(url).pipe(
+            map(
+                (responseApartments) => {
+                    // we will add id to our response
+                    let updatedApartmentsResponse: Apartment[] = [];
+                    let id: number = 1;
+                    for (const responseApartment of responseApartments) {
+                        console.log(responseApartment);
+                        updatedApartmentsResponse.push({...responseApartment, id});
+                        id++;
+                    }
+                    return updatedApartmentsResponse;
+                }
+            ),
+            catchError(this.handleError)
+        );
+    }
+
+    private handleError(error: HttpErrorResponse) {
+        if (error.status === 0) {
+            console.log('An error occured:', error.error);
+        } else {
+            console.log(`Backend returned code ${error.status}, body was: `, error.error);
+        }
+        return throwError(() => new Error('Something bad happend; please try again later.'));
+     }   
+
+}
+
+
+
+
+
+
+// ************************** apartments-interface.ts ****************************
+export interface ApartmentsState {
+    apartments: Apartment[];
+    error: string;
+}
+
+export interface Apartment {
+    id?: number;
+    name: string;
+    reviewScore: number;
+    starRating: number;
+    price: number;
+    freeCancellation: boolean;
+    distanceFromClosestBeach : number;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************************
+// *************************** Example  ****************************
+// *****************************************************************
+
+// ************************* interface *****************************
+export interface CommentsModel {
+    postId: number;
+    id: number;
+    name: string;
+    email: string;
+    body: string;
+}
+
+
+// ************************  service file ************************
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { CommentsModel } from './data-model';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class ApiDataService {
+
+  constructor(private http: HttpClient) { }
+
+  getComments() {
+    const url = 'https://jsonplaceholder.typicode.com/comments/?_limit=5';
+    const httpOptions = {
+      headers: new HttpHeaders({
+         'Content-Type':  'application/json',
+         Authorization: 'my-auth-token'
+      }),
+    };
+    
+    return this.http.get<CommentsModel[]>( url, httpOptions ).pipe(
+      catchError(this.handleError));
+  }
+
+
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `,
+        error.error
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
+  }
+
+
+
+
+}
+
+
+
+
+// *********************** component js *************************
+export class CommentsComponent implements OnInit, OnDestroy {
+  comments: CommentsModel[] = [];
+  commentsSubscription!: Subscription;
+
+  constructor(private apiDataService: ApiDataService) { }
+
+  ngOnInit(): void {
+    this.commentsSubscription = this.apiDataService.getComments().subscribe({
+      next: commentsData => {
+        this.comments = commentsData;
+      },
+      error: () => {
+        console.error('getComments subscribsion error');
+      },
+      complete: () => {
+        console.log('getComments subscribsion completed ...');
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.commentsSubscription.unsubscribe();
+  }
+}
+
+
+
+
+// *********************** app.module.ts ************************
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************************
+// *************************** Example  ****************************
+// *****************************************************************
+
+
+// ************ data.model.ts *************
+export interface UsersModel {
+    id: number;
+    name: string;
+    username: string;
+    email: string;
+    city: string;
+    street: string;
+}
+
+
+
+
+
+// ************ api.data.service **************
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UsersModel } from './data.model';
+import { map } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+
+export class ApiDataService {
+
+  constructor(private http: HttpClient) { }
+
+  getUsersAddress() {
+    const url = 'https://jsonplaceholder.typicode.com/users/?_limit=3';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+         Authorization: 'my-auth-token'
+      })
+    };
+    return this.http.get<any>( url, httpOptions )
+    // 1. here we want change our response.
+    // 2. we will use map() operator in order to change object 
+    //    that we get from server as responce.
+    // 3. we declare new object 'userAddressData' and we will
+    //    assign to this object values from object that we get 
+    //    from response.
+    .pipe(
+      map(
+        usersData => {
+         // create new object according to our interface. 
+         const userAddressData: UsersModel[] = []; 
+       
+         // 1. we loop for our array of objects.
+         // 2. 'userData' is each object in our array.
+         for (const userData of usersData) {
+           // 1. we assign new vakues to 'userAddressData'
+           //    array of objects. Then we will return this new object
+           //    and in html page we will subscribe to current method and we will
+           //    get new updated object according to our 'UsersModel' interface.
+           userAddressData.push({
+            id: userData.id,
+            name: userData.name,
+            username: userData.username,
+            email: userData.email,
+            city: userData.address.city,
+            street: userData.address.street
+           });
+           
+         }
+          // 1. here we return new updated object.
+          // 2. this object take only part of values from object 
+          //    that we get from response.
+          return userAddressData;
+        }
+      )
+    );
+  }
+}
+
+
+
+
+// ********************** users.component.ts **********************
+import { OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { ApiDataService } from '../shared/api-data.service';
+import { UsersModel } from '../shared/data.model';
+
+
+@Component({
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
+})
+
+export class UsersComponent implements OnInit, OnDestroy {
+
+  usersAddressSubscription!: Subscription;
+
+  usersAddressData: UsersModel[] = [];
+
+  constructor(private apiDataService: ApiDataService) { }
+
+  ngOnInit(): void {
+    
+    // user address data
+    this.usersAddressSubscription = this.apiDataService.getUsersAddress().subscribe({
+      next: usersAddressData => {
+        this.usersAddressData = usersAddressData;
+        console.log(this.usersAddressData);
+      },
+      error: () => {
+        console.log('error in getUsersAddress');
+      }
+    });
+
+
+  }
+
+  ngOnDestroy(): void {
+    this.usersSubscription.unsubscribe();
+    this.usersAddressSubscription.unsubscribe();
+  }
+
+}
+
+
+
+
+
+// ********************* users.component.html ***********************
+<section class="users">
+    <table>
+        <thead>
+            <tr>
+                <th>Id:</th>
+                <th>Name:</th>
+                <th>UserName:</th>
+                <th>Email:</th>
+                <th>City:</th>
+                <th>Street:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let userAddressData of usersAddressData">
+                <td >{{userAddressData.id}}</td>
+                <td>{{userAddressData.name}}</td>
+                <td>{{userAddressData.username}}</td>
+                <td>{{userAddressData.email}}</td>
+                <td>{{userAddressData.city}}</td>
+                <td>{{userAddressData.street}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+
+// ******************** users.component.html ********************
+.users table td {
+    border: 1px solid #000000;
+    padding:5px;
+    text-align: center;
+}
+
+.users table th {
+    border: 1px solid #000000;
+    padding:5px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************************
+// *************************** Example  ****************************
+// *****************************************************************
+
+// ************ products.service.ts *************
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { Product } from './products.interface';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class ProductService {
+  private productsUrl = 'https://jsonplaceholder.typicode.com/posts?_limit=3';
+
+  constructor(private http: HttpClient) { }
+
+
+  getProducts(): Observable<Product[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.http.get<Product[]>(this.productsUrl, httpOptions)
+      .pipe(
+        tap(data => console.log(JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
+
+
+
+  deleteProduct(id: number): Observable<{}> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    const url = `${this.productsUrl}/${id}`;
+    return this.http.delete<Product>(url, httpOptions)
+      .pipe(
+        tap(data => console.log('deleteProduct: ' + id)),
+        catchError(this.handleError)
+      );
+  }
+
+
+
+  updateProduct(product: Product): Observable<Product> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    const url = `${this.productsUrl}/${product.id}`;
+    return this.http.put<Product>(url, product, httpOptions).pipe(
+        tap(() => console.log('updateProduct: ' + product.id)),
+        // Return the product on an update
+        map(() => product),
+        catchError(this.handleError)
+      );
+  }
+
+
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+
+
+
+
+
+}
+
+
+
+// *********** products.interface.ts ************
+export interface Product {
+    userId: number;
+    id: number;
+    title: string;
+    body: string;
+}
+
+
+
+
+
+
+// ********** products.component.ts ************
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ProductService } from '../shared/product.service';
+
+
+@Component({
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
+})
+export class ProductsComponent implements OnInit, OnDestroy {
+
+  constructor(
+    private productService : ProductService ) { }
+
+
+  productsSubscription!: Subscription;
+
+  ngOnInit(): void {
+      this.productsSubscription = this.productService.getProducts().subscribe(
+        products => {
+          console.log(products);
+          
+        }
+      );
+  }
+
+
+  ngOnDestroy(): void {
+    this.productsSubscription.unsubscribe();
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************************
+// *************************** Example  ****************************
+// *****************************************************************
+
+
+// ************** user.data.service.ts ***************
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+
+import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UserModel } from './user-model';
+
+@Injectable({
+  providedIn: 'root',
+})
+
+export class UserDataService {
+  constructor(private http: HttpClient) {}
+
+
+  getUsers(): Observable<UserModel[]> {
+    const url = 'https://jsonplaceholder.typicode.com/users/?_limit=3';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+         Key: 'XYZ123KPY483',
+      }),
+    };
+    return this.http.get<UserModel[]>(url, httpOptions).pipe(
+      map((userData) => {
+        const newUserData: UserModel[] = [];
+        let index = 1;
+        for (const uData of userData) {
+          newUserData.push({
+            id: index,
+            name: uData.name,
+            username: uData.username,
+            email: uData.email,
+          });
+          index++;
+        }
+
+        return newUserData;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+
+
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `,
+        error.error
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
+  }
+
+
+
+}
+
+
+
+
+
+
+
+// ************** app.component.ts ***************
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserDataService } from './user-data.service';
+import { UserModel } from './user-model';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent implements OnInit, OnDestroy {
+  userDataSubscription!: Subscription;
+  userData: UserModel[] = [];
+  isError: boolean = false;
+
+  constructor(private userDataService: UserDataService) {}
+
+
+
+  onLoadData() {
+    this.userDataSubscription = this.userDataService.getUsers().subscribe({
+      next: (data) => {
+        this.userData = data;
+        console.log(data);
+        
+      },
+      error: () => {
+        this.isError = true;
+      },
+      complete: () => {
+        console.log('Data was loaded ...');
+      },
+    });
+  }
+
+  
+
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.userDataSubscription.unsubscribe();
+  }
+}
+
+
+
+
+
+
+
+
+
+// ************** app.component.html ***************
+<section class="users">
+  <div class="users-content">
+    <p>
+      <span>Here will be user data</span>
+    </p>
+
+    <ul *ngIf="!isError">
+      <li *ngFor="let u of userData">
+        {{ u.name }} - {{ u.username }} - {{ u.email }} - {{ u.id }}
+      </li>
+    </ul>
+
+    <p *ngIf="isError">Error on page !!!</p>
+
+    <p>
+      <button (click)="onLoadData()">Load Data</button>
+    </p>
+  </div>
+</section>
+
+
+
+
+
+
+// ************** app.component.css ***************
+.users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+   
+    
+.users-content {
+    width: 500px;
+    border:1px solid red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************************
+// *************************** Example  ****************************
+// *****************************************************************
+
+
+// ************** users.service.ts ***************
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError, map } from "rxjs";
+import { HandleErrorService } from "src/app/shared/error/error.service";
+import { User } from "./users.interface";
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class UsersService {
+    constructor(
+      private http: HttpClient,
+      private handleErrorService: HandleErrorService
+    ) {}
+
+    getUsers() {
+        const url = 'https://jsonplaceholder.typicode.com/users/?_limit5';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Key': 'DFDFDFDFDFD34343DDSDSDS'
+            })
+        };
+        return this.http.get<User[]>(url, httpOptions).pipe(
+            map((responseData) => {
+                const userArray: User[] = [];
+                for (const key in responseData) {
+                    if (responseData.hasOwnProperty(key)) {
+                        userArray.push({ ...responseData[key], network: 'best games' });
+                    }
+                }
+                return userArray;
+            }),
+            catchError(this.handleErrorService.handleError)
+        );
+    }
+}
+
+
+
+
+// ************** users-shell.component.html ***************
+import { Component, OnInit } from "@angular/core";
+import { UsersService } from "../state/users.service";
+
+@Component({
+    selector: 'app-users-shell',
+    templateUrl: './users-shell.component.html',
+    styleUrls: ['./users-shell.component.css']
+})
+
+export class UsersShellComponent implements OnInit {
+    constructor(private usersService: UsersService) {}
+
+    ngOnInit(): void {
+        this.usersService.getUsers().subscribe(
+            (usersResponse) => {
+                console.log(usersResponse);
+                
+            }
+        );
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ********************************************************************
+// *************************** Example 6: *****************************
+// ********************************************************************
+
+
+// ************ user-data.service.ts *************
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Posts } from './user-data';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class UserDataService {
+
+
+  constructor(private http: HttpClient) { }
+
+
+  // get posts data from server
+  getPosts(): Observable<Posts[]> {
+    const url = 'https://jsonplaceholder.typicode.com/posts';
+    const options = {
+      // You can also create HTTP parameters directly
+      // from a query string by using the fromString variable.
+      params: new HttpParams({
+        fromString: '_limit=2'
+      }),
+      // Adding and updating headers
+      headers: new HttpHeaders({
+        Authorization: 'my-auth-token-xysdgfhejwjfe'
+      })
+    };
+
+    return this.http.get<Posts[]>(url, options).pipe(
+      catchError(errorRes => {
+        throw 'error in get posts response' + errorRes;
+      })
+    );
+  }
+
+}
+
+
+
+
+// ************ user-data.ts *************
+export interface Posts {
+    userId: number;
+    id: number;
+    title: string;
+    body: string;
+}
+
+
+
+
+// ************ promotions.component.ts *************
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
+import { Posts } from '../shared/user-data';
+import { UserDataService } from '../shared/user-data.service';
+
+@Component({
+  selector: 'app-promotions',
+  templateUrl: './promotions.component.html',
+  styleUrls: ['./promotions.component.css']
+})
+export class PromotionsComponent implements OnInit, OnDestroy {
+
+  posts: Posts[] = [];
+  posts$Subscription!: Subscription;
+
+  showError: boolean = false;
+
+  constructor(private userDataService: UserDataService) { }
+
+  ngOnInit(): void {
+    //get posts data from service
+    this.posts$Subscription = this.userDataService.getPosts().subscribe({
+      next: (postsData) => {
+        this.posts = postsData;
+      },
+      error: () => {
+        // show error message
+        this.showError = true;
+      },
+      complete: () => {
+        console.log('get posts subscribe completed !!!');
+      }
+    }); 
+ }
+
+
+
+  ngOnDestroy(): void {
+      this.posts$Subscription.unsubscribe();
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************************************
+// ****************************** Example 7: ********************************
+// **************************** Get to 3 users ******************************
+// **************************************************************************
+
+
+// ******************** user-data.service.ts *************************
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { map } from "rxjs";
+
+
+interface Todos {
+    userId: number;
+    id: number;
+    title: string;
+    completed: string;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class UserDataService {
+    constructor(private http: HttpClient) {}
+
+
+    getTop3Users() {
+        
+        const url = 'https://jsonplaceholder.typicode.com/todos/?_limit=10';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'key': 'DGDFDFDUIOILJGHDGRR4545454'
+            })
+        };
+        return this.http.get<Todos[]>(url, httpOptions).pipe(
+            // ************** get top 3 users **************
+            map((usersData) => {
+                // list of top 3 users
+                const usersDataTop3: Todos[] = []; 
+
+                // we will compare each user id with this value
+                let currentIndex: number = 0;
+
+                // in this empty array we will save list of indexes
+                let listOfIndexes: number[] = [];
+   
+                // loop over top 3 users
+                for (let index = 0; index < 3; index++) {
+                    // loop over array of objects
+                    for (const userData of usersData) {
+                        // if current user id bigger that 'currentIndex'
+                        // or this user already appear in our 'listOfIndexes' array.
+                        if((userData.id > currentIndex) && (listOfIndexes.indexOf(userData.id) === -1)) {
+                            currentIndex = userData.id;
+                        }
+                    }
+        
+                    // add big index to 'listOfIndexes' array
+                    listOfIndexes.push(currentIndex)
+                
+                    // find current object from array of objects according to 'currentIndex'
+                    let getUserDataByIndex: any = usersData.find(el => el.id === currentIndex );
+
+                    // add object with big id to output array.
+                    usersDataTop3.push(getUserDataByIndex);
+
+                    currentIndex = 0;
+                }
+
+                // return new updated array of objects
+                return usersDataTop3;
+            })
+        );
+    }
+
+}
+
+
+
+
+
+
+// ******************* app-assignment6.component.ts *******************
+import { Component, OnInit } from '@angular/core';
+import { UserDataService } from './user-data.service';
+
+@Component({
+  selector: 'app-assignment6',
+  templateUrl: './assignment6.component.html',
+  styleUrls: ['./assignment6.component.css']
+})
+export class Assignment6Component implements OnInit {
+
+  constructor(
+    private userDataService: UserDataService
+  ) { }
+
+
+
+  ngOnInit(): void {
+    this.userDataService.getTop3Users()
+    .subscribe((response) => {
+      console.log(response);
+    });
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************************************
+// ****************************** Example 8: ********************************
+// ******************** Get only part of data from json *********************
+// **************************************************************************
+
+// 1. in this example we send data to 'https://swapi.dev/api/people/' free online REST API
+
+
+
+// ************************* get-data.service.ts ****************************
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { UserData } from './user-data.interface';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GetDataService {
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+
+    getData() {
+      const url = 'https://swapi.dev/api/people/';
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      return this.http.get<any>(url, httpOptions).pipe(
+        map((response) => {
+          const responseResults = response.results;
+          
+          // we can take part of our response with js .map method
+          const outputResult = responseResults.map((data: any, index: number) => { // <- #################### map() js method #####################
+            return { userId: index + 1, userName: data.name}
+          });
+
+          return outputResult;
+        })
+      );
+    }
+
+}
+
+
+
+
+
+// *********************** user-data.interface.ts ***********************
+export interface UserData {
+    userId: number;
+    userName: string;
+}
+
+
+
+
+
+
+// *********************** assignment1.component.ts *********************
+import { Component, OnInit } from '@angular/core';
+import { GetDataService } from '../shared/get-data.service';
+
+@Component({
+  selector: 'app-assignment1',
+  templateUrl: './assignment1.component.html',
+  styleUrls: ['./assignment1.component.css']
+})
+export class Assignment1Component implements OnInit {
+
+  constructor(
+    private getDataService: GetDataService
+  ) { }
+
+  ngOnInit(): void {
+    this.getDataService.getData().subscribe({
+      next: (response) => {
+        console.log('Observer got a next value: ' + response);
+        console.log(response);
+      },
+      error: (err) => {
+        console.log('Observer got an error:' + err);
+      },
+      complete: () => {
+        console.log('Observer got a complete notification');
+      }
+    });
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// **************************************************************************
+// **************************************************************************
+// ****************************** Example 9: ********************************
+// **************************************************************************
+// **************************************************************************
+
+
+
+// step 1: get data from back-end.
+// step 2: use rxjs operators map and pipe.
+// step 3: use js map function for array finter.
+// step 4: use js filter function for find current user per id.
+
+
+// ***************************** getUsers.service.ts ************************
+import { Injectable } from "@angular/core";
+import { GetUsersInterface } from "./getUsers.interface";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, find, map, Observable, of, pipe } from "rxjs";
+import { Subject } from 'rxjs';
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class UsersService {
+
+    constructor(
+        private http: HttpClient
+    ) {}
+
+
+    getUsers() {
+        const url = 'https://swapi.dev/api/people/?format=json';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        };
+        return this.http.get<any>(url, httpOptions).pipe(
+            map(response => {
+                const listOfUsers = response.results;
+                const newUsersArray = listOfUsers.map((user: any, index: number) => {
+                    return { userId: index + 1, userName: user.name}
+                });
+                
+                return newUsersArray;
+            })
+        );
+    }
+
+
+
+
+
+    getUser(id: number) {
+        const url = 'https://swapi.dev/api/people/?format=json';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        };
+        return this.http.get<any>(url, httpOptions).pipe(
+            map(response => {
+                const listOfUsers = response.results;
+                const newUsersArray = listOfUsers.map((user: any, index: number) => {
+                    return { userId: index + 1, userName: user.name}
+                });
+
+                const userPerId = newUsersArray.find((user: any) => user.userId === id);
+                
+                return userPerId;
+            })
+        );
+    }
+    
+}
+
+
+
+
+
+
+// ****************************** getUsers.interface.ts ***************************
+export interface GetUsersInterface {
+    userId: number;
+    userName: string;
+}
+
+
+
+
+
+
+// **************************** user.component.ts ***************************
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UsersService } from 'src/app/shared/getUsers.service';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
+export class UserComponent implements OnInit, OnDestroy {
+
+  constructor(
+    private route: ActivatedRoute,
+    private usersService: UsersService
+  ) { }
+
+  userId: number = 0;
+  userName: string = '';  
+  userSub!: Subscription;  
+
+  ngOnInit(): void {
+   
+    // subscribe to page params,  if page url : 'http://localhost:4200/users/1'
+    // result will be : {id: '1'}
+    this.route.params.subscribe(
+      (pageParamsResponse) => {
+        this.userId = parseInt(pageParamsResponse['id']);
+        
+        this.userSub = this.usersService.getUser(this.userId).subscribe(
+          response => {
+            console.log(response);
+            this.userName = response.userName;
+          }
+        );
+      }
+    );
+
+  }
+
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
+
+}
+
+
+
+
+
+// ************************ user.component.html **********************
+<p>
+    user Id : {{ userId }}
+</p>
+
+<p>
+    user name : {{ userName }}
+</p>
+
+
+
+
+
+

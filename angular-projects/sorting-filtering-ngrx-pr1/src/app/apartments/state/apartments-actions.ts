@@ -21,26 +21,9 @@ export const showAllApartments = createAction(
 );
 
 
-export const filterApartmentsByStars = createAction(
-    '[Apartments Page] Filter Apartments By Stars',
-    props<{ starRating: StarRating }>()
-);
-
 export const filterApartmentsByDistance = createAction(
     '[Apartments Page] Filter Apartments By Distance',
     props<{ distanceFromBeach: DistanceFromBeach }>()
-);
-
-export const sortApartmentsByPriceHighestFirst = createAction(
-    '[Apartment Page] Sort Apartments By Price Highest First'
-);
-
-export const sortApartmentsByDistanceFromClosestBeach = createAction(
-    '[Apartment Page] Sort Apartments By Distance From Closest Beach'
-);
-
-export const sortApartmentsByStarsHighestFirst = createAction(
-    '[Apartment Page] Sort Apartments By Stars Highest First'
 );
 
 

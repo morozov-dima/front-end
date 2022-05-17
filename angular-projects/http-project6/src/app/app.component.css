@@ -1,0 +1,84 @@
+.content {
+    width: 100%;
+}
+
+.content-internal {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.form-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.profileForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    padding:10px;
+}
+
+.user-input-block {
+    border: 1px solid #dcd1d1;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+
+.dbButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 10px;
+}
+
+.database-connections {
+    border:1px solid green;
+}
+
+.btn {
+    border:1px solid orange;
+}
+
+
+
+
+
+.content-template {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.content-internal-template {
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    border: 1px solid #9a9a9a;
+    width: 960px;
+}
+
+.top-block {
+    padding: 10px;
+    border: 1px solid #9a9a9a;
+    width: 50%;
+}
+
+.bottom-block {
+    padding: 10px;
+    border: 1px solid #9a9a9a;
+    width: 50%;
+}

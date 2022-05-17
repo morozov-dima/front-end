@@ -5,9 +5,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 
 
 import * as ApartmentsActions from '../state/apartments-actions';
-import { selectAllApartments,
-        // selectApartmentsSortedByStarRating,
-         selectFilteredApartments
+import { selectAllApartments
          } from "../state/apartments-selectors";
 
 
@@ -25,7 +23,6 @@ export class ApartmentsShellComponent implements OnInit {
     
 
     apartments: Apartment[] = [];
-    filteredApartments: Apartment[] = [];
     
     starRating = new FormGroup({
         starRating_1: new FormControl(false),
@@ -49,7 +46,8 @@ export class ApartmentsShellComponent implements OnInit {
         // select all apartments from 'store'
         this.selectAllApartmentsFromStore();
 
-    }    
+    }  
+    
 
 
     loadApartmentsFromBackEnd() {
@@ -59,54 +57,86 @@ export class ApartmentsShellComponent implements OnInit {
     selectAllApartmentsFromStore() {
         this.store.select(selectAllApartments).subscribe(
             (apartmentsResponse) => {
-                this.filteredApartments = apartmentsResponse;
+                this.apartments = apartmentsResponse;
             }
         );
     }
 
-    // TO DO
+
     onCheckboxChangeStarRating(starRatingObject: any) {
-        this.store.dispatch(ApartmentsActions.filterApartmentsByStars({ starRating: starRatingObject }));  
-        this.store.select(selectFilteredApartments).subscribe((response) => {
-            console.log(response);
-            this.filteredApartments = response;
-        });
+        
+        this.store.select(selectAllApartments).subscribe(
+            response => {
+                let updatedApartments: Apartment[] = []; 
+                for (const property in starRatingObject) {
+                        let lastCharIndex = property.indexOf('_');
+                        let starRatingIndex = parseInt(property.substring(lastCharIndex + 1));
+                     if (starRatingObject[property]) {
+                        for (const apartment of response) {
+                            if (apartment.starRating === starRatingIndex) {
+                                // add relevant object to the 'updatedApartments' local array.
+                                updatedApartments.push(apartment);
+                            }
+                        }
+                    }
+                }
+                if (updatedApartments.length !== 0) {
+                    // if at least one checkbox is checked.
+                    this.apartments = updatedApartments;
+                } 
+                
+            }
+        );
+
+       
+ 
     }
 
 
-    // TO DO
+
     onCheckboxChangeDistanceFromBeach(distanceFromBeachObject: any) {
          this.store.dispatch(ApartmentsActions.filterApartmentsByDistance({ distanceFromBeach: distanceFromBeachObject }));
-        // this.store.select(selectFilteredApartments).subscribe((response) => {
-        //     console.log(response);
-        //     this.filteredApartments = response;
-        // });
+
     }
 
 
     changeTabs(event: any) {
+       // console.log(this.apartments);
         switch (event.index) {
-            case 0: // All
-                this.store.dispatch(ApartmentsActions.showAllApartments());
+            case 0: // All (filter by name)
+
+                let allUpdatedApartment: Apartment[] = [];
+                allUpdatedApartment = this.apartments.slice(0);
+                allUpdatedApartment.sort((a: any, b: any) => a.id - b.id);
+                console.log(allUpdatedApartment);
+                
+                this.apartments = allUpdatedApartment;
                 break;
             case 1: // Price (highest first)
-                this.store.dispatch(ApartmentsActions.sortApartmentsByPriceHighestFirst());
+
+                let priceUpdatedApartment: Apartment[] = [];
+                priceUpdatedApartment = this.apartments.slice(0);
+                priceUpdatedApartment.sort((a: any, b: any) => b.price - a.price);
+                console.log(priceUpdatedApartment);
+                this.apartments = priceUpdatedApartment;
                 break; 
             case 2: // Distance from closest beach
-                this.store.dispatch(ApartmentsActions.sortApartmentsByDistanceFromClosestBeach());
+
+                let distanceUpdatedApartment: Apartment[] = [];
+                distanceUpdatedApartment = this.apartments.slice(0);
+                distanceUpdatedApartment.sort((a: any, b: any) => a.distanceFromClosestBeach - b.distanceFromClosestBeach);
+                console.log(distanceUpdatedApartment);
+                this.apartments = distanceUpdatedApartment;
                 break;      
-            case 3: // Distance from closest beach
-                this.store.dispatch(ApartmentsActions.sortApartmentsByStarsHighestFirst())
-                break;          
-        
-            default:
-                this.store.dispatch(ApartmentsActions.showAllApartments());
-                break;
+            case 3: // Stars (highest first)
+                let starsUpdatedApartment: Apartment[] = [];
+                starsUpdatedApartment = this.apartments.slice(0);
+                starsUpdatedApartment.sort((a: any, b: any) => b.starRating - a.starRating);
+                console.log(starsUpdatedApartment);
+                this.apartments = starsUpdatedApartment;
+                break;   
         }
 
-        this.store.select(selectFilteredApartments).subscribe((response) => {
-            this.filteredApartments = response;
-        });
         
     }
 

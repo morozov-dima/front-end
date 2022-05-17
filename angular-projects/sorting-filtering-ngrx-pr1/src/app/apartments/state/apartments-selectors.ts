@@ -11,36 +11,14 @@ export const selectAllApartments = createSelector(
 );
 
 
-
-export const selectApartmentsByPriceHighestFirst = createSelector(
+export const selectApartmentsSortedByStarsHighestFirst = createSelector(
     selectApartmentsFeatureState,
     (state) => {
-        return state.filteredApartments;
+        let updatedApartment: Apartment[] = [];
+        updatedApartment = state.apartments.slice(0);
+        updatedApartment.sort((a: any, b: any) => a.price - b.price);
+        return updatedApartment;
     }
 );
 
-
-export const selectFilteredApartments = createSelector(
-    selectApartmentsFeatureState,
-    (state) => {
-        return state.filteredApartments;
-    }
-);
-
-
-export const selectApartmentsByDistanceFromClosestBeach = createSelector(
-    selectApartmentsFeatureState,
-    (state) => {
-        return state.filteredApartments;
-    }
-);
-
-
-
-export const selectApartmentsByStarsHighestFirst = createSelector(
-    selectApartmentsFeatureState,
-    (state) => {
-        return state.filteredApartments;
-    }
-);
 

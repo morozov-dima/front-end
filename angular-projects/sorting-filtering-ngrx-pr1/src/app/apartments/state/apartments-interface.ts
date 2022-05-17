@@ -1,7 +1,6 @@
 export interface ApartmentsState {
     apartments: Apartment[];
     error: string;
-    filteredApartments: Apartment[]
 }
 
 export interface Apartment {

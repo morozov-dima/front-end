@@ -1,0 +1,28 @@
+// ************************ Example 1 **************************
+
+/* 
+ * The properties of the .bordered class will now appear in both #menu a and .post a.
+ * (Note that you can also use #ids as mixins.)
+ * 
+ */
+
+.bordered {
+  border-top: dotted 1px black;
+  border-bottom: solid 2px black;
+}
+
+
+
+#menu a {
+  color: #111;
+  .bordered();
+}
+
+.post a {
+  color: red;
+  .bordered();
+}
+
+
+
+

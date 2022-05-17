@@ -24,7 +24,7 @@ import { EffectsModule } from '@ngrx/effects';
     FooterComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     NgbModule,
     AppRoutingModule,

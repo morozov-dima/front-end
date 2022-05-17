@@ -1,7 +1,5 @@
 
 
-// ################## Example 1: ##################
-
 // ******************* interface **********************
 export interface CommentsModel {
     postId: number;
@@ -20,6 +18,7 @@ import { CommentsModel } from './data-model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiDataService {
 
   constructor(private http: HttpClient) { }
@@ -29,14 +28,12 @@ export class ApiDataService {
     const httpOptions = {
       headers: new HttpHeaders({
          'Content-Type':  'application/json',
-         Authorization: 'my-auth-token'
+          Authorization: 'my-auth-token'
       }),
     };
     
-    return this.http.get<CommentsModel[]>(
-      url,
-      httpOptions
-    ).pipe(catchError(this.handleError));
+    return this.http.get<CommentsModel[]>(url, httpOptions).pipe(
+      catchError(this.handleError));
   }
 
 

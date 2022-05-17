@@ -1,7 +1,3 @@
-// *****************************************************************
-// *************************** Example  ****************************
-// *****************************************************************
-
 
 // ********************* apartments-service.ts *********************
 
@@ -10,7 +6,9 @@ import { Injectable } from "@angular/core";
 import { catchError, map, Observable, throwError } from "rxjs";
 import { Apartment } from "./apartments-interface";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 
 export class ApartmentsService {
 
@@ -38,6 +36,8 @@ export class ApartmentsService {
         );
     }
 
+
+
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
             console.log('An error occured:', error.error);
@@ -47,6 +47,7 @@ export class ApartmentsService {
         return throwError(() => new Error('Something bad happend; please try again later.'));
      }   
 
+
 }
 
 
@@ -55,13 +56,8 @@ export class ApartmentsService {
 
 
 // ************************** apartments-interface.ts ****************************
-export interface ApartmentsState {
-    apartments: Apartment[];
-    error: string;
-}
-
 export interface Apartment {
-    id?: number;
+    id?: number; // optional
     name: string;
     reviewScore: number;
     starRating: number;

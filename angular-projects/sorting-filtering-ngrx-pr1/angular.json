@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sorting-filtering-ngrx-pr1",
+            "outputPath": "dist/sorting-filtering-ngrx-pr1/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -101,6 +101,64 @@
             ],
             "scripts": []
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/sorting-filtering-ngrx-pr1/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "sorting-filtering-ngrx-pr1:build:development",
+              "serverTarget": "sorting-filtering-ngrx-pr1:server:development"
+            },
+            "production": {
+              "browserTarget": "sorting-filtering-ngrx-pr1:build:production",
+              "serverTarget": "sorting-filtering-ngrx-pr1:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sorting-filtering-ngrx-pr1:build:production",
+              "serverTarget": "sorting-filtering-ngrx-pr1:server:production"
+            },
+            "development": {
+              "browserTarget": "sorting-filtering-ngrx-pr1:build:development",
+              "serverTarget": "sorting-filtering-ngrx-pr1:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

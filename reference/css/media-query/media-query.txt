@@ -1,5 +1,5 @@
 // Example 1
-// 1. this css block willbe for desktop. 
+// 1. this css block will be for desktop. 
 //
 /* Small devices (landscape phones, 576px and up) */
 @media screen and (min-width: 576px) {
