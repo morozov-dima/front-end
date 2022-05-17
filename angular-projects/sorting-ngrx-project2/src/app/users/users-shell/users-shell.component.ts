@@ -5,7 +5,7 @@ import { State } from '../../state/app.state';
 
 import * as UsersActions from '../state/users.actions';
 import { User } from '../state/users.interface';
-import { selectAllUsers, selectSortedUsers, selectUsersByAge, selectUsersByName } from "../state/users.selectors";
+import { selectAllUsers, selectUsersByAge, selectUsersByName } from "../state/users.selectors";
 
 
 
@@ -21,7 +21,7 @@ export class UsersShellComponent implements OnInit {
         private store: Store<State>
     ) {}
 
-    users: User[] = [];
+  
     usersSorted: User[] = [];
 
 
@@ -33,7 +33,6 @@ export class UsersShellComponent implements OnInit {
         // selectAllUsers selector
         this.store.select(selectAllUsers).subscribe(
             (responseUsers) => {
-                this.users = responseUsers;
                 this.usersSorted = responseUsers;
             }
         );

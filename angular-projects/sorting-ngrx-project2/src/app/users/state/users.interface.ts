@@ -1,8 +1,6 @@
 export interface UsersState {
     users: User[];
-    usersSorted: User[],
     error: string;
-    userType: string;
 }
 
 

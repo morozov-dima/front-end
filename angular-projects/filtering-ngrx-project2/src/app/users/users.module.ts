@@ -6,6 +6,11 @@ import { UsersTableComponent } from "./users-shell/users-table/users-table.compo
 import { UsersRoutingModule } from "./users.routing.module";
 import { HttpClientModule } from '@angular/common/http';
 import { UsersDataService } from "./state/users-data.service";
+import { EffectsModule } from "@ngrx/effects";
+
+import { usersReducer } from "./state/users-reducer";
+import { StoreModule } from "@ngrx/store";
+import { UsersEffect } from "./state/users.effects";
 
 @NgModule({
     providers: [
@@ -19,7 +24,11 @@ import { UsersDataService } from "./state/users-data.service";
         CommonModule,
         UsersRoutingModule,
         MeterialsModule,
-        HttpClientModule
+        HttpClientModule,
+        StoreModule.forFeature('users', usersReducer),
+        EffectsModule.forFeature([
+            UsersEffect
+        ])
     ]
 })
 

@@ -1,0 +1,116 @@
+
+
+
+<section class="apartments-shell">
+    <div class="apartment-side-menu">
+        <div class="apartments-filter">
+
+
+
+            <section class="example-section" [formGroup]="starRating">
+              <h4 [ngStyle]="{'font-weight': 'bold'}">Star Rating</h4>
+              <p><mat-checkbox (change)="onCheckboxChangeStarRating(starRating.value)" formControlName="starRating_1">1 stars</mat-checkbox></p>
+              <p><mat-checkbox (change)="onCheckboxChangeStarRating(starRating.value)" formControlName="starRating_2">2 stars</mat-checkbox></p>
+              <p><mat-checkbox (change)="onCheckboxChangeStarRating(starRating.value)" formControlName="starRating_3">3 stars</mat-checkbox></p>
+              <p><mat-checkbox (change)="onCheckboxChangeStarRating(starRating.value)" formControlName="starRating_4">4 stars</mat-checkbox></p>
+              <p><mat-checkbox (change)="onCheckboxChangeStarRating(starRating.value)" formControlName="starRating_5">5 stars</mat-checkbox></p>
+            </section>
+
+            <section class="example-section" [formGroup]="distanceFromBeach">
+              <h4 [ngStyle]="{'font-weight': 'bold'}">Distance from closest Beach</h4>
+              <p><mat-checkbox (change)="onCheckboxChangeDistanceFromBeach(distanceFromBeach.value)" formControlName="lessThan1Km">Less than 1 km</mat-checkbox></p>
+              <p><mat-checkbox (change)="onCheckboxChangeDistanceFromBeach(distanceFromBeach.value)" formControlName="lessThan3Km">Less than 3 km</mat-checkbox></p>
+              <p><mat-checkbox (change)="onCheckboxChangeDistanceFromBeach(distanceFromBeach.value)" formControlName="lessThan5Km">Less than 5 km</mat-checkbox></p>
+            </section>
+            
+            <section class="example-section" [formGroup]="starRating">
+              <h4>You chose:</h4>
+              {{starRating.value | json}}
+            </section>
+
+
+            <section class="example-section" [formGroup]="distanceFromBeach">
+              <h4>You chose:</h4>
+              {{distanceFromBeach.value | json}}
+            </section>
+
+
+  
+        </div>
+    </div>
+    <div class="apartments-content">
+        <div class="apartments-sorting">
+
+
+          <mat-tab-group (selectedTabChange)="changeTabs($event)">
+            <mat-tab label="All"> 
+              <!-- list of apartments begin -->
+              <div class="apartments-result">
+                <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
+                    <mat-card-title>{{filteredApartment.name}}</mat-card-title>
+                    <p>Price: {{filteredApartment.price}}</p>
+                    <p>reviewScore : {{filteredApartment.reviewScore}}</p>
+                    <p>starRating : {{filteredApartment.starRating}}</p>
+                    <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
+                    <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                </mat-card>
+              </div>
+              <!-- list of apartments end -->
+            </mat-tab>
+            <mat-tab label="Price (highest first) "> 
+              <!-- list of apartments begin -->
+              <div class="apartments-result">
+                <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
+                    <mat-card-title>{{filteredApartment.name}}</mat-card-title>
+                    <p>Price: {{filteredApartment.price}}</p>
+                    <p>reviewScore : {{filteredApartment.reviewScore}}</p>
+                    <p>starRating : {{filteredApartment.starRating}}</p>
+                    <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
+                    <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                </mat-card>
+              </div>
+              <!-- list of apartments end -->
+            </mat-tab>
+            <mat-tab label="Distance from closest beach">
+                <!-- list of apartments begin -->
+                <div class="apartments-result">
+                  <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
+                      <mat-card-title>{{filteredApartment.name}}</mat-card-title>
+                      <p>Price: {{filteredApartment.price}}</p>
+                      <p>reviewScore : {{filteredApartment.reviewScore}}</p>
+                      <p>starRating : {{filteredApartment.starRating}}</p>
+                      <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
+                      <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                  </mat-card>
+                </div>
+                <!-- list of apartments end -->
+            
+            </mat-tab>
+            <mat-tab label="Stars (highest first) "> 
+                <!-- list of apartments begin -->
+                <div class="apartments-result">
+                  <mat-card class="apartment-card" *ngFor="let filteredApartment of filteredApartments">
+                      <mat-card-title>{{filteredApartment.name}}</mat-card-title>
+                      <p>Price: {{filteredApartment.price}}</p>
+                      <p>reviewScore : {{filteredApartment.reviewScore}}</p>
+                      <p>starRating : {{filteredApartment.starRating}}</p>
+                      <p>freeCancellation: {{filteredApartment.freeCancellation}}</p>
+                      <p>distanceFromClosestBeach : {{filteredApartment.distanceFromClosestBeach}}</p>
+                  </mat-card>
+                </div>
+                <!-- list of apartments end -->
+            </mat-tab>
+          </mat-tab-group>
+
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+<button type="button" class="btn btn-primary">
+    Single Button
+  </button>

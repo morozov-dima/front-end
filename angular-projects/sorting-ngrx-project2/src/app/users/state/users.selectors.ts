@@ -12,12 +12,7 @@ export const selectAllUsers = createSelector(
 );
 
 
-export const selectSortedUsers = createSelector(
-    selectUsersFeatureState,
-    (state) => {
-       return state.usersSorted;
-    }
-);
+
 
 
 export const selectUsersByAge = createSelector(

@@ -1,0 +1,47 @@
+<header>
+  <div class="header-content">
+    
+    <!-- desktop menu begin -->
+    <div class="header-content-desktop">
+      <ul ngbNav  class="nav-tabs" [(activeId)]="active">
+        <li [ngbNavItem]="1" >
+          <a ngbNavLink routerLink="/" >Home</a>
+        </li>
+        <li [ngbNavItem]="2" >
+          <a ngbNavLink routerLink="/apartments" >Apartments</a>
+        </li>
+        <li [ngbNavItem]="3" >
+          <a ngbNavLink routerLink="/flights" >Flights</a>
+        </li>
+      </ul>
+    </div>
+    <!-- desktop menu end -->
+
+
+    <!-- mobile menu begin -->
+    <div class="header-content-mobile">
+      <ng-template #content let-offcanvas>
+        <div class="offcanvas-header">
+          <h4 class="offcanvas-title" id="offcanvas-basic-title">Booking Menu</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="mb-3">
+              <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="offcanvas.close()">Home</a>
+            </div>
+            <div class="mb-3">
+              <a routerLink="/apartments" routerLinkActive="active" (click)="offcanvas.close()">Apartments</a>
+            </div>
+            <div class="mb-3">
+              <a routerLink="/flights" routerLinkActive="active" (click)="offcanvas.close()">Flights</a>
+            </div>
+        </div>
+      </ng-template>
+      
+      <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Menu</button>
+    </div>
+    <!-- mobile menu end -->
+
+
+  </div>
+</header>

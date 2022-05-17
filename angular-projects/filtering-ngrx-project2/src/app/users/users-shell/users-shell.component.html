@@ -1,6 +1,6 @@
 <section class="users-shell">
     <div class="users-shell-content">
-        <mat-tab-group>
+        <mat-tab-group (selectedTabChange)="selectTab($event)">
             <mat-tab label="All"> 
                 <app-users-table [userData]="userData" ></app-users-table>
             </mat-tab>

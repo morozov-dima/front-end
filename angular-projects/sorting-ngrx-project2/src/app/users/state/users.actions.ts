@@ -26,3 +26,9 @@ export const showUsersSortedByName = createAction(
 export const showUsersSortedByAge = createAction(
     '[Users Page] Show Users Sorted By Age'
 );
+
+
+export const selectedTab = createAction(
+    '[Users Page] Select Tab',
+    props<{ selectedTab: number }>()
+);

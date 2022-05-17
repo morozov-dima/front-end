@@ -7,3 +7,9 @@ export interface UserData {
     website: string;
     type: string;
 }
+
+export interface UserState {
+    users: UserData[];
+    selectedTabName: string;
+    error: string;
+}

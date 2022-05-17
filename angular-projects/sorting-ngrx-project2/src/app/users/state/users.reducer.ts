@@ -5,9 +5,7 @@ import { UsersState } from "./users.interface";
 
 const initialState: UsersState = {
     users: [],
-    usersSorted: [],
-    error: '',
-    userType: 'all'
+    error: ''
 };
 
 export const usersReducer = createReducer(

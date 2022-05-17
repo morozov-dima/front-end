@@ -1,0 +1,60 @@
+.apartments-shell {
+    width: 100%;
+    display:flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.apartment-side-menu {
+    width: 100%;
+    padding: 5px;
+}
+
+.apartments-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.apartments-sorting {
+    padding: 5px;
+    margin:5px;
+}
+
+.apartments-result {
+    padding: 5px;
+    margin:5px;
+}
+
+.apartment-card {
+    margin:10px;
+}
+
+
+.example-section {
+    margin: 12px 0;
+  }
+
+
+
+
+@media screen and (min-width: 576px) {
+    .apartments-shell {
+        flex-direction: row;
+    }
+    .apartment-side-menu {
+        width: 30%;
+        padding: 5px;
+        margin:5px;
+    }
+    
+    .apartments-content {
+        width: 70%;
+        padding: 5px;
+        margin:5px;
+    }
+  }
+
+
+

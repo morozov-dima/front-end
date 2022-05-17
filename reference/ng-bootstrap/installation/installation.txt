@@ -1,0 +1,7 @@
+<!-- 
+    *************** Install Bootstrap widgets ******************
+    1.  https://ng-bootstrap.github.io/#/home
+    2. https://www.youtube.com/watch?v=nZbZ5AHZJnc
+    3. TO DO - try install and run
+ -->
+ ng add @ng-bootstrap/ng-bootstrap

@@ -1,0 +1,74 @@
+[
+    {
+      "name": "Cozy Place",
+      "reviewScore": 6.5,
+      "starRating": 5,
+      "price": 1500,
+      "freeCancellation": true,
+      "distanceFromClosestBeach" : 1200
+    },
+    {
+        "name": "Appartement Eilat vue mer",
+        "reviewScore": 4.5,
+        "starRating": 1,
+        "price": 1400,
+        "freeCancellation": true,
+        "distanceFromClosestBeach" : 1100
+      },
+      {
+        "name": "North Shore ApartmentOpens",
+        "reviewScore": 3.5,
+        "starRating": 5,
+        "price": 500,
+        "freeCancellation": false,
+        "distanceFromClosestBeach" : 1300
+      },
+      {
+        "name": "ERA home boutiqueOpen",
+        "reviewScore": 8.5,
+        "starRating": 3,
+        "price": 3000,
+        "freeCancellation": true,
+        "distanceFromClosestBeach" : 1220
+      },
+      {
+        "name": "Soof Boutique apartmentOpens",
+        "reviewScore": 9.5,
+        "starRating": 2,
+        "price": 2350,
+        "freeCancellation": true,
+        "distanceFromClosestBeach" : 600
+      },
+      {
+        "name": "amdar luxury apart residenceOpens",
+        "reviewScore": 9.5,
+        "starRating": 3,
+        "price": 1550,
+        "freeCancellation": false,
+        "distanceFromClosestBeach" : 7000
+      },
+      {
+        "name": "Villa Kibel ApartmentsOpens",
+        "reviewScore": 6.6,
+        "starRating": 2,
+        "price": 1450,
+        "freeCancellation": true,
+        "distanceFromClosestBeach" : 1330
+      },
+      {
+        "name": "Leisurely Apartment EilatOpens",
+        "reviewScore": 6.6,
+        "starRating": 2,
+        "price": 1455,
+        "freeCancellation": true,
+        "distanceFromClosestBeach" : 5000
+      },
+      {
+        "name": "Sea and SoulOpens",
+        "reviewScore": 6.5,
+        "starRating": 3,
+        "price": 1430,
+        "freeCancellation": false,
+        "distanceFromClosestBeach" : 1202
+      }
+]
