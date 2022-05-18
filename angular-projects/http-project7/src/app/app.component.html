@@ -1,0 +1,40 @@
+<section class="content">
+  <div class="content-internal">
+
+    <div class="add-todo">
+      <form [formGroup]="todosForm" class="addTodoForm" (ngSubmit)="onSubmit()">
+        <label for="addTodo">Todo</label>
+        <input
+          formControlName="todoName" 
+          id="todoName"
+          name="todoName"
+          type="text">
+        <button type="submit" [disabled]="!todosForm.valid">Save</button>
+     </form>
+    </div>
+
+
+    <div class="todo-results">
+      <div class="todo-results-buttons">
+        <button (click)="saveToDos()">Save to Database</button>
+        <button (click)="fetchToDos()">Fetch from Database</button>
+      </div>
+    </div>
+
+    <div class="todo-list">
+      <ul class="todo-list-items">
+        <li *ngFor="let todo of todos; index as i" class="todo-list-item">
+          <div>
+            <span>
+             {{todo.title}}
+            </span>
+            <button (click)="deleteTodo(i)">
+              delete
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>

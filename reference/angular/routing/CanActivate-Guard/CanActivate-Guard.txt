@@ -1,3 +1,109 @@
+// **************************************************************************
+// ******************************** Example  ********************************
+// **************************************************************************
+
+
+
+// ************************** canActivateUser.ts ***************************
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { Observable, of } from "rxjs";
+import { AuthService } from "./auth.service";
+
+@Injectable()
+
+export class CanActivateUser implements CanActivate, CanActivateChild {
+
+    constructor(
+        private authService: AuthService,
+        private router: Router
+        ) {}
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
+        boolean | 
+        UrlTree | 
+        Observable<boolean | 
+        UrlTree> | 
+        Promise<boolean | 
+        UrlTree> {
+        if (this.authService.isAuthUser) {
+            return of(true);   
+        } else {
+            // redirect to '/login?aceessDenied=true'
+            return this.router.createUrlTree(['/login'], {
+                queryParams: {aceessDenied: true}
+            });
+        }    
+        
+    }
+
+    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
+        boolean | 
+        UrlTree | 
+        Observable<boolean | 
+        UrlTree> | 
+        Promise<boolean | 
+        UrlTree> {
+            return this.canActivate(childRoute, state);
+    }
+    
+
+}
+
+
+
+
+
+// ************************* app.routing.module.ts ****************************
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { LoginComponent } from "./login/login.component";
+import { PostsComponent } from "./posts/posts.component";
+import { CanActivateUser } from "./shared/canActivateUser";
+import { UsersComponent } from "./users/users.component";
+import { WelcomeComponent } from "./welcome/welcome.component";
+
+const routes: Routes = [
+    { path: '', component: WelcomeComponent },
+    { path: 'users', component: UsersComponent, canActivate: [CanActivateUser] },
+    { path: 'posts', component: PostsComponent },
+    { path: 'login', component: LoginComponent }
+];
+
+@NgModule({
+    imports: [
+       RouterModule.forRoot(routes) 
+    ],
+    exports: [
+        RouterModule
+    ],
+    providers: [
+        CanActivateUser
+    ]
+})
+
+export class AppRoutingModule {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -85,4 +85,19 @@ export class AuthService {
 
 
 
+
+    private handleError(error: HttpErrorResponse) {
+        if (error.status === 0) {
+            console.log('An error occured:', error.error);
+        } else {
+            console.log(`Backend returned code ${error.status}, body was: `, error.error);
+        }
+        return throwError(() => new Error('Something bad happend; please try again later.'));
+    } 
+
+
+
+
+
+
 }
