@@ -1,0 +1,10 @@
+.welcome {
+    width: 100%;
+}
+
+.welcome-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding:10px;
+}

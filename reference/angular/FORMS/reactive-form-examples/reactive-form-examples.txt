@@ -1,6 +1,65 @@
 
 // ********************************************************************************
-// ********************************** Example 1 ***********************************
+// ***************************** Basic Form Example  ******************************
+// ********************************************************************************
+
+
+// ************************* app.component.ts ****************************
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements  {
+
+  profileForm = new FormGroup({
+    todoName: new FormControl('', Validators.required)
+  });
+
+
+  onSubmit() {
+    console.log(this.profileForm.value.todoName);
+  }
+
+}
+
+
+
+// ********************************* app.component.html ******************************
+
+  <form class="profileForm" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <input 
+      id="todo-name"
+      formControlName="todoName"
+      name="todoName"
+      type="text">
+      <button type="submit" [disabled]="!profileForm.valid">Save</button>
+  </form>
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ********************************************************************************
+// *********************************** Example  ***********************************
 // ********************************************************************************
 
 // ************* contact-us.component.html **************

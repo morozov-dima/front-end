@@ -1,0 +1,16 @@
+<section class="welcome">
+  <div class="welcome-content">
+    <mat-accordion>
+
+      <mat-expansion-panel *ngFor="let comment of comments">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{comment.name}} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>
+          {{comment.body}}
+        </p>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </div>
+</section>

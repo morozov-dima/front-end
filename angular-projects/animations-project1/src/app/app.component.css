@@ -1,0 +1,25 @@
+.content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.internal-content {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.click-button {
+    cursor: pointer;   
+}
+
+.textTop {
+    color:red;
+}
+
+.textBottom {
+    color:blue;
+}

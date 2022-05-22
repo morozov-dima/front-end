@@ -1,0 +1,27 @@
+.posts {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding:10px;
+}
+
+.posts-content {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+}
+
+
+
+
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
