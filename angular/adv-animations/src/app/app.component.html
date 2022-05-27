@@ -1,0 +1,30 @@
+<button (click)="isShown = !isShown">
+  Toggle Element
+</button>
+<p 
+  @showState
+  *ngIf="isShown">
+  You can see now!
+</p>
+
+
+
+
+<button (click)="width = width - 50">Shrink</button>
+<button (click)="animate = true">Animate me</button>
+<p 
+  [@animateState]="animate ? 'animate' : 'noAnimation'"
+  [ngStyle]="{
+  'width.px': width
+ }">Shrink me</p>
+<hr>
+<button (click)="onAddElement()">Add Element</button>
+<div
+  @listState
+  (@listState.start)="onAnimationStarted($event)"
+  (@listState.done)="onAnimationDone($event)" 
+  *ngFor="let testResult of testResults; index as i" 
+  class="test-result">
+ {{i}} - {{testResult}}
+</div>
+

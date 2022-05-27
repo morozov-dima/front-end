@@ -8,7 +8,10 @@
 
       <div 
         class="box"
-        [@divState]="state">some div</div>
+        [@divState]="state"
+        (@divState.start)="animationStarted($event)"
+        (@divState.done)="animationEnded($event)"
+        >some div</div>
       </div>
 
 
@@ -29,6 +32,7 @@
         <li
           class="list-group-item"
           (click)="onDelete(item)"
+          [@list1]
           *ngFor="let item of list">
           {{ item }}
         </li>
@@ -41,6 +45,7 @@
       <ul class="list-group">
         <li
           class="list-group-item"
+          [@list2]
           (click)="onDelete(item)"
           *ngFor="let item of list">
           {{ item }}

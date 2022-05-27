@@ -1,0 +1,68 @@
+/*
+    1. background-color -> what we want animate. if we have more animations we
+       can set 'all' , this means listen for all properties.
+    2. 0.5s     -> animation duration.
+       ease-out -> animation type.
+    3. 2s     -> delay (our animation will be after this delay)
+*/
+
+/* div {
+    width:100px;
+    height: 100px;
+    background-color: blue;
+    transition: all 0.5s ease-out 2s;
+} */
+
+/* div {
+    width:100px;
+    height: 100px;
+    background-color: blue;
+    transition: background-color 0.5s ease-out 2s;
+} */
+
+
+/*
+ this way we can chnage multiple transitions with different timings
+*/
+.div1 {
+    width:100px;
+    height: 100px;
+    background-color: blue;
+    transition: background-color 0.5s ease-out 2s, 
+                width 1s ease-in 0.2s;
+}
+
+.div2 {
+    width: 150px;
+    height: 75px;
+    background-color: green;
+}
+
+.animate {
+    animation: moved 4s ease-out forwards;
+}
+
+@keyframes moved {
+    0% {
+       transform: translateX(0) scale(1);
+       opacity: 1; 
+    }
+    50% {
+        transform: translateX(300px) scale(1.2);
+    }
+    75% {
+        transform: translateX(400px) scale(1);
+        opacity: 0.3
+    }
+    100% {
+        transform: translateX(400px) scale(1);
+        opacity: 0.1
+    }
+}
+
+
+.marked {
+    width: 300px;
+    /* transition: width 0.5s ease-out 2s; */
+}
+

@@ -11,6 +11,20 @@
 </p>
 
 
+  <div class="interesting">
+    <app-quote 
+      [ngStyle]="{
+        'width': isFavorite ? '600px' : '400px'
+      }"
+      (click)="isFavorite = !isFavorite"
+      [ngClass]="{'favorite super-favorite' : isFavorite}">
+    </app-quote>
+  </div>
+
+
+
+
+
 
 
 
@@ -36,6 +50,9 @@ getColor() {
 
 
 
+
+
+
 // *****************************************************************
 // *************************** Example  ****************************
 // *****************************************************************
@@ -51,8 +68,6 @@ getColor() {
         box
     </div>
    <button (click)="changeBg = !changeBg">Change Background</button>
-
-
 
 
 
@@ -141,4 +156,46 @@ export class Assignment3Component {
     this.clicks.push(currentDate);
   }
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************************
+// *************************** Example  ****************************
+// *****************************************************************
+
+
+// ********************** app.component.html ***********************
+<button>Shrink</button>
+
+<p [ngStyle]="{
+  'width.px': widthValue
+ }">Shrink me</p>
+
+
+
+
+
+
+// ************************ app.component.ts ***********************
+import { Component } from '@angular/core';
+import { showStateTrigger } from './animations';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  widthValue: number = 400;
 }
