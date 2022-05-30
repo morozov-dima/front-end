@@ -39,7 +39,7 @@ export const routeFadeStateTrigger = (params:any) => trigger('routeFadeState', [
 
 // *************************** users.component.ts *************************
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { routeFadeStateTrigger, routeSlideStateTrigger } from '../shared/route-animations';
+import { routeFadeStateTrigger } from '../shared/route-animations';
 
 @Component({
   selector: 'app-users',

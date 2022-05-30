@@ -1,0 +1,7 @@
+<!-- 
+    *************** run Unit Tests ******************
+    1. 'ng test' run basic tests.
+    2. 'ng test --code-coverage' run tests with 'coverage summary table'
+ -->
+ ng test
+ ng test --code-coverage
