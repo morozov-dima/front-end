@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ShortenPipe } from './custop.pipe';
+import { ShortenPipe } from './custom.pipe';
 
 @NgModule({
   declarations: [

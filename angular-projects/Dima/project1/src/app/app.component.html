@@ -2,3 +2,6 @@
 
 
 
+<div *ngFor="let highlight of highlights" [innerHtml]="text | shorten:highlight.from:highlight.to">
+
+</div>

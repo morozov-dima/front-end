@@ -1,28 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { GetData } from './data.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  constructor(private getData: GetData) {}
-  dataSub!: Subscription;
-  data: any[] = []; // TO DO add interface
+export class AppComponent implements OnInit {
+  constructor() {}
+  text: string = '';
+  highlights: any[] = [];
 
   ngOnInit(): void {
-      this.dataSub = this.getData.getData().subscribe(
-        response => {
-          console.log(response);
-          this.data = response;
+      this.text = ' DimaMorozovJSAngularCSS';
+      this.highlights = [
+        {
+            from: 2,
+            to: 4
+        },
+        {
+            from: 6,
+            to: 9
         }
-      );
+    ];
   }
-
-  ngOnDestroy(): void {
-    this.dataSub.unsubscribe();
-  }
-
 }
