@@ -41,6 +41,8 @@ export class AppRoutingModule { }
 
 
 
+
+
 // *********************** header.component.html ********************
 <a [routerLink]="['/slots/slot-games', 10, 'slotGame']">Load slotGame</a> <!-- /slots/slot-games/10/slotGame -->
 
