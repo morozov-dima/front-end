@@ -1,9 +1,0 @@
-.posts {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-}
-
-.posts-list li {
-    list-style: none;
-}

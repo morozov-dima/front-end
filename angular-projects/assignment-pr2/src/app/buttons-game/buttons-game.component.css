@@ -1,8 +1,0 @@
-.buttons-game-content {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 10px;
-    margin:10px;
-    background-color: cyan;
-}
