@@ -80,12 +80,9 @@ describe('RoutingComponent', () => {
   });
 
 
-
   it('should be defined', () => {
     expect(component).toBeDefined();
   });
-
-
 
 
   it('should navigate to posts if go back', () => {
@@ -99,5 +96,7 @@ describe('RoutingComponent', () => {
   });
 
 
-
 });
+
+
+
