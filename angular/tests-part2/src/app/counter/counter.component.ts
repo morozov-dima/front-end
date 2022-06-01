@@ -5,13 +5,13 @@ import {Component} from "@angular/core";
   templateUrl: './counter.component.html'
 })
 export class CounterComponent {
-  counter = 0
+  counter: number = 0;
 
   increment() {
-    this.counter++
+    this.counter++;
   }
 
   decrement() {
-    this.counter--
+    this.counter--;
   }
 }

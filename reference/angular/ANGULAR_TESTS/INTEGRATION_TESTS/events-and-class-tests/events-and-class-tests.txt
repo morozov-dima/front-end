@@ -1,3 +1,54 @@
+// *************************************************************************
+// ******************************** Example  *******************************
+// *************************************************************************
+
+
+
+
+// ************************** counter.component.html ***********************
+<h1 class="counter" [class.green]="counter % 2 === 0">
+    {{counter}}
+</h1>
+
+<button id="increment" (click)="increment()">
+    Increment
+</button>
+
+<button (click)="decrement()">
+    Decrement
+</button>
+
+
+
+
+
+
+// ************************ counter.component.ts ************************
+import {Component} from "@angular/core";
+
+@Component({
+  selector: 'app-counter',
+  templateUrl: './counter.component.html'
+})
+export class CounterComponent {
+  // we will test this property.  
+  counter: number = 0;
+
+  increment() {
+    this.counter++;
+  }
+
+  decrement() {
+    this.counter--;
+  }
+}
+
+
+
+
+
+
+// ********************** counter.component.spec.ts ********************
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -36,29 +87,6 @@ describe('CounterComponent', () => {
     // here we check if our 'component' was defined.
     expect(component).toBeDefined();
   });
-
-
-
-
-  it('should render counter property', () => {
-      // we set new value to number.
-      let num: number = 42;
-
-      // here we can go to our component and set counter value as 42.
-      component.counter = num;
-
-      fixture.detectChanges();
-
-      // 1. we need get access to 'h1' element and get 'counter' class. 
-      // 2. we will use 'By' object.
-      // 3. 'de' - debug element.
-      let de = fixture.debugElement.query(By.css('.counter'));
-      let el: HTMLElement = de.nativeElement;
-
-      // 'toContain' get string.
-      expect(el.textContent).toContain(num.toString());
-  }); 
-
 
 
 
