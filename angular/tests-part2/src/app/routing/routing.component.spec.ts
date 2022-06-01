@@ -24,8 +24,8 @@ describe('RoutingComponent', () => {
       providers: [
                 // instead 'Router' use 'RouterStub'
                 {provide: Router, useClass: RouterStub},
-                // instead 'ActivatedRoute' use 'ActivatedRouteStub'
-               {provide: ActivatedRoute, useClass: ActivatedRouteStub}
+                 // instead 'ActivatedRoute' use 'ActivatedRouteStub'
+                {provide: ActivatedRoute, useClass: ActivatedRouteStub}
       ]
     })
 
