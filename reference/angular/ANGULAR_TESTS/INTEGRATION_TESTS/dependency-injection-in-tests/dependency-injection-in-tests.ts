@@ -39,6 +39,8 @@ export class PostsService {
 
 
 
+
+
 // ************************ posts.component.ts ****************************
 import {Component, OnInit} from '@angular/core';
 import {PostsService} from './posts.service';
@@ -92,6 +94,9 @@ export class PostsComponent implements OnInit {
 
 
 
+
+
+
 // *********************** posts.component.spec.ts *********************
 import { HttpClientModule } from "@angular/common/http";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
@@ -121,7 +126,6 @@ describe('PostsComponent', () => {
 
 
 
-
   it('should fetch posts on ngOnInit', () => {
     // ngOnInit method should be called now automatically.
 
@@ -138,5 +142,6 @@ describe('PostsComponent', () => {
 
 
 
-
 })
+
+

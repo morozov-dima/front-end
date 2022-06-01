@@ -63,7 +63,6 @@ describe('CounterComponent', () => {
   let fixture: ComponentFixture<CounterComponent>;
 
 
-
   beforeEach(() => {
     // here we configure our testing module.
     TestBed.configureTestingModule({
@@ -78,7 +77,6 @@ describe('CounterComponent', () => {
     //fixture.debugElement;
     //fixture.nativeElement;
   })
-
 
 
 
@@ -107,7 +105,6 @@ describe('CounterComponent', () => {
 
 
 
-
   it('should increment counter if increment button was clicked', () => {
       let btn = fixture.debugElement.query(By.css('#increment'));
       
@@ -118,7 +115,6 @@ describe('CounterComponent', () => {
   });
 
 
-
-
-
 })
+
+

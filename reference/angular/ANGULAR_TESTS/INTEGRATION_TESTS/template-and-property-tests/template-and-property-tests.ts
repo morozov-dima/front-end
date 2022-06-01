@@ -22,6 +22,9 @@
 
 
 
+
+
+
 // ************************ counter.component.ts ************************
 import {Component} from "@angular/core";
 
@@ -41,6 +44,9 @@ export class CounterComponent {
     this.counter--;
   }
 }
+
+
+
 
 
 
