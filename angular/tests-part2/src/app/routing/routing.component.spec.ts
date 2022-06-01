@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { RoutingComponent } from './routing.component';
 
@@ -10,7 +10,17 @@ class RouterStub {
 }
 
 class ActivatedRouteStub {
-  params!: Observable<Params>
+  private subject = new Subject<Params>();
+
+  push(params: Params) {
+    this.subject.next(params);
+  }
+
+  get params() {
+    return this.subject.asObservable();
+  }
+
+ // params!: Observable<Params>
 }
 
 
@@ -51,6 +61,18 @@ describe('RoutingComponent', () => {
 
     expect(spy).toHaveBeenCalledOnceWith(['/posts']);
   });
+
+
+
+
+  // it('should navigate to 404 if id = 0', () => {
+  //   let router = fixture.debugElement.injector.get(Router);
+  //   let spy = spyOn(router, 'navigate');
+
+ 
+
+  //   expect(spy).toHaveBeenCalledWith(['/404']);
+  // });
 
 
 
