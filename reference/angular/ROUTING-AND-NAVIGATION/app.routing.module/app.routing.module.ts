@@ -1,6 +1,10 @@
-// Example 1:
+// *************************************************************************
+// ******************************** Example  *******************************
+// *************************************************************************
 
-// ********** app.routing.module.ts ***********
+
+
+// ************************ app.routing.module.ts **************************
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GamesComponent } from './games/games.component';
@@ -29,6 +33,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
 
 
@@ -36,7 +41,7 @@ export class AppRoutingModule { }
 
 
 
-// ************ header.component.html *************
+// *********************** header.component.html ********************
 <a [routerLink]="['/slots/slot-games', 10, 'slotGame']">Load slotGame</a> <!-- /slots/slot-games/10/slotGame -->
 
 
@@ -46,7 +51,7 @@ export class AppRoutingModule { }
 
 
 
-// ************ header.component.html *************
+// *********************** header.component.html ********************
 <header class="header">
     <div class="header-left">
         <ul class="header-left-items">
@@ -75,7 +80,7 @@ export class AppRoutingModule { }
 
 
 
-// ******************* app.module.ts ********************
+// ************************ app.module.ts **************************
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
