@@ -5,98 +5,66 @@
 
 
 
-// ************************** routing.component.ts ***********************
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
-@Component({
-  selector: 'app-routing',
-  templateUrl: './routing.component.html',
-  styleUrls: ['./routing.component.css']
-})
-export class RoutingComponent implements OnInit {
-
-  constructor(
-      private router: Router,
-      private route: ActivatedRoute
-    ) { }
-
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      if(params['id'] === 0) {
-        this.router.navigate(['/404']);
-      }
-    });
-  }
-
-  goBack() {
-    // navigate to posts page
-    this.router.navigate(['/posts']);
-  }
-
-}
+// ************************** navbar.component.html **********************
+<nav>
+    <a routerLink="/posts">Posts</a>
+    <a routerLink="/home">Home</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/about">About</a>
+</nav>
+  
 
 
 
 
 
 
-
-
-// ************************ routing.component.spec.ts *********************
+// ************************ navbar.component.spec.ts *********************
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { RouterLinkWithHref } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { RoutingComponent } from './routing.component';
+import { NavbarComponent } from './navbar.component';
 
-// we can create our classes.
-class RouterStub {
-  navigate(path: string) {}
-}
+describe('NavbarComponent', () => {
+  let component: NavbarComponent;
+  let fixture: ComponentFixture<NavbarComponent>;
 
-class ActivatedRouteStub {
-  params!: Observable<Params>
-}
-
-
-describe('RoutingComponent', () => {
-  let component: RoutingComponent;
-  let fixture: ComponentFixture<RoutingComponent>;
-
-  beforeEach(() => {
-     TestBed.configureTestingModule({
-      declarations: [ RoutingComponent ],
-      providers: [
-                // instead 'Router' use 'RouterStub'
-                {provide: Router, useClass: RouterStub},
-                 // instead 'ActivatedRoute' use 'ActivatedRouteStub'
-                {provide: ActivatedRoute, useClass: ActivatedRouteStub}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ NavbarComponent ],
+      imports: [
+        RouterTestingModule
       ]
     })
+    .compileComponents();
+  });
 
-    fixture = TestBed.createComponent(RoutingComponent);
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
 
-  it('should be defined', () => {
-    expect(component).toBeDefined();
-  });
+  it('should have link to posts page', () => {
+     let debugElements = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+     console.log(debugElements);
+     
+     let index = debugElements.findIndex(e => e.properties['pathname'] === '/posts');
+     console.log(index);
+      
 
-
-  it('should navigate to posts if go back', () => {
-    let router = fixture.debugElement.injector.get(Router);
-    let spy = spyOn(router, 'navigate');
-
-    // call 'goBack' method.
-    component.goBack();
-
-    expect(spy).toHaveBeenCalledOnceWith(['/posts']);
-  });
+     expect(index).toBeGreaterThan(-1);
+   });
 
 
 });
-
-
-
