@@ -5,28 +5,11 @@
 
 
 // ************************** assignment4.component.html ***************************
-<h3>assignment 4 - Property & Event Binding and View Encapsulation </h3>
-<ol>
-    <li class="done">Create three new components: GameControl, Odd and Even</li>
-    <li class="done">The GameControl Component should have buttons to start and stop the game</li>
-    <li>When starting the game, an event (holding a incrementing number) should get emitted each second (ref = setInterval())</li>
-    <li>The event should be listenable from outside the component</li>
-    <li>When stopping the game, no more events should get emitted (clearInterval(ref))</li>
-    <li>A new Odd component should get created for every odd number emitted, the same should happen for the Even Component (on even numbers)</li>
-    <li>Simply output Odd - NUMBER or Even - NUMBER in the two components</li>
-    <li>Style the element (e.g. paragraph) holding your output text differently in both components</li>
-  </ol>
-
-    <br>
-    <br>
 
   <section class="assignment4">
     <app-game-control (sendNumber)="sendNumberGetEvent($event)"></app-game-control>
-
     <app-even [evenNumber]="evenNumberValue"></app-even>
-
     <app-odd [oddNumber]="oddNumberValue" ></app-odd>
-
   </section>
 
 
@@ -34,30 +17,19 @@
 
 
 
-
-
-
-
 // ************************** assignment4.component.ts ***************************
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-assignment4',
   templateUrl: './assignment4.component.html',
   styleUrls: ['./assignment4.component.css']
 })
-export class Assignment4Component implements OnInit {
+export class Assignment4Component {
   @Input() evenNumberValue!: number;
   @Input() oddNumberValue!: number;
 
-  constructor() { }
-
-  ngOnInit(): void {
-
-  }
-
   sendNumberGetEvent(eventNumber: number) {
-    console.log(eventNumber);
     // odd numbers 1, 3, 5
     // even numbers 2, 4, 6
     eventNumber % 2 === 0 ? this.evenNumberValue = eventNumber : this.oddNumberValue = eventNumber

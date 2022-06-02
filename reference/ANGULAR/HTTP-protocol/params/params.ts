@@ -14,10 +14,7 @@ import { Posts } from './user-data';
 })
 
 export class UserDataService {
-
-
   constructor(private http: HttpClient) { }
-
 
       // get posts data from server
       getPosts(): Observable<Posts[]> {
@@ -40,7 +37,6 @@ export class UserDataService {
           catchError(this.handleError)
         );
       }
-
 
 }
 

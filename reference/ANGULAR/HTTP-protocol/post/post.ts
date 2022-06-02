@@ -3,11 +3,7 @@
 // *************************************************************************
 
 
-
-
-
 // ************************ here.service.ts **********************
-
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, throwError } from "rxjs";
@@ -17,9 +13,7 @@ import { catchError, Observable, throwError } from "rxjs";
 })
 
 export class HeroService {
-
   constructor(private http: HttpClient) { }
-
 
   /** POST: add a new hero to the database */
   addHero(hero: Hero): Observable<Hero> {
@@ -31,7 +25,7 @@ export class HeroService {
     };
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
       .pipe(
-        catchError(this.handleError('addHero', hero))
+        catchError(this.handleError)
       );
   }
 
@@ -56,10 +50,5 @@ export class HeroService {
 
 
 }
-
-
-
-
-
 
 

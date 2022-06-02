@@ -6,8 +6,7 @@
 
 
 
-
-// *************** users.interface.ts ***************
+// **************************** users.interface.ts **************************
 
 export interface UserState {
     users: User[];
@@ -47,6 +46,20 @@ export interface User {
         bs: string;
     }
     network: string;
+}
+
+
+
+
+
+export interface Apartment {
+    id?: number;
+    name: string;
+    reviewScore: number;
+    starRating: number;
+    price: number;
+    freeCancellation: boolean;
+    distanceFromClosestBeach : number;
 }
 
 

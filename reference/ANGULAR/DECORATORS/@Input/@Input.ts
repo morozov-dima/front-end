@@ -14,13 +14,10 @@
   `
 })
 class BankAccount {
-  // This property is bound using its original name.
   @Input() bankName: string;
-  // this property value is bound to a different property name
-  // when this component is instantiated in a template.
   @Input('account-id') id: string;
 
-  // this property is not bound, and is not automatically updated by Angular
+
   normalizedBankName: string;
 }
 

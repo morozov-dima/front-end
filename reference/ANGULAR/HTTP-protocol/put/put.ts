@@ -9,7 +9,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Injectable } from "@angular/core";
 import { Product } from './products.interface';
 
-
 @Injectable({
   providedIn: 'root'
 })

@@ -1,11 +1,13 @@
+// *************************************************************************
+// ********************************* Example *******************************
+// *************************************************************************
 
-// ************ products.service.ts *************
+
+// ************************ products.service.ts ****************************
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Product } from './products.interface';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +15,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 
 export class ProductService {
   private productsUrl = 'https://jsonplaceholder.typicode.com/posts?_limit=3';
-
   constructor(private http: HttpClient) { }
-
 
   getProducts(): Observable<Product[]> {
     const httpOptions = {
@@ -28,8 +28,6 @@ export class ProductService {
         catchError(this.handleError)
       );
   }
-
-
 
 
 
@@ -47,8 +45,6 @@ export class ProductService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
-
-
 
 
 }
