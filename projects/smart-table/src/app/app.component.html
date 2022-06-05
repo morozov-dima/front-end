@@ -1,0 +1,90 @@
+<section class="main-container">
+  <div class="employee-container">
+
+    <!-- add new employee -->
+    <div class="add-new-employee" *ngIf="!showError">
+      <div class="page-title">
+        <h1 mat-dialog-title>Angular smart-table Example with Add,Edit and Delete Record</h1>
+      </div>
+      <mat-card class="add-new-employee-block">
+        <mat-card-actions align="end">
+           <button mat-raised-button color="primary" (click)="openDialog()">
+              <mat-icon>library_add</mat-icon> 
+               Add New Employee
+           </button> 
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="employee-list">
+
+      <!-- error message -->
+      <app-error-message *ngIf="showError"></app-error-message>
+
+
+      <!-- mat-table -->
+      <div *ngIf="!showError" class="employee-list-content">
+            <mat-form-field  appearance="standard">
+              <mat-label>global search</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+            <div class="mat-elevation-z8">
+              <table class="mat-table-style" mat-table [dataSource]="dataSource" matSort>
+            
+                <!-- Profile Column -->
+                <ng-container matColumnDef="thumbnailUrl">
+                  <th class="thumbnailUrlRow table-title" mat-header-cell *matHeaderCellDef> Profile </th>
+                  <td class="thumbnailUrlRow" mat-cell *matCellDef="let row">
+                     <img class="user-profile-img" alt="User Profile" [src]="row.thumbnailUrl | safe: 'url'">
+                  </td>
+                </ng-container>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                  <th class="idRow table-title" mat-header-cell *matHeaderCellDef> ID </th>
+                  <td class="idRow" mat-cell *matCellDef="let row" [innerHTML]="row.id | safe: 'html'"></td>
+                </ng-container>
+            
+                <!-- Title Column -->
+                <ng-container matColumnDef="title">
+                  <th class="titleRow table-title" mat-header-cell *matHeaderCellDef> Title </th>
+                  <td class="titleRow" mat-cell *matCellDef="let row" [innerHTML]="row.title | safe: 'html'"></td>
+                </ng-container>
+
+                <!-- AlbumId Column -->
+                <ng-container matColumnDef="albumId">
+                  <th class="AlbumIdRow table-title" mat-header-cell *matHeaderCellDef> AlbumId </th>
+                  <td class="AlbumIdRow" mat-cell *matCellDef="let row" [innerHTML]="row.albumId | safe: 'html'"></td>
+                </ng-container>
+
+                <!-- editDelete Column -->
+                <ng-container matColumnDef="actions">
+                  <th class="actionsRow table-title" mat-header-cell *matHeaderCellDef> Action </th>
+                  <td class="actionsRow" mat-cell *matCellDef="let row">
+                        <button (click)="onEditEmployee(row)" mat-icon-button color="primary">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                        <button (click)="onDeleteEmployee(row.id)" mat-icon-button color="warn">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+              
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+            </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+

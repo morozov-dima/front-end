@@ -1,0 +1,11 @@
+$error-message-color: #ff0000;
+$error-message-font-size: 19px;
+
+.errorMessage {
+    padding: 10px;
+    p {
+      padding: 10px;
+      color: $error-message-color;
+      font-size: $error-message-font-size;
+    }
+  }
