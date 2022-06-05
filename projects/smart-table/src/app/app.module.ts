@@ -7,7 +7,6 @@ import { MaterialsModule } from './materials/materials.module';
 import { HeadersInterceptor } from './shared/headers-interceptor.service';
 import { ActionsDialogComponent } from './add-employee-dialog/add-employee-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SafePipe } from './shared/safe.pipe';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 
 
@@ -15,7 +14,6 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
   declarations: [
     AppComponent,
     ActionsDialogComponent,
-    SafePipe,
     ErrorMessageComponent
   ],
   imports: [

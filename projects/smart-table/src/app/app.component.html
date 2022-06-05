@@ -35,26 +35,26 @@
                 <ng-container matColumnDef="thumbnailUrl">
                   <th class="thumbnailUrlRow table-title" mat-header-cell *matHeaderCellDef> Profile </th>
                   <td class="thumbnailUrlRow" mat-cell *matCellDef="let row">
-                     <img class="user-profile-img" alt="User Profile" [src]="row.thumbnailUrl | safe: 'url'">
+                     <img class="user-profile-img" alt="User Profile" [src]="row.thumbnailUrl">
                   </td>
                 </ng-container>
 
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
                   <th class="idRow table-title" mat-header-cell *matHeaderCellDef> ID </th>
-                  <td class="idRow" mat-cell *matCellDef="let row" [innerHTML]="row.id | safe: 'html'"></td>
+                  <td class="idRow" mat-cell *matCellDef="let row">{{row.id}}</td>
                 </ng-container>
             
                 <!-- Title Column -->
                 <ng-container matColumnDef="title">
                   <th class="titleRow table-title" mat-header-cell *matHeaderCellDef> Title </th>
-                  <td class="titleRow" mat-cell *matCellDef="let row" [innerHTML]="row.title | safe: 'html'"></td>
+                  <td class="titleRow" mat-cell *matCellDef="let row">{{row.title}}</td>
                 </ng-container>
 
                 <!-- AlbumId Column -->
                 <ng-container matColumnDef="albumId">
                   <th class="AlbumIdRow table-title" mat-header-cell *matHeaderCellDef> AlbumId </th>
-                  <td class="AlbumIdRow" mat-cell *matCellDef="let row" [innerHTML]="row.albumId | safe: 'html'"></td>
+                  <td class="AlbumIdRow" mat-cell *matCellDef="let row">{{row.albumId}}</td>
                 </ng-container>
 
                 <!-- editDelete Column -->
