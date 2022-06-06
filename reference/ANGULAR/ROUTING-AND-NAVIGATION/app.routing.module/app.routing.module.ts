@@ -15,6 +15,7 @@ import { LoginGuardGuard } from './shared/login-guard.guard';
 import { SlotGameComponent } from './slot-game/slot-game.component';
 import { SlotsComponent } from './slots/slots.component';
 
+
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'promotions', component: PromotionsComponent },
@@ -30,8 +31,14 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  declarations: [],
+  imports: [
+    CommonModule,
+    RouterModule.forRoot(routes)
+  ],
+  exports: [
+    RouterModule
+  ]
 })
 
 export class AppRoutingModule { }
@@ -87,7 +94,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './RoutingModule';
+import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
   declarations: [
