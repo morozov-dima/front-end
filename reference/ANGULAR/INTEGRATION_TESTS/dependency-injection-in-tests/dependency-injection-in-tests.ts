@@ -6,6 +6,75 @@
 
 
 
+// *********************** posts.component.spec.ts *********************
+import { of } from "rxjs";
+import { WelcomeComponent } from "../welcome/welcome.component";
+import { UserDataService } from "./user-data.service";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { HttpClientModule } from "@angular/common/http";
+
+
+
+describe('WelcomeComponent', () => {
+
+  let fixture: ComponentFixture<WelcomeComponent>;
+  let component: WelcomeComponent;
+  let service: UserDataService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [ WelcomeComponent ],
+      providers: [ UserDataService ],
+      imports: [ HttpClientModule ] 
+    });
+    
+    fixture = TestBed.createComponent(WelcomeComponent);
+    component = fixture.componentInstance;
+    service = fixture.debugElement.injector.get(UserDataService);
+  });
+
+
+
+
+  it('should fetch posts on ngOnInit', () => {
+    // ngOnInit method should be called now automatically.
+
+    const data = [
+    {
+        albumId: 1,
+        id: 1,
+        title: "accusamus beatae ad facilis cum similique qui sunt",
+        url: "https://via.placeholder.com/600/92c952",
+        thumbnailUrl: "https://via.placeholder.com/150/92c952"
+      },
+      {
+        albumId: 1,
+        id: 2,
+        title: "reprehenderit est deserunt velit ipsam",
+        url: "https://via.placeholder.com/600/771796",
+        thumbnailUrl: "https://via.placeholder.com/150/771796"
+      }
+    ];
+
+    // with 'of' operator we will create Observable from our array. 
+    spyOn(service, 'fetchUserData').and.returnValue(of(data));
+
+    // Angular should update all states.
+    fixture.detectChanges();
+
+    expect(component.data).toEqual(data);
+  });
+
+});
+
+
+
+
+
+
+
+
+
 
 // **************************** posts.service.ts **************************
 import { Injectable } from "@angular/core";
@@ -101,71 +170,3 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
 }
 
-
-
-
-
-
-
-
-// *********************** posts.component.spec.ts *********************
-import { of } from "rxjs";
-import { WelcomeComponent } from "../welcome/welcome.component";
-import { UserDataService } from "./user-data.service";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { HttpClientModule } from "@angular/common/http";
-
-
-
-describe('WelcomeComponent', () => {
-
-  let fixture: ComponentFixture<WelcomeComponent>;
-  let component: WelcomeComponent;
-  let service: UserDataService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ WelcomeComponent ],
-      providers: [ UserDataService ],
-      imports: [ HttpClientModule ] 
-    });
-    
-    fixture = TestBed.createComponent(WelcomeComponent);
-    component = fixture.componentInstance;
-    service = fixture.debugElement.injector.get(UserDataService);
-  });
-
-
-
-
-  it('should fetch posts on ngOnInit', () => {
-    // ngOnInit method should be called now automatically.
-
-    const data = [
-    {
-        albumId: 1,
-        id: 1,
-        title: "accusamus beatae ad facilis cum similique qui sunt",
-        url: "https://via.placeholder.com/600/92c952",
-        thumbnailUrl: "https://via.placeholder.com/150/92c952"
-      },
-      {
-        albumId: 1,
-        id: 2,
-        title: "reprehenderit est deserunt velit ipsam",
-        url: "https://via.placeholder.com/600/771796",
-        thumbnailUrl: "https://via.placeholder.com/150/771796"
-      }
-    ];
-
-    // with 'of' operator we will create Observable from our array. 
-    spyOn(service, 'fetchUserData').and.returnValue(of(data));
-
-    // Angular should update all states.
-    fixture.detectChanges();
-
-    expect(component.data).toEqual(data);
-  });
-
-
-});
