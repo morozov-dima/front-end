@@ -16,7 +16,6 @@ import { HttpClientModule } from "@angular/common/http";
 
 
 describe('WelcomeComponent', () => {
-
   let fixture: ComponentFixture<WelcomeComponent>;
   let component: WelcomeComponent;
   let service: UserDataService;
@@ -34,11 +33,8 @@ describe('WelcomeComponent', () => {
   });
 
 
-
-
   it('should fetch posts on ngOnInit', () => {
     // ngOnInit method should be called now automatically.
-
     const data = [
     {
         albumId: 1,
@@ -56,13 +52,13 @@ describe('WelcomeComponent', () => {
       }
     ];
 
-    // with 'of' operator we will create Observable from our array. 
-    spyOn(service, 'fetchUserData').and.returnValue(of(data));
+      // with 'of' operator we will create Observable from our array. 
+      spyOn(service, 'fetchUserData').and.returnValue(of(data));
 
-    // Angular should update all states.
-    fixture.detectChanges();
+      // Angular should update all states.
+      fixture.detectChanges();
 
-    expect(component.data).toEqual(data);
+      expect(component.data).toEqual(data);
   });
 
 });
