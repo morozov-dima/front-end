@@ -1,0 +1,20 @@
+// ********************* app.component.scss *******************
+
+.employee-container {
+    width: 1200px;
+    @media screen and (max-width: 576px) {
+      width: 100%;
+    }
+    @include display-flex(column, center);
+  }
+
+
+  .page-title {
+    margin: 10px;
+    @include display-flex(row, left);
+    @media screen and (max-width: 576px) {
+      h1 {
+        font-size: 18px;
+      }
+    }
+  }

@@ -1,0 +1,20 @@
+// ********************* app.component.scss *******************
+
+$base-color: #000000;
+$secondary-color: #faf7f8;
+
+
+
+.add-new-employee-block {
+    background-color: $secondary-color;
+    padding: 20px 30px 30px 0px;
+    margin:5px;
+  }
+
+
+  .table-title {
+    color: $base-color;
+    font-size: $table-title-font-size;
+  }
+
+

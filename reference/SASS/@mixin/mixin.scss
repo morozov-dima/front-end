@@ -1,0 +1,24 @@
+// ********************* app.component.scss *******************
+
+@mixin display-flex($flex-direction, $justify-content) {
+    display: flex;
+    justify-content: $justify-content;
+    flex-direction: $flex-direction;
+  }
+
+  @mixin table-td-width($width) {
+    width: $width;
+  }
+  
+  
+
+  
+  .main-container {
+    width: 100%;
+    @include display-flex(row, center);
+  }
+
+
+  .thumbnailUrlRow {
+    @include table-td-width(10%);
+  }
