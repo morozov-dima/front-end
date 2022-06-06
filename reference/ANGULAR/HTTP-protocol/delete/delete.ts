@@ -10,13 +10,11 @@ deleteHero(id: number): Observable<unknown> {
   const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
   return this.http.delete(url, httpOptions)
     .pipe(
-      catchError(this.handleError('deleteHero'))
+      catchError(this.handleError)
     );
 }
 
 
-
-// *************** app/config/config.service.ts  **************
 private handleError(error: HttpErrorResponse) {
   if (error.status === 0) {
     // A client-side or network error occurred. Handle it accordingly.
