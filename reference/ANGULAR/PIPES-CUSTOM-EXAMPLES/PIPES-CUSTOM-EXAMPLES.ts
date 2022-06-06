@@ -10,9 +10,6 @@ import { Pipe, PipeTransform } from "@angular/core";
     name: 'shorten'
 })
 
-/*
-    We need implement our pipe with PipeTransform interface - this is good practice.
-*/
 export class ShortenPipe implements PipeTransform {
     transform(value: any, limit: number) {
         // here we check if value lenght is greater than 10 characters.
