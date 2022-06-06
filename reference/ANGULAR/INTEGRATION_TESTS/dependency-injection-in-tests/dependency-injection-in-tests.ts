@@ -5,32 +5,50 @@
 
 
 
+
+
 // **************************** posts.service.ts **************************
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from "@angular/core";
+import { catchError, Observable, throwError } from "rxjs";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { UserDataInterface } from "./user-data.interface";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 
-export class PostsService {
-  constructor(private http: HttpClient) {}
+export class UserDataService {
 
-  create(post: any): Observable<any> {
-    // here we use empty url (because we want just create test)
-    return this.http.post(``, post);
-  }
+    constructor(private http: HttpClient) {}
 
-  fetch(): Observable<any[]> {
-    // here we use empty url (because we want just create test)
-    return this.http.get<any[]>(``)
-  }
+    fetchUserData(): Observable<UserDataInterface[]> {
+        const url = 'https://jsonplaceholderd.typicode.com/photos?_limit=10';
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-type': 'application/json; charset=UTF-8'
+            }),
+          };
+        return this.http.get<UserDataInterface[]>(url, httpOptions).pipe(
+            catchError(this.handleError)
+        );  
+    }
 
-  remove(id: number): Observable<any> {
-    // here we use empty url (because we want just create test)
-    return this.http.delete<void>(`${id}`)
-  }
+
+
+    private handleError(error: HttpErrorResponse) {
+        if (error.status === 0) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.error('An error occurred:', error.error);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong.
+          console.error(
+            `Backend returned code ${error.status}, body was: `, error.error);
+        }
+        // Return an observable with a user-facing error message.
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+      }
+
 }
 
 
@@ -40,54 +58,47 @@ export class PostsService {
 
 
 
-
 // ************************ posts.component.ts ****************************
-import {Component, OnInit} from '@angular/core';
-import {PostsService} from './posts.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UserDataInterface } from '../shared/user-data.interface';
+import { UserDataService } from '../shared/user-data.service';
 
 @Component({
-  template: `Posts component`,
-  selector: 'app-posts'
+  selector: 'app-welcome',
+  templateUrl: './welcome.component.html',
+  styleUrls: ['./welcome.component.scss']
 })
+export class WelcomeComponent implements OnInit, OnDestroy {
 
-export class PostsComponent implements OnInit {
-  posts: any[] = [];
-  message: string= '';
+  constructor(private userDataService: UserDataService) { }
 
-  constructor(private service: PostsService) {}
+  userDataSub!: Subscription;
+  data: UserDataInterface[] = [];
 
   ngOnInit(): void {
-    // fetch (get) data from srvice
-    this.service.fetch().subscribe({
-      next: (response) => {
-       this.posts = response;
-      },
-      error: (err) => {
-        this.message = err;
-      }
-    })
+    this.getUserData();
   }
-  
 
-  // add data to service
-  add(title: string) {
-    const post = { title };
-    this.service.create(post).subscribe({
-      next: (p) => {
-        this.posts.push(p);
+  getUserData() {
+    this.userDataSub = this.userDataService.fetchUserData().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.data = response;
       },
       error: (err) => {
-        this.message = err;
+        console.log(err);
+      },
+      complete: () => {
+        console.log('completed !!!');
       }
     });
   }
 
-
-  delete(id: number) {
-    if (window.confirm('Are you sure?')) {
-      this.service.remove(id).subscribe();
-    }
+  ngOnDestroy(): void {
+    this.userDataSub.unsubscribe();
   }
+
 }
 
 
@@ -98,29 +109,30 @@ export class PostsComponent implements OnInit {
 
 
 // *********************** posts.component.spec.ts *********************
-import { HttpClientModule } from "@angular/common/http";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { of } from "rxjs";
-import { PostsComponent } from "./posts.component";
-import { PostsService } from "./posts.service";
-
-describe('PostsComponent', () => {
-  let fixture: ComponentFixture<PostsComponent>;
-  let component: PostsComponent;
-  let service: PostsService;
+import { WelcomeComponent } from "../welcome/welcome.component";
+import { UserDataService } from "./user-data.service";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { HttpClientModule } from "@angular/common/http";
 
 
-  
+
+describe('WelcomeComponent', () => {
+
+  let fixture: ComponentFixture<WelcomeComponent>;
+  let component: WelcomeComponent;
+  let service: UserDataService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PostsComponent ],
-      providers: [ PostsService ],
+      declarations: [ WelcomeComponent ],
+      providers: [ UserDataService ],
       imports: [ HttpClientModule ] 
     });
     
-    fixture = TestBed.createComponent(PostsComponent);
+    fixture = TestBed.createComponent(WelcomeComponent);
     component = fixture.componentInstance;
-    service = fixture.debugElement.injector.get(PostsService);
+    service = fixture.debugElement.injector.get(UserDataService);
   });
 
 
@@ -129,19 +141,31 @@ describe('PostsComponent', () => {
   it('should fetch posts on ngOnInit', () => {
     // ngOnInit method should be called now automatically.
 
-    const posts = [1, 2, 3];
+    const data = [
+    {
+        albumId: 1,
+        id: 1,
+        title: "accusamus beatae ad facilis cum similique qui sunt",
+        url: "https://via.placeholder.com/600/92c952",
+        thumbnailUrl: "https://via.placeholder.com/150/92c952"
+      },
+      {
+        albumId: 1,
+        id: 2,
+        title: "reprehenderit est deserunt velit ipsam",
+        url: "https://via.placeholder.com/600/771796",
+        thumbnailUrl: "https://via.placeholder.com/150/771796"
+      }
+    ];
 
     // with 'of' operator we will create Observable from our array. 
-    spyOn(service, 'fetch').and.returnValue(of(posts));
+    spyOn(service, 'fetchUserData').and.returnValue(of(data));
 
     // Angular should update all states.
     fixture.detectChanges();
 
-    expect(component.posts).toEqual(posts);
+    expect(component.data).toEqual(data);
   });
 
 
-
-})
-
-
+});
