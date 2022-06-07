@@ -4,7 +4,6 @@
 
 
 
-
 // ************************** contact-us.component.ts *****************************
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +17,7 @@ import { CustomValidator } from '../shared/custom-validator';
 export class ContactUsComponent implements OnInit {
   profileForm!: FormGroup;
   constructor() { }
+
   ngOnInit(): void {
     this.profileForm = new FormGroup({
       'fullNameInput': new FormControl('', Validators.required),
@@ -25,7 +25,6 @@ export class ContactUsComponent implements OnInit {
       'companyNameInput': new FormControl('', Validators.required)
     });
   }
-
 
   onSubmit() {
     console.log(this.profileForm);
