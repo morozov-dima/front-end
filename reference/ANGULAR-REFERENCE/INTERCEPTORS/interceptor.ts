@@ -7,12 +7,12 @@
 
 
 
-// 1. In order to add interceptor for your project you need
-//    create two files. ts file with interceptop code and connect 
-//    this interceptor in app.module.ts
-// 2. You can add new headers to existing headers.
-// 3. We can interact with requests.
-// 4. We can interact with response.
+/*  1. In order to add interceptor for your project you need
+ *    create two files. ts file with interceptop code and connect this interceptor in app.module.ts 
+ *  2. You can add new headers to existing headers.
+ *  3. We can interact with requests.
+ *  4. We can interact with response.
+*/
 
 
 

@@ -1,14 +1,17 @@
+// *************************************************************************
+// ********************************* Example *******************************
+// *************************************************************************
 
 
-// Example 1:
+
+
+
 // ************* src/environments/environment.prod.ts **************
 
 // this file for LIVE
 export const environment = {
   production: true,
-
-  // you can store your API key here
-  // this code will be used for 'production'
+  // you can store your API key here this code will be used for 'production'
   firebaseAPIKey: 'AIzaSyAicmLY0SSVqbnJJFDrJrWUW3if4ngn2_8'
 };
 
@@ -30,9 +33,7 @@ export const environment = {
 // this file for DEV mode
 export const environment = {
   production: false,
-
-  // you can store your API key here
-  // this code will be used for DEV mode.
+  // you can store your API key here this code will be used for DEV mode.
   firebaseAPIKey: 'AIzaSyAicmLY0SSVqbnJJFDrJrWUW3if4ngn2_8'
 };
 
@@ -47,11 +48,10 @@ export const environment = {
 // ************* app/auth/auth.service.ts **************
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, Subject, throwError } from "rxjs";
+import { throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { AuthResponseData } from "./authResponseData";
-
 
 @Injectable({
     providedIn: 'root'
@@ -70,19 +70,10 @@ export class AuthService {
                 password: password,
                 returnSecureToken: true
             }
-        ).pipe(
-                catchError(this.handleError),
-                tap(resData => {
-                    this.handleAuthentication(
-                        resData.email,
-                        resData.localId,
-                        resData.idToken,
-                        +resData.expiresIn
-                    );
-                })
-            )
+            ).pipe(
+                catchError(this.handleError)
+            );
     }
-
 
 
 
@@ -94,10 +85,6 @@ export class AuthService {
         }
         return throwError(() => new Error('Something bad happend; please try again later.'));
     } 
-
-
-
-
 
 
 }

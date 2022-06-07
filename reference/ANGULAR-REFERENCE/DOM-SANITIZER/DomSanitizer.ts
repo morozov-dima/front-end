@@ -5,6 +5,16 @@
 
 
 
+
+
+// *********************** app.component.html ************************
+<div [innerHTML]="row.id | safe: 'html'"></div>
+<img [src]="row.thumbnailUrl | safe: 'url'">
+
+
+
+
+
 // ************************** safe.pipe.ts ******************************
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -51,12 +61,6 @@ export class AppModule { }
 
 
 
-
-
-
-// *********************** app.component.html ************************
-<div [innerHTML]="row.id | safe: 'html'"></div>
-<img [src]="row.thumbnailUrl | safe: 'url'">
 
 
 
