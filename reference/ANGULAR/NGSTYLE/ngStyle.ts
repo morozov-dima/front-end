@@ -2,14 +2,9 @@
 // *************************** Example  ****************************
 // *****************************************************************
 
-<p [ngStyle]="{backgroundColor: 'red'}">
-  Some text
-</p>
+<p [ngStyle]="{backgroundColor: 'red'}">Some text</p>
 
-<p [ngStyle]="{'background-color': 'red'}">
-  Some text
-</p>
-
+<p [ngStyle]="{'background-color': 'red'}">Some text</p>
 
   <div class="interesting">
     <app-quote 
@@ -35,9 +30,7 @@
 // *************************** Example  ****************************
 // *****************************************************************
 
-<p [ngStyle]="{'background-color': getColor()}">
-  some text
-</p>
+<p [ngStyle]="{'background-color': getColor()}">some text</p>
 
 getColor() {
   return this.serverStatus === 'online' ? 'green' : 'red';
@@ -57,9 +50,8 @@ getColor() {
 // *************************** Example  ****************************
 // *****************************************************************
 
-// ************************ app.component.html *********************
-// you can write backgroundColor of 'background-color'
 
+// ************************ app.component.html *********************
     <div [ngStyle]="{
             backgroundColor: changeBg ? 'blue' : 'unset',
             color: changeBg ? 'white' : 'blue'
@@ -68,29 +60,6 @@ getColor() {
         box
     </div>
    <button (click)="changeBg = !changeBg">Change Background</button>
-
-
-
-
-
-
-// ************************ app.component.ts *********************
-import { Component, OnInit } from '@angular/core';
-
-@Component({
-  selector: 'app-background',
-  templateUrl: './background.component.html',
-  styleUrls: ['./background.component.css']
-})
-export class BackgroundComponent implements OnInit {
-  changeBg: boolean = false;
-  
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
 
 
 
@@ -114,8 +83,6 @@ export class BackgroundComponent implements OnInit {
 
 
 // ************************ app.component.html *********************
-// you can write backgroundColor of 'background-color'
-
 <section class="assignment3">
   <button (click)="toggleText()">Display Details</button>
   <p *ngIf="showText">Secret Password = tuna</p>
@@ -178,9 +145,7 @@ export class Assignment3Component {
 // ********************** app.component.html ***********************
 <button>Shrink</button>
 
-<p [ngStyle]="{
-  'width.px': widthValue
- }">Shrink me</p>
+<p [ngStyle]="{'width.px': widthValue}">Shrink me</p>
 
 
 
@@ -199,3 +164,5 @@ import { showStateTrigger } from './animations';
 export class AppComponent {
   widthValue: number = 400;
 }
+
+

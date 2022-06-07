@@ -26,7 +26,6 @@ http.onreadystatechange = function() {
   }
 };
 
-
 // send request
 http.send();
 
@@ -77,8 +76,6 @@ http.onreadystatechange = function() {
 
 // send request
 http.send(data);
-
-
 
 
 // ********* response from server **********

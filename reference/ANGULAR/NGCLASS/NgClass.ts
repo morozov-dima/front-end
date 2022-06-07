@@ -2,9 +2,7 @@
 // ******************************* Example ********************************
 // ************************************************************************
 
-<p [ngClass]="{onlineClass: serverStatus === 'online'}">
-  Some text
-</p>
+<p [ngClass]="{onlineClass: serverStatus === 'online'}">Some text</p>
 
 
 <div class="interesting">
@@ -108,6 +106,8 @@ export class Assignment3Component {
 
 
 
+
+
 // ************************************************************************
 // ****************************** Example 2 *******************************
 // ************************************************************************
@@ -154,21 +154,6 @@ export class AppComponent {
   }  
 
 }
-
-
-
-
-
-  // ************************ app.component.css ************************
-.btn-primary {
-    color: green;
-}
-
-.btn-default {
-    color: red;
-}
-
-
 
 
 

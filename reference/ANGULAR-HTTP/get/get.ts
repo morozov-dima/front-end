@@ -107,3 +107,70 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// *************************************************************************
+// ********************************** Example ******************************
+// *************************************************************************
+
+
+// *********** api-data.service.ts **************
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UsersModel } from './data.model';
+import { map } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+
+export class ApiDataService {
+
+  constructor(private http: HttpClient) { }
+ 
+  getUsersAddress() {
+    const url = 'https://jsonplaceholder.typicode.com/users/?_limit=3';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+         Authorization: 'my-auth-token'
+      })
+    };
+    return this.http.get<any>(
+      url,
+      httpOptions
+    )
+    .pipe(
+      map(
+        usersData => {
+         const userAddressData: UsersModel[] = []; 
+         for (const userData of usersData) {
+           userAddressData.push({
+            id: userData.id,
+            name: userData.name,
+            username: userData.username,
+            email: userData.email,
+            city: userData.address.city,
+            street: userData.address.street
+           });
+           
+         }
+          return userAddressData;
+        }
+      )
+    );
+  }
+
+}
