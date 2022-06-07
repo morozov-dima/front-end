@@ -12,9 +12,7 @@ import { Apartment } from "./apartments-interface";
 
 export class ApartmentsService {
 
-    constructor(
-        private http: HttpClient
-    ) {}
+    constructor( private http: HttpClient ) {}
 
     getApartments(): Observable<Apartment[]> {
         const url = '../../../assets/apartments-data.json';
@@ -54,21 +52,3 @@ export class ApartmentsService {
 
 
 }
-
-
-
-
-
-
-// ************************** apartments-interface.ts ****************************
-export interface Apartment {
-    id?: number; // optional
-    name: string;
-    reviewScore: number;
-    starRating: number;
-    price: number;
-    freeCancellation: boolean;
-    distanceFromClosestBeach : number;
-}
-
-

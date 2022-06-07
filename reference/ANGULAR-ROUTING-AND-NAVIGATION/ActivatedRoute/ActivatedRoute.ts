@@ -69,8 +69,7 @@ export class UserComponent implements OnInit, OnDestroy {
   userSub!: Subscription;  
 
   ngOnInit(): void {
-   
-    // subscribe to page params,  if page url : 'http://localhost:4200/users/1'
+       // subscribe to page params,  if page url : 'http://localhost:4200/users/1'
     // result will be : {id: '1'}
     this.route.params.subscribe(
       (pageParamsResponse) => {
@@ -111,8 +110,6 @@ export class UserComponent implements OnInit, OnDestroy {
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-user-data',
   templateUrl: './user-data.component.html',
@@ -134,7 +131,6 @@ export class UserDataComponent implements OnInit {
   }
 
 }
-
 
 
 

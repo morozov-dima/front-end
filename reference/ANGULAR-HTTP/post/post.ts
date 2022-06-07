@@ -17,13 +17,18 @@ export class HeroService {
 
   /** POST: add a new hero to the database */
   addHero(hero: Hero): Observable<Hero> {
+    const url = 'https://jsonplaceholder.typicode.com/posts';
     const httpOptions = {
-      headers: new HttpHeaders({
-         'Content-Type':  'application/json',
-          Authorization: 'my-auth-token'
+      params: new HttpParams({
+        fromString: '_limit=2'
       }),
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+         Authorization: 'my-auth-token-xysdgfhejwjfe'
+      })
     };
-    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
+
+    return this.http.post<Hero>(url, hero, httpOptions)
       .pipe(
         catchError(this.handleError)
       );

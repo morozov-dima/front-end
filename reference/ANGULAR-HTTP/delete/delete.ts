@@ -4,10 +4,16 @@
 
 
 
-
 // *********************** app/heroes/heroes.service.ts ********************
 deleteHero(id: number): Observable<unknown> {
   const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+       Authorization: 'my-auth-token-xysdgfhejwjfe'
+    })
+  };
+
   return this.http.delete(url, httpOptions)
     .pipe(
       catchError(this.handleError)

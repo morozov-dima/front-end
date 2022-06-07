@@ -18,13 +18,17 @@ export class UserData {
     constructor(private http: HttpClient) {}
 
     getPosts(): Observable<Posts[]> {
-        const url = 'https://jsonplaceholder.typicode.com/posts?_limit=5';
+        const url = 'https://jsonplaceholder.typicode.com/posts';
         const httpOptions = {
-            headers: new HttpHeaders({
-               'Content-Type':  'application/json',
-                Authorization: 'my-auth-token'
-            }),
-          };
+          params: new HttpParams({
+            fromString: '_limit=2'
+          }),
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+              Authorization: 'my-auth-token-xysdgfhejwjfe'
+          })
+        };
+
         return this.http.get<Posts[]>(url, httpOptions).pipe(
             catchError(this.handleError)
         );
@@ -141,13 +145,17 @@ export class ApiDataService {
   constructor(private http: HttpClient) { }
  
   getUsersAddress() {
-    const url = 'https://jsonplaceholder.typicode.com/users/?_limit=3';
+    const url = 'https://jsonplaceholder.typicode.com/users';
     const httpOptions = {
+      params: new HttpParams({
+        fromString: '_limit=2'
+      }),
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-         Authorization: 'my-auth-token'
+        'Content-Type': 'application/json',
+         Authorization: 'my-auth-token-xysdgfhejwjfe'
       })
     };
+
     return this.http.get<any>(
       url,
       httpOptions
@@ -174,3 +182,5 @@ export class ApiDataService {
   }
 
 }
+
+

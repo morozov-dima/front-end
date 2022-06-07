@@ -15,7 +15,6 @@ import { LoginGuardGuard } from './shared/login-guard.guard';
 import { SlotGameComponent } from './slot-game/slot-game.component';
 import { SlotsComponent } from './slots/slots.component';
 
-
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'promotions', component: PromotionsComponent },
@@ -28,7 +27,6 @@ const routes: Routes = [
   { path: 'old-page', redirectTo: '', pathMatch: 'full' }, // redirect "old-page" page to "home page"
   { path: '**', component: PageNotFoundComponent } // Wildcard route for a 404 page
 ];
-
 
 @NgModule({
   declarations: [],
@@ -49,40 +47,31 @@ export class AppRoutingModule { }
 
 
 
+// *********************** header.component.html ********************
+      <ul>
+          <li>
+              <a [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">Home</a>
+          </li>
+          <li>
+              <a [routerLink]="['/promotions']" [routerLinkActive]="['active']">Promotions</a>
+          </li>
+          <li>
+              <a [routerLink]="['/games']" [routerLinkActive]="['active']">Games</a>
+          </li>
+          <li>
+              <a [routerLink]="['/slots']" [routerLinkActive]="['active']">Slots</a>
+          </li>
+      </ul>
+
+
+
+
+
 
 // *********************** header.component.html ********************
 <a [routerLink]="['/slots/slot-games', 10, 'slotGame']">Load slotGame</a> <!-- /slots/slot-games/10/slotGame -->
 
 
-
-
-
-
-
-
-// *********************** header.component.html ********************
-<header class="header">
-    <div class="header-left">
-        <ul class="header-left-items">
-            <li class="header-left-item">
-                <a [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">Home</a>
-            </li>
-            <li class="header-left-item">
-                <a [routerLink]="['/promotions']" [routerLinkActive]="['active']">Promotions</a>
-            </li>
-            <li class="header-left-item">
-                <a [routerLink]="['/games']" [routerLinkActive]="['active']">Games</a>
-            </li>
-            <li *ngIf="showTab" class="header-left-item">
-                <a [routerLink]="['/slots']" [routerLinkActive]="['active']">Slots</a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="header-right">
-        <app-login></app-login>
-    </div>
-</header>
 
 
 
@@ -108,13 +97,6 @@ import { AppRoutingModule } from './app.routing.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-
-
-
-
-
 
 
 

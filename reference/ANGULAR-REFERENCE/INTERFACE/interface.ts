@@ -53,7 +53,7 @@ export interface User {
 
 
 export interface Apartment {
-    id?: number;
+    id?: number;  // optional
     name: string;
     reviewScore: number;
     starRating: number;
