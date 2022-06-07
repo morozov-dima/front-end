@@ -12,7 +12,6 @@
 // ************************ users.component.ts ********************
 import { Component } from '@angular/core';
 import { UsersService } from '../shared/getUsers.service';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -20,12 +19,10 @@ import { UsersService } from '../shared/getUsers.service';
 })
 export class UsersComponent {
   constructor(private usersService: UsersService) { }
-
   onSendData() {
     const number = 100;
     this.usersService.userData.next(number);
   }
-
 }
 
 
@@ -36,22 +33,13 @@ export class UsersComponent {
 
 // ********************* getUsers.service.ts **********************
 import { Injectable } from "@angular/core";
-import { GetUsersInterface } from "./getUsers.interface";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, pipe } from "rxjs";
 import { Subject } from 'rxjs';
-
 @Injectable({
     providedIn: 'root'
 })
-
 export class UsersService {
     userData = new Subject<number>(); 
-
-    constructor(
-        private http: HttpClient
-    ) {}
-    
+    constructor() {}
 }
 
 
@@ -70,7 +58,6 @@ import { UsersService } from 'src/app/shared/getUsers.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
   constructor(
     private usersService: UsersService
   ) { }
@@ -82,7 +69,7 @@ export class UserComponent implements OnInit {
       }
     );
   }
-
-
-
 }
+
+
+
