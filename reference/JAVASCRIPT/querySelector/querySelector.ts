@@ -1,8 +1,6 @@
-// #####################################################################
-// #####################################################################
-// Example 1: (Add/remove elements example)
-// #####################################################################
-// #####################################################################
+// *************************************************************************
+// ********************************* Example *******************************
+// *************************************************************************
 
 
 // ******************** html ************************
@@ -15,13 +13,6 @@
 
 
 // ******************* js **************************
-// ############ Add/Remove elements example ################
-// 1. In this example we can add elements.
-// 2. we use 'querySelector' to get elements.
-// 3. we use 'addEventListener' to add click event.
-// 4. we use 'createElement' for creating new HTML element.
-// 5. inside 'addEventListener' we don't execute current function,
-//    we just pass reference to this function.
 let inputEl = document.querySelector('input');
 let buttonEl = document.querySelector('button');
 let ulEl = document.querySelector('ul');
@@ -40,16 +31,11 @@ function addTodo() {
     value: userInput
   };
   
-  // add new element to the end (right) of our main array.
   todos.push(newTodo);
   
-  // create 'li' element.
   let toDoLi = document.createElement('li');
-  // update content of out HTML with user input data.
   toDoLi.textContent = userInput;
-  // when we click on some element, we want to remove it.
   toDoLi.addEventListener('click', removeTodo);
-  // this was we can add 'data-id' attribute to our html.
   toDoLi.dataset.id = newTodo.id;
   ulEl.appendChild(toDoLi);
   console.log(todos);
@@ -59,12 +45,10 @@ function addTodo() {
 
 
 function removeTodo(event) {
-  // get element that was clicked.
 	let clickedLi = event.target;
   let itemId = clickedLi.dataset.id;
   for(let i = 0; i < todos.length; i++) {
   	if (todos[i].id == itemId) {
-    	// remove current one element from our array
       todos.splice(i, 1);
       break;
     }
@@ -73,10 +57,6 @@ function removeTodo(event) {
   clickedLi.parentNode.removeChild(clickedLi);
   console.log(todos);
 }
-
-
-
-
 
 
 
