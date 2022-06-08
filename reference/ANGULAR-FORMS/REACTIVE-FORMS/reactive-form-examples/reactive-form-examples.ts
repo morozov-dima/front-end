@@ -198,7 +198,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
-    // we need import this module for reactive forms.
     ReactiveFormsModule
   ],
   providers: [],

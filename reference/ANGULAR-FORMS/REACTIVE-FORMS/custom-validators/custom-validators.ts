@@ -21,21 +21,18 @@ export class ContactUsComponent implements OnInit {
   ngOnInit(): void {
     this.profileForm = new FormGroup({
       'fullNameInput': new FormControl('', Validators.required),
-      'emailNameInput': new FormControl('', [ Validators.required, Validators.email ], CustomValidator.forbiddenEmails),
-      'companyNameInput': new FormControl('', Validators.required)
+      'emailNameInput': new FormControl('', [ Validators.required, Validators.email ], CustomValidator.forbiddenEmails)
     });
   }
 
   onSubmit() {
     console.log(this.profileForm);
-    // reset form after submit
-    //this.profileForm.reset();
+    this.profileForm.reset();
   }
 
   // we can always access any form control through the get method
   get fullNameInput() { return this.profileForm.get('fullNameInput')!;  }
   get emailNameInput() { return this.profileForm.get('emailNameInput')!; }
-  get companyNameInput() { return this.profileForm.get('companyNameInput')!; }
 }
 
 
@@ -68,8 +65,6 @@ export class CustomValidator {
         return promise;
     }
 }
-
-
 
 
 
