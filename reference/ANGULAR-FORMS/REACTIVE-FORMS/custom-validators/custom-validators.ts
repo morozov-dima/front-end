@@ -7,7 +7,7 @@
 
 
 // ****************************** app.component.ts ********************************
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { forbiddenNameValidator } from './shared/custom-form-validator';
@@ -19,7 +19,7 @@ import { FormDataService } from './shared/form-data.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   userForm = new FormGroup({
     formEmail: new FormControl('', [
@@ -40,6 +40,13 @@ export class AppComponent {
   formDataSub!: Subscription;
   formReferenseId!: number;
 
+
+  ngOnInit(): void {
+    this.userForm.patchValue({
+      formEmail: 'Email'
+    });
+  }
+
   onSubmit() {
     const formValue: FormData = {
       email: this.userForm.value.formEmail,
@@ -55,7 +62,7 @@ export class AppComponent {
       }
     })
   }
-
+  
   get formEmail() {
     return this.userForm.get('formEmail')!;
   }

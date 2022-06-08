@@ -53,7 +53,7 @@
 
 
 // ************************ contact-us.component.ts *************************
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ApiDataService } from '../shared/api-data.service';
@@ -63,7 +63,7 @@ import { ApiDataService } from '../shared/api-data.service';
   templateUrl: './contact-us.component.html',
   styleUrls: ['./contact-us.component.css']
 })
-export class ContactUsComponent implements  OnDestroy {
+export class ContactUsComponent implements OnInit, OnDestroy {
 
   userDataSub!: Subscription;
   isSubmitted: boolean = false;
@@ -77,6 +77,15 @@ export class ContactUsComponent implements  OnDestroy {
 
   constructor(private apiDataService: ApiDataService) { }
   
+
+  ngOnInit(): void {
+    // Updating parts of form fields
+    this.profileForm.patchValue({
+      formEmail: 'First Name'
+    });
+  }
+
+
   onSubmit() {
     this.userDataSub = this.apiDataService.sendContactUsForm(this.profileForm.value).subscribe({
       next: (responseData) => {
