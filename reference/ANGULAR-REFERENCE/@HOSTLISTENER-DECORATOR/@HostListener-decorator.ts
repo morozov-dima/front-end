@@ -27,3 +27,23 @@ export class PhotoComponent  {
 // ***********************************************************************
 // ********************************* Example *****************************
 // ***********************************************************************
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-animation',
+  templateUrl: './animation.component.html',
+  styleUrls: ['./animation.component.scss']
+})
+export class AnimationComponent implements OnInit {
+
+  constructor(private el:ElementRef) { }
+
+  ngOnInit(): void {}
+
+  @HostListener('window:scroll', ['$event']) testView() {
+      if ((window.innerHeight - window.scrollY + this.el.nativeElement.offsetHeight) <= 0) {
+        console.log('user see current component ...');
+      }
+  }
+
+}
