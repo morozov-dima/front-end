@@ -5,15 +5,12 @@
 
 
 // ************************ welcome.component.html *************************
-<section class="welcome-content">
-    <div class="welcome-block">
-        <ul>
-            <li *ngFor="let d of data">
-                {{d.id}} - {{d.title}}
-            </li>
-        </ul>
-    </div>
-</section>
+<ul>
+    <li *ngFor="let d of data">
+        {{d.id}} - {{d.title}}
+    </li>
+</ul>
+
 
 
 
