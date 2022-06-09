@@ -5,46 +5,63 @@
 
 
 // ************************* contact-us.component.html *********************
-<section class="contact-us">
-    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="!isSubmitted">
+<section class="content">
 
-        <!-- firstName field -->
-        <div>
-            <label for="firstName">First Name: </label>
-            <input id="firstName" type="text" formControlName="firstName">
-            <span *ngIf="!firstNameInput.valid && firstNameInput.touched">
-                Please enter a valid industry
-            </span>
+  <div *ngIf="isSubmitted; else elseBlock">
+    Form was submitted. form id: {{userId}}
+  </div>
+
+  <ng-template #elseBlock>
+    <form id="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  
+        <div class="form-field">
+          <label for="userEmail">Enter your email:</label>
+          <input 
+            type="email"
+            formControlName="userEmail"
+            id="userEmail" >
+            <span *ngIf="!userEmail.valid && userEmail.touched">enter your email</span>
         </div>
-
-        <!-- lastName field -->
-        <div>
-            <label for="lastName">Last Name: </label>
-            <input id="lastName" type="text" formControlName="lastName">
-            <span *ngIf="!lastNameInput.valid && lastNameInput.touched">
-                Please enter a valid industry
-            </span>
+  
+  
+        <div class="form-field">
+          <label for="userName">User Name (4 to 8 characters):</label>
+          <input 
+            type="text" 
+            formControlName="userName"
+            id="userName" >
+            <span *ngIf="!userName.valid && userName.touched">enter your user name</span>
+         </div> 
+  
+  
+         <div class="user-address-group" formGroupName="userAddress">
+            <div class="form-field">
+              <label for="userCity">City:</label>
+              <input 
+              type="text"
+              formControlName="userCity"
+              id="userCity" >
+              <span *ngIf="!userCity.valid && userCity.touched">enter your city</span>
+            </div>
+            <div class="form-field">
+              <label for="userCountry">Country:</label>
+              <input
+              type="text"
+              formControlName="userCountry"
+              id="userCountry" >
+              <span *ngIf="!userCountry.valid && userCountry.touched">enter your country</span>
+            </div>
         </div>
-
-        <!-- email field -->
-        <div>
-            <label for="email">Email: </label>
-            <input id="email" type="text" formControlName="email">
-            <span *ngIf="!emailInput.valid && emailInput.touched">
-                Please enter a valid industry
-            </span>
-        </div>
-
-        <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+   
+  
+         <button [disabled]="!userForm.valid" type="submit">
+           Submit
+         </button>
+    
     </form>
+  </ng-template>
 
-    <p *ngIf="isSubmitted">
-          form was isSubmitted
-          <br>
-          you will get all details in your email: {{ submittedEmail }}  
-    </p>
 </section>
-
 
 
 
@@ -56,57 +73,84 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ApiDataService } from '../shared/api-data.service';
+import { UserDataService } from './shared/user-data.service';
 
 @Component({
-  selector: 'app-contact-us',
-  templateUrl: './contact-us.component.html',
-  styleUrls: ['./contact-us.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class ContactUsComponent implements OnInit, OnDestroy {
 
-  userDataSub!: Subscription;
-  isSubmitted: boolean = false;
-  submittedEmail: string = '';
-
-  profileForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
-    lastName: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email] )
+export class AppComponent implements OnInit, OnDestroy {
+  userForm = new FormGroup({
+    userEmail: new FormControl('', [Validators.required, Validators.email]),
+    userName: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
+    userAddress: new FormGroup({
+      userCity: new FormControl('', Validators.required),
+      userCountry: new FormControl('', Validators.required)
+    })
   });
 
-  constructor(private apiDataService: ApiDataService) { }
-  
+  constructor(private userDataService: UserDataService) {}
+
+  userId!: number;
+  userDataSub!: Subscription;
+  isSubmitted: boolean = false;
 
   ngOnInit(): void {
-    // Updating parts of form fields
-    this.profileForm.patchValue({
-      formEmail: 'First Name'
-    });
+    this.updateFormFields();
   }
 
-
-  onSubmit() {
-    this.userDataSub = this.apiDataService.sendContactUsForm(this.profileForm.value).subscribe({
-      next: (responseData) => {
-        this.isSubmitted = responseData.isSubmitted;
-        this.submittedEmail = responseData.email;
-      },
-      error: () => {
-        console.error("error in sendContactUsForm");
+  updateFormFields() {
+    this.userForm.patchValue({
+      userAddress: {
+        userCity: 'example: TLV'
       }
     });
   }
 
-    get firstNameInput() { return this.profileForm.get('firstName')!;  }
-    get lastNameInput() { return this.profileForm.get('lastName')!; }
-    get emailInput() { return this.profileForm.get('email')!; }
-
-    ngOnDestroy(): void {
-      this.userDataSub.unsubscribe();
+  onSubmit() {
+    console.log(this.userForm.value);
+    if(this.userForm.value) {
+        this.userDataSub = this.userDataService.submitUserForm(this.userForm.value).subscribe({
+          next: (response) => {
+            if (response.id) {
+              this.userId = response.id;
+            }
+            this.isSubmitted = true;
+            this.userForm.reset();
+          },
+          error: (err) => {
+            console.log(err);
+          },
+          complete: () => {
+            console.log('complete !!!');
+          }
+        })
     }
-}
+  }
 
+  get userEmail() {
+    return this.userForm.get('userEmail')!;
+  }
+
+  get userName() {
+    return this.userForm.get('userName')!;
+  }
+
+  get userCity() {
+    return this.userForm.get('userAddress.userCity')!;
+  }
+
+  get userCountry() {
+    return this.userForm.get('userAddress.userCountry')!;
+  }
+
+  ngOnDestroy(): void {
+    this.userDataSub.unsubscribe();
+  }
+
+}
 
 
 
@@ -138,10 +182,14 @@ select.ng-valid.ng-touched {
 
 
 // ************************* data.model.ts **************************
-export interface ContactUsModel {
-    firstName: string;
-    lastName: string;
-    email: string;
+export interface UserData {
+  email: string;
+  username: string;
+  address: {
+      city: string;
+      country: string;
+  }
+  id?: number;
 }
 
 
@@ -149,41 +197,43 @@ export interface ContactUsModel {
 
 
 
-
 // ************************ api.data.service.ts ****************************
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ContactUsModel, UsersModel } from './data.model';
-import { map } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import { UserData } from './user-data.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class ApiDataService {
+export class UserDataService {
 
   constructor(private http: HttpClient) { }
 
-  sendContactUsForm(formData: ContactUsModel) {
-    const url = 'https://jsonplaceholder.typicode.com/posts';
+  submitUserForm(body: UserData): Observable<UserData> {
+    const url = 'https://jsonplaceholder.typicode.com/todos';
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
-    const body: ContactUsModel = formData;
+    return this.http.post<UserData>(url, body, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-    return this.http.post<ContactUsModel>(url, body, httpOptions).pipe(
-        map(
-          responseData => {
-            const submittedformInfo = {
-              email: responseData.email,
-              isSubmitted: true
-            };
-            return submittedformInfo;
-          }
-        )
-        );
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
 }
@@ -194,19 +244,22 @@ export class ApiDataService {
 
 
 
-
 // ****************** app.component.ts ******************
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    FormsModule,
     ReactiveFormsModule
   ],
   providers: [],

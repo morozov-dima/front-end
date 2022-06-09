@@ -41,9 +41,11 @@ export class AnimationComponent implements OnInit {
   ngOnInit(): void {}
 
   @HostListener('window:scroll', ['$event']) testView() {
-      if ((window.innerHeight - window.scrollY + this.el.nativeElement.offsetHeight) <= 0) {
-        console.log('user see current component ...');
+    if (window.scrollY >= this.el.nativeElement.offsetTop - window.innerHeight) {
+        console.log('user see current component !!!');
       }
   }
 
 }
+
+
