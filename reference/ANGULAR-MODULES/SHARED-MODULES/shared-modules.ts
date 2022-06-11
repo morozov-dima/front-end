@@ -48,7 +48,7 @@ import { CommonModule } from '@angular/common';
     SharedComponent
   ]
 })
-export class PostsModule { }
+export class SharedModule { }
 
 
 
