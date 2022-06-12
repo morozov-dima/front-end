@@ -37,10 +37,7 @@ export class UsersEffect {
             );
         }
         );
-
-
-
-    
+  
 
 }
 
