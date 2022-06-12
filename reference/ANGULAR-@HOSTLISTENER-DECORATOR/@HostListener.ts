@@ -24,9 +24,12 @@ export class PhotoComponent  {
 
 
 
+
+
 // ***********************************************************************
 // ********************************* Example *****************************
 // ***********************************************************************
+
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 
 @Component({
@@ -49,3 +52,31 @@ export class AnimationComponent implements OnInit {
 }
 
 
+
+
+
+
+
+
+// ***********************************************************************
+// ********************************* Example *****************************
+// ***********************************************************************
+
+import { Component, HostListener } from '@angular/core';
+
+@Component({
+  selector: 'app-animation',
+  templateUrl: './animation.component.html',
+  styleUrls: ['./animation.component.scss']
+})
+export class AnimationComponent {
+
+  @HostListener('mouseenter') onMouseEnter() {
+      console.log('onMouseEnter ...');
+  }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    console.log('onMouseLeave ...');
+  }
+  
+}
