@@ -19,15 +19,23 @@ whenever one or more data-bound input properties change.
 
 
 // *************************************************************************
-// ********************************** Example ******************************
+// *************************** Example - ngOnInit **************************
 // *************************************************************************
+/*
+ * Called once, after the first ngOnChanges().
+ * ngOnInit is still called even when ngOnChanges() is not 
+ * (which is the case when there are no template-bound inputs).
+ */
 
-ngOnInit()
-Called once, after the first ngOnChanges(). ngOnInit()
-is still called even when ngOnChanges() is not
-(which is the case when there are no template-bound inputs).
-
-
+import { OnInit } from '@angular/core';
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+  ngOnInit(): void {}
+}
 
 
 
@@ -143,10 +151,15 @@ subsequent ngAfterContentChecked().
 
 
 
+
+
 // *************************************************************************
 // *********************** Example - ngOnDestroy ***************************
 // *************************************************************************
-//Called immediately before Angular destroys the directive or component.
+/*
+ * Called immediately before Angular destroys the directive or component.
+ */
+
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
