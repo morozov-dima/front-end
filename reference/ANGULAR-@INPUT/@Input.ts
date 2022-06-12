@@ -216,6 +216,3 @@ export class OddComponent implements OnInit {
 
 
 
-
-
-
