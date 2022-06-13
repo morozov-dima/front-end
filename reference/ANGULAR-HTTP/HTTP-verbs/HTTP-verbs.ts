@@ -17,74 +17,78 @@ export class TodoService {
     constructor (private http: HttpClient) {}
 
     
+   
 
-
-
+    
     // 'GET' - get data from server.
     fetchTodos(): Observable<Todo[]> {
-        const url = 'https://jsonplaceholder.typicode.com/todos/';
+      const url = 'https://jsonplaceholder.typicode.com/todos/';
+      /**
+       * Option 1:
+       * You can also create HTTP parameters directly from a query string by using the 'fromString' variable
+       * 
+       */
+       const httpOptions = {
+          headers: new HttpHeaders({
+              'Content-type': 'application/json; charset=UTF-8',
+              Authorization: 'my-auth-token'
+          }),
+          params: new HttpParams({
+              fromString: '_limit=5'
+          })
+       };
+       
+       
+      /**
+       * Option 2:
+       * Using set() method in params only
+       *
+       *  const httpOptions = {
+       *     headers: new HttpHeaders({
+       *       'Content-type': 'application/json; charset=UTF-8',
+       *       Authorization: 'my-auth-token'
+       *     }),
+       *     params: new HttpParams()
+       *      .set('name', 'value1')
+       *      .set('name1', 'value2')
+       *      .set('_limit', '5')
+       *  };
+       * 
+       * 
+       */
 
-        /**
-         * Option 1:
-         * You can also create HTTP parameters directly from a query string by using the 'fromString' variable
-         * 
-         *  const httpOptions = {
-         *     headers: new HttpHeaders({
-         *         'Content-type': 'application/json; charset=UTF-8',
-         *          Authorization: 'my-auth-token'
-         *     }),
-         *     params: new HttpParams({
-         *         fromString: '_limit=5'
-         *     })
-         *  };
-         *
-         */
+      return this.http.get<Todo[]>(url, httpOptions).pipe(
+          tap((response) => {
+              console.log(response);
+          }),
+          map(responseTodos => {
+              let upadatedResponse: Todo[] = [];
+              let randomNum = Math.random();
+              for (const responseTodo of responseTodos) {
+                  upadatedResponse.push({...responseTodo, randomNum});
+              }
 
-        /**
-         * Option 2:
-         * Using set() method
-         *
-         */
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-type': 'application/json; charset=UTF-8',
-                Authorization: 'my-auth-token'
-            }),
-                params: new HttpParams()
-                .set('name', 'value1')
-                .set('name1', 'value2')
-                .set('_limit', '5')
-        };
+              /**
+               * We can also create new object and assign to this object part of values.
+               * Using set() method
+               *
+               *   for (const responseTodo of responseTodos) {
+               *     upadatedResponse.push({
+               *       randomNum: randomNum,
+               *       title: responseTodo.title,
+               *       completed: responseTodo.completed,
+               *       id: responseTodo.id
+               *   });
+               * 
+               */
 
-        return this.http.get<Todo[]>(url, httpOptions).pipe(
-            tap((response) => {
-                console.log(response);
-            }),
-            map(responseTodos => {
-                let upadatedResponse: Todo[] = [];
-                let randomNum = Math.random();
-                for (const responseTodo of responseTodos) {
-                    upadatedResponse.push({...responseTodo, randomNum});
-                }
+              // return updated response. we add rundom number for our response.
+              return upadatedResponse;
+          }),
+          catchError(this.handleError)
+      );
+  }
 
-                /*
-                 * We can also create new object and assign to this object part of values.
-                 */
-                // for (const responseTodo of responseTodos) {
-                //     upadatedResponse.push({
-                //       randomNum: randomNum,
-                //       title: responseTodo.title,
-                //       completed: responseTodo.completed,
-                //       id: responseTodo.id
-                //     });
-                // }
-
-                // return updated response. we add rundom number for our response.
-                return upadatedResponse;
-            }),
-            catchError(this.handleError)
-        );
-    }
 
 
 
@@ -125,6 +129,7 @@ export class TodoService {
                  Authorization: 'my-auth-token'
             })
         };
+        // data that we need update.
         const body = {
             completed: true
         };
