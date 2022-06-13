@@ -1,5 +1,8 @@
+// *************************************************************************
+// ********************************* Example  ******************************
+// *************************************************************************
 
-/* Example 1:
+/* 
  * In this example we have array of numbers, and we need find group of numbers
  * that sum of this numbers equal to target.
  *

@@ -17,18 +17,45 @@ export class TodoService {
     constructor (private http: HttpClient) {}
 
     
+
+
+
     // 'GET' - get data from server.
     fetchTodos(): Observable<Todo[]> {
         const url = 'https://jsonplaceholder.typicode.com/todos/';
+
+        /**
+         * Option 1:
+         * You can also create HTTP parameters directly from a query string by using the 'fromString' variable
+         * 
+         *  const httpOptions = {
+         *     headers: new HttpHeaders({
+         *         'Content-type': 'application/json; charset=UTF-8',
+         *          Authorization: 'my-auth-token'
+         *     }),
+         *     params: new HttpParams({
+         *         fromString: '_limit=5'
+         *     })
+         *  };
+         *
+         */
+
+        /**
+         * Option 2:
+         * Using set() method
+         *
+         */
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-type': 'application/json; charset=UTF-8',
-                 Authorization: 'my-auth-token'
+                Authorization: 'my-auth-token'
             }),
-            params: new HttpParams({
-                fromString: '_limit=5'
-            })
+                params: new HttpParams()
+                .set('name', 'value1')
+                .set('name1', 'value2')
+                .set('_limit', '5')
         };
+
         return this.http.get<Todo[]>(url, httpOptions).pipe(
             tap((response) => {
                 console.log(response);
@@ -61,6 +88,11 @@ export class TodoService {
 
 
 
+
+
+
+
+
     // 'DELETE' - delete part of data from server
     deleteTodo(id: number): Observable<unknown> {
         const url = `https://jsonplaceholder.typicode.com/todos/${id}`;
@@ -74,6 +106,11 @@ export class TodoService {
             catchError(this.handleError)
         );
     }
+
+
+
+
+
 
 
 
@@ -106,6 +143,11 @@ export class TodoService {
 
 
 
+
+
+
+
+
     // 'ADD' - add new data to server
     addTodo(todo: Todo): Observable<Todo> {
         const url = 'https://jsonplaceholder.typicode.com/todos';
@@ -130,6 +172,11 @@ export class TodoService {
 
 
 
+
+
+
+
+
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
           // A client-side or network error occurred. Handle it accordingly.
@@ -144,6 +191,10 @@ export class TodoService {
         return throwError(() => new Error('Something bad happened; please try again later.'));
       }
 
+
+
+
+      
 }
 
 

@@ -15,6 +15,7 @@ export class PhotoComponent  {
   @HostListener('mouseenter', ['$event']) onComponentMouseEnter(event: any) {
       console.log(event);
   }
+
 }
 
 
