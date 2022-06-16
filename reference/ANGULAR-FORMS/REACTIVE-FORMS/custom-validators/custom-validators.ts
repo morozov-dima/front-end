@@ -81,6 +81,49 @@ export class AppComponent implements OnInit {
 
 
 
+// ****************************** app.component.html ********************************
+<section class="content">
+  <div class="internal-content">
+    
+    <div *ngIf="isSubmitted">
+        Form was submitted. Referense id is: {{ formReferenseId }}
+    </div>
+    
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="!isSubmitted">
+
+      <div class="form-field">
+        <label for="formEmail">Enter your email:</label>
+        <input 
+          type="text" 
+          formControlName="formEmail"
+          id="formEmail" >
+          <span *ngIf="!formEmail.valid && formEmail.touched">Please enter correct email</span>
+      </div>
+
+       <div class="form-field">
+        <label for="formPass">Password (8 characters minimum):</label>
+        <input 
+          type="password"
+          formControlName="formPass"
+          id="formPass" >
+          <span *ngIf="!formPass.valid && formPass.touched">Please enter correct password</span>
+       </div> 
+
+       <button [disabled]="!userForm.valid" type="submit" >Submit</button>
+
+    </form>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
 // *************************** custom-form-validator.ts ****************************
 
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
