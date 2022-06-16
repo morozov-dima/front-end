@@ -1,0 +1,57 @@
+<section class="content">
+
+    <div *ngIf="isSubmitted; else elseBlock">
+      Form was submitted. form id: {{userId}}
+    </div>
+  
+    <ng-template #elseBlock>
+      <form id="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    
+          <div class="form-field">
+            <label for="userEmail">Enter your email:</label>
+            <input 
+              type="email"
+              formControlName="userEmail"
+              id="userEmail" >
+              <span *ngIf="!userEmail.valid && userEmail.touched">enter your email</span>
+          </div>
+    
+    
+          <div class="form-field">
+            <label for="userName">User Name (4 to 8 characters):</label>
+            <input 
+              type="text" 
+              formControlName="userName"
+              id="userName" >
+              <span *ngIf="!userName.valid && userName.touched">enter your user name</span>
+           </div> 
+    
+    
+           <div class="user-address-group" formGroupName="userAddress">
+              <div class="form-field">
+                <label for="userCity">City:</label>
+                <input 
+                type="text"
+                formControlName="userCity"
+                id="userCity" >
+                <span *ngIf="!userCity.valid && userCity.touched">enter your city</span>
+              </div>
+              <div class="form-field">
+                <label for="userCountry">Country:</label>
+                <input
+                type="text"
+                formControlName="userCountry"
+                id="userCountry" >
+                <span *ngIf="!userCountry.valid && userCountry.touched">enter your country</span>
+              </div>
+          </div>
+     
+    
+           <button [disabled]="!userForm.valid" type="submit">
+             Submit
+           </button>
+      
+      </form>
+    </ng-template>
+  
+  </section>
