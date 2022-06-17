@@ -4,6 +4,7 @@ import { UserData } from "../../shared/user.data.interface";
 import { UsersData } from "../../shared/users-data.service";
 
 
+
 @Component({
     selector: 'app-users-data',
     templateUrl: './users-data.component.html',
