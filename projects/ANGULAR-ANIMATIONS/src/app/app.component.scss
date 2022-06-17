@@ -1,0 +1,24 @@
+.content {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.block {
+    width: 100%;
+    height: 300px;   
+}
+
+.style1 {
+    background-color: rgb(162, 231, 231);
+}
+
+.style2 {
+    background-color: rgb(224, 231, 189);
+}
+
+.style3 {
+    background-color: rgb(197, 144, 233);
+}
+
