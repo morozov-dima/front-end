@@ -1,0 +1,10 @@
+.welcome-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+
+mat-card {
+    margin: 5px;
+}

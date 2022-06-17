@@ -1,0 +1,18 @@
+<section class="users-shell">
+    <div class="users-shell-content">
+        <mat-tab-group (selectedTabChange)="selectTab($event)">
+            <mat-tab label="All"> 
+                <app-users-table [userData]="userData" ></app-users-table>
+            </mat-tab>
+            <mat-tab label="Beginner"> 
+                <app-users-table [userData]="userData" ></app-users-table>    
+            </mat-tab>
+            <mat-tab label="Intermediate"> 
+                <app-users-table [userData]="userData" ></app-users-table>    
+            </mat-tab>
+            <mat-tab label="Advanced"> 
+                <app-users-table [userData]="userData" ></app-users-table>    
+            </mat-tab>
+          </mat-tab-group>
+    </div>
+</section>
