@@ -4,17 +4,12 @@ import { Subscription } from 'rxjs';
 import { UserDataService } from './shared/api.data.service';
 
 
-
-
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-
 
   userForm = new FormGroup({
     userEmail: new FormControl('', [Validators.required, Validators.email]),
@@ -88,7 +83,6 @@ export class AppComponent implements OnInit, OnDestroy {
   get userComments() {
     return this.userForm.get('userComments')!;
   }
-
   
 
   ngOnDestroy(): void {
