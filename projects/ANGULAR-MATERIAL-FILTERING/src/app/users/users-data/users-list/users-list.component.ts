@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { UserData } from "src/app/shared/user.data.interface";
+import { UserData } from "../../../shared/user.data.interface";
 
 
 @Component({
