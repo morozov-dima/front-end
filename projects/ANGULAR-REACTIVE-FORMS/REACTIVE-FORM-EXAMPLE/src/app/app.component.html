@@ -1,0 +1,102 @@
+<section class="content">
+  <mat-card class="form-content">
+
+    <div class="submitter-form" *ngIf="isSubmitted">
+        Form was submitted. form id: {{ userId }}
+    </div>
+
+    <div class="form-fields" *ngIf="!isSubmitted">
+      <form id="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+        <!--Email field begin -->
+        <div class="form-field">
+          <mat-form-field class="example-full-width" appearance="standard">
+            <mat-label for="userEmail">Email</mat-label>
+            <input
+              type="email"
+              matInput
+              id="userEmail"
+              formControlName="userEmail"
+            />
+          </mat-form-field>
+          <span *ngIf="!userEmail.valid && userEmail.touched">Please enter a valid email address</span
+          >
+        </div>
+        <!--Email field end -->
+
+
+        <!-- User Name field begin -->
+        <div class="form-field">
+          <mat-form-field appearance="standard">
+            <mat-label for="userName">User Name (4 to 8 characters):</mat-label>
+            <input formControlName="userName" id="userName" matInput />
+          </mat-form-field>
+          <span *ngIf="!userName.valid && userName.touched">Please enter a valid user name</span>
+        </div>
+        <!-- User Name field end -->
+
+
+        <!-- User Address Group Gegin -->
+        <div class="user-address-group" formGroupName="userAddress">
+          <div class="form-field">
+            <mat-form-field appearance="standard">
+              <mat-label for="userCity">City:</mat-label>
+              <input formControlName="userCity" id="userCity" matInput />
+            </mat-form-field>
+            <span *ngIf="!userCity.valid && userCity.touched">Please enter your city</span>
+          </div>
+
+          <div class="form-field">
+            <mat-form-field appearance="standard">
+              <mat-label for="userCountry">Country:</mat-label>
+              <input formControlName="userCountry" id="userCountry" matInput />
+            </mat-form-field>
+            <span *ngIf="!userCountry.valid && userCountry.touched">Please enter your country</span>
+          </div>
+        </div>
+        <!-- User Address Group End -->
+
+
+
+        <!-- User Zip Code field begin -->
+        <div class="form-field">
+          <mat-form-field appearance="standard">
+            <mat-label for="userZipCode">Select:</mat-label>
+            <mat-select formControlName="userZipCode" id="userZipCode">
+              <mat-option value="option1">Option 1</mat-option>
+              <mat-option value="option2">Option 2</mat-option>
+              <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <span *ngIf="!userZipCode.valid && userZipCode.touched">Please enter your zip code</span>
+        </div>
+        <!-- User Zip Code field end -->
+
+
+        <!-- Comments field begin -->
+        <div class="form-field">
+          <mat-form-field appearance="outline">
+            <mat-label for="userComments">Comments:</mat-label>
+            <textarea
+              formControlName="userComments"
+              id="userComments"
+              matInput
+            ></textarea>
+          </mat-form-field>
+          <span *ngIf="!userComments.valid && userComments.touched">Please enter your comments</span>
+        </div>
+        <!-- Comments field end -->
+
+
+        <button
+          mat-flat-button
+          [disabled]="!userForm.valid"
+          type="submit"
+          color="primary" >
+          Primary
+        </button>
+
+      </form>
+    </div>
+  </mat-card>
+</section>

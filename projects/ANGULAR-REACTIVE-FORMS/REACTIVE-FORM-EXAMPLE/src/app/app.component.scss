@@ -1,0 +1,49 @@
+.content {
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+
+.form-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 400px;
+    margin:20px;
+}
+
+.submitter-form {
+    color: green;
+}
+
+.form-fields {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+
+.form-field {
+    margin:5px;
+    padding:5px;
+    mat-form-field {
+        width: 100%;  
+        margin:0px;
+    }
+    span {
+        color:red;
+    }
+    textarea {
+        height: 100px;
+    }
+}
+
+
+
+
+  

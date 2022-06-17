@@ -27,9 +27,9 @@ export class AppComponent implements OnInit {
       Validators.email,
       /*
        * Here's how you pass in the custom validator.
-       * you can pass value ro regular expression '/morozov/i'
+       * you can pass value ro regular expression '/testemail/i'
       */
-      forbiddenNameValidator(/morozov/i)  // <-- custom validator.
+      forbiddenNameValidator(/testemail/i)  // <-- custom validator.
     ]),
     formPass: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
