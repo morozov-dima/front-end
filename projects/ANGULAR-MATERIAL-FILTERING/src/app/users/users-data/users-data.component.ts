@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { UserData } from "src/app/shared/user.data.interface";
-import { UsersData } from "src/app/shared/users-data.service";
+import { UserData } from "../../shared/user.data.interface";
+import { UsersData } from "../../shared/users-data.service";
 
 
 @Component({
