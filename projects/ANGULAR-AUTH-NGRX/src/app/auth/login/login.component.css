@@ -1,0 +1,11 @@
+.login-content {
+    margin:20px;
+    color:#000000; 
+    display: flex;
+    justify-content: center;
+}
+
+.form-was-submitted {
+    color: green;
+}
+

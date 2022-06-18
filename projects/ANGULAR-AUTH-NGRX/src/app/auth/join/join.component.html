@@ -1,0 +1,62 @@
+<section class="register-shell">
+    <div class="register-shell-content">
+        <div class="register-shell-form">
+            <div class="register-shell-form-content">
+
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"  *ngIf="!isSubmitted" >
+
+                    <div class="formRow">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label for="emailField">Enter your email:</mat-label>
+                            <input name="emailField" formControlName="emailField" id="emailField" type="email" matInput>
+                          </mat-form-field>
+                    </div>   
+                                        
+                    <div class="formRow">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label for="passwordField">Enter your password:</mat-label>
+                            <input formControlName="passwordField" name="passwordField" id="passwordField" type="password" matInput>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="formRow">
+                        <button type="submit" [disabled]="!registerForm.valid" mat-raised-button color="primary">Submit</button>
+                    </div>
+                </form>
+
+                <div class="submitted-form-message" *ngIf="isSubmitted">
+                    You form was submitted
+                </div>
+
+            </div>
+        </div>
+        <div class="register-shell-info">
+            <div class="register-shell-info-content">
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore, amet.
+            </p>
+            <p>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. A, laboriosam.
+            </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+<section class="promotions">
+
+    <div *ngIf="promotions; else showLoader" class="promotions-item">
+        <div class="promotions-items" *ngFor="let promotion of promotions">
+            <img src="https://via.placeholder.com/200x100.png" alt="">
+            <h3>{{promotion.title}}</h3>
+            <p>{{promotion.body}}</p>
+
+        </div>
+    </div>
+
+    <ng-template #showLoader>
+        <app-loader></app-loader>
+    </ng-template>
+    
+</section>
+

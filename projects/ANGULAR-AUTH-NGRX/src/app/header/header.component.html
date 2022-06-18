@@ -1,0 +1,29 @@
+<section class="header">
+    <div class="header-left">
+        <ul>
+             <li>
+                <a [routerLink]="['']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" >Home</a>
+            </li>
+             <li *ngIf="isAuthenticated">
+                <a [routerLink]="['/promotions']" [routerLinkActive]="['active']" >Promotions</a>
+            </li>
+            
+            <li *ngIf="isAuthenticated">
+                <a [routerLink]="['/users']" [routerLinkActive]="['active']" >Users</a>
+            </li>
+        </ul>
+    </div>
+    <div class="header-right">
+        <ul>
+            <li>
+                <a *ngIf="!isAuthenticated" [routerLink]="['/auth']" >Auth</a>  
+            </li>
+            <li>
+                <a class="logout-link" *ngIf="isAuthenticated" (click)="onLogout()" >Logout</a>    
+            </li>
+        </ul>
+    </div>
+</section>
+
+
+

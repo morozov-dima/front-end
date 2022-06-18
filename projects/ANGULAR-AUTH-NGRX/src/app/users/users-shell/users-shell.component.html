@@ -1,0 +1,25 @@
+<section class="users">
+    <div class="users-content">
+
+        <mat-card class="users-list">
+            <app-users-list
+             (currentUserEvent)="getCurrentUser($event)"
+             (dispatchEmailEvent)="toggleEmailInUsersList()"
+             (initializeNewUser)="initializeNewUser()"
+             [selectedUser]="selectedUser$ | async"
+             [users]="users"
+             [displayEmail]="displayEmail$ | async"
+             ></app-users-list> 
+        </mat-card>
+
+        <mat-card class="users-details">
+           <app-users-description
+
+           ></app-users-description>
+        </mat-card>
+        
+    </div>
+</section>
+
+
+
