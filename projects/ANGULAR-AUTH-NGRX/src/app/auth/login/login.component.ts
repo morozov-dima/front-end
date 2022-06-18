@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthPageActions } from "../state/actions";
-import { State } from "src/app/state/app.reducer";
+import { State } from "../../state/app.reducer";
 import { Store } from '@ngrx/store';
 
 

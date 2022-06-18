@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { catchError, map, tap } from "rxjs";
-import { HandleErrorService } from "src/app/shared/error/error.service";
-import { State } from "src/app/state/app.reducer";
+import { HandleErrorService } from "../../shared/error/error.service";
+import { State } from "../../state/app.reducer";
 import { User } from "./users.interface";
 
 @Injectable({

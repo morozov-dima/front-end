@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
-import { State } from "src/app/state/app.reducer";
+import { State } from "../../state/app.reducer";
 import { UserPageActions } from "../state/actions";
 import { User } from "../state/users.interface";
 import { getCurrentUser } from "../state/users.selectors";

@@ -1,12 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, map, tap } from "rxjs";
-import { HandleErrorService } from "src/app/shared/error/error.service";
+import { HandleErrorService } from "../../shared/error/error.service";
 import { environment } from 'src/environments/environment';
 import { User } from "./auth-user.model";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { State } from "src/app/state/app.reducer";
+import { State } from "../../state/app.reducer";
 import { AuthApiActions, AuthPageActions } from "./actions";
 import { AuthResponseData } from "./auth.interface";
 

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable, Subscription } from "rxjs";
-import { State } from "src/app/state/app.reducer";
+import { State } from "../../state/app.reducer";
 import { UserPageActions } from "../state/actions";
 import { User } from "../state/users.interface";
 import { getCurrentUser, getUsers, toggleEmail } from "../state/users.selectors";

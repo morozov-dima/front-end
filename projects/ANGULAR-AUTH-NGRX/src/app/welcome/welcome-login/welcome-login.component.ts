@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { Posts } from "src/app/shared/general-data/general-data.interface";
-import { GeneralDataService } from "src/app/shared/general-data/general-data.service";
+import { Posts } from "../../shared/general-data/general-data.interface";
+import { GeneralDataService } from "../../shared/general-data/general-data.service";
 
 
 

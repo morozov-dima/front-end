@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { State } from "src/app/state/app.reducer";
+import { State } from "../../state/app.reducer";
 import { PromotionPageActions } from "../state/actions";
 import { Promotion } from "../state/promotions.interface";
 import { getPromotions } from "../state/promotions.selectors";
