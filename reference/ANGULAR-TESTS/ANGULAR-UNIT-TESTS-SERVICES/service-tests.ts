@@ -15,7 +15,6 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 
-
 export class PostsService {
   constructor(private http: HttpClient) {}
 
@@ -34,6 +33,9 @@ export class PostsService {
     return this.http.delete<void>(`${id}`)
   }
 }
+
+
+
 
 
 
@@ -89,6 +91,10 @@ export class PostsComponent implements OnInit {
 
 
 
+
+
+
+
 // ************************ posts.component.spec.ts *********************
 import { EMPTY, of, throwError } from "rxjs";
 import { PostsComponent } from "./posts.component";
@@ -112,6 +118,8 @@ describe('PostsComponent', () => {
 
 
 
+
+
   // #################### fetch method test  #####################
   // 1. it this test we test ### ngOnInit service methods ### 
   // 2. in this test we check if our method 'fetch' exist on 'ngOnInit'
@@ -129,6 +137,10 @@ describe('PostsComponent', () => {
     expect(spy).toHaveBeenCalled();
 
   });
+
+
+
+
 
 
 
@@ -155,6 +167,11 @@ describe('PostsComponent', () => {
 
 
 
+
+
+
+
+
   // #######################  add() method test #####################
   // it this test we test ### add() ### service method. here we test that our method can add new post.
   it('should add new post', () => {
@@ -173,6 +190,11 @@ describe('PostsComponent', () => {
     // and we can also test that now our 'posts' array have one value 'test'
     expect(component.posts.includes(post)).toBeTruthy();
   });
+
+
+
+
+
 
 
 
@@ -196,6 +218,9 @@ describe('PostsComponent', () => {
 
 
 
+
+
+
   // #################### delete method test  #####################
   // in case user press 'yes' in confirm popup
   it('should remove post if user confirms', () => {
@@ -213,6 +238,10 @@ describe('PostsComponent', () => {
 
 
 
+
+
+
+  
 
   // #################### delete method test  #####################
   // in case user press 'no' in confirm popup

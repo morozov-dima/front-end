@@ -7,7 +7,6 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-
 @Component({
     selector: 'app-counter',
     template: `Counter: {{counter}}`
@@ -28,7 +27,6 @@ export class CounterComponent {
 
     increment() {
         this.counter++;
-        // we want test that this emit work with our tests.
         this.counterEmitter.emit(this.counter);
     }
 
@@ -36,6 +34,10 @@ export class CounterComponent {
         this.counter--;
     }
 }
+
+
+
+
 
 
 
@@ -57,11 +59,7 @@ describe('CounterComponent', () => {
     })
 
 
-    // ################################### We can also use #################################:
-    // beforeAll - we can call this method and this method will be called before all 'its'.
-    // afterEach - we can call this method and this method will be called after end of each it.
-    // afterAll  - we can call this method and this method will be called after end of 'its'.
-    // #####################################################################################:
+
 
 
  
@@ -80,6 +78,9 @@ describe('CounterComponent', () => {
 
 
 
+
+
+
     // Form Tests
     // Here we check if our form validasion work
     // this way we test 'required' validator.
@@ -94,5 +95,9 @@ describe('CounterComponent', () => {
         // here we can use Jasminbe mmethod that check if our value is falsy 'toBeFalsy'
         expect(control?.valid).toBeFalsy();
     });
+
+
+
+
 
 });

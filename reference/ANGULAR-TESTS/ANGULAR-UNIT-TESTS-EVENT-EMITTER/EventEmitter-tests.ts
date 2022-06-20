@@ -47,14 +47,6 @@ describe('CounterComponent', () => {
     })
 
 
-    // ################################### We can also use #################################:
-    // beforeAll - we can call this method and this method will be called before all 'its'.
-    // afterEach - we can call this method and this method will be called after end of each it.
-    // afterAll  - we can call this method and this method will be called after end of 'its'.
-    // #####################################################################################:
-
-
-
     // we will test our EventEmitter !!!!!!!
     // EventEmitters are Observables and we can subscribe.
     it('should increment value by event emitter', () => {
@@ -67,9 +59,11 @@ describe('CounterComponent', () => {
 
         component.increment(); // now result 0 -> 1
 
-        // now ewsult should be 1
+        // now result should be 1
         expect(result).toBe(1);
-
     })
+
+
+
 
 });

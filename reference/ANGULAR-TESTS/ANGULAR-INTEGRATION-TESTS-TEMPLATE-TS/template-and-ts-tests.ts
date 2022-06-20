@@ -116,6 +116,47 @@ describe('CounterComponent', () => {
 
 
 
+
+
+
+
+  it('should add green class if counter is even', () => {
+    // set counter value to 6
+    component.counter = 6;
+
+    // we tell to angular that same chabge was done
+    fixture.detectChanges();
+
+    let de = fixture.debugElement.query(By.css('.counter'));
+    let el: HTMLElement = de.nativeElement;
+
+    // here we check that our expresion is true.
+    // we check that our element contains class 'green'.
+    expect(el.classList.contains('green')).toBeTruthy();
+  });
+
+
+
+
+
+
+
+  it('should increment counter if increment button was clicked', () => {
+      let btn = fixture.debugElement.query(By.css('#increment'));
+      
+      // we call 'click' method. 
+      btn.triggerEventHandler('click', null);  
+
+      expect(component.counter).toBe(1);
+  });
+
+
+
+
+
+
+
+
 })
 
 
