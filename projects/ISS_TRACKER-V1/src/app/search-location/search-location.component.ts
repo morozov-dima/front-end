@@ -63,7 +63,7 @@ export class SearchLocationComponent implements OnInit {
       this.store.dispatch(MapPageActions.currentActiveLocation({currentLocation: focusedLocation})); 
 
       //localStorage.setItem('currentLocation', JSON.stringify(focusedLocation));
-      localStorage.setItem('appLocationState', JSON.stringify(2));
+      localStorage.setItem('appLocationState', JSON.stringify(222));
 
 
       // this.store.select(getActiveLocationsHistory).subscribe({
@@ -80,7 +80,7 @@ export class SearchLocationComponent implements OnInit {
       this.store.dispatch(MapPageActions.setInternalAppState({appLocationState: 1}));
       this.store.dispatch(MapPageActions.loadMaps()); 
       this.store.dispatch(MapPageActions.saveLocationsHistory({updatedLocation: focusedLocation})); 
-      localStorage.setItem('appLocationState', JSON.stringify(1));
+      localStorage.setItem('appLocationState', JSON.stringify(111));
       this.isFocused = false;
     }
   }
