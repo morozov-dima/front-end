@@ -1,0 +1,22 @@
+<section class="header">
+    <div class="header-current-location">
+        <app-current-location></app-current-location>
+    </div>
+    <div class="menu-wrapper">
+        <!-- Map page -->
+        <button 
+            mat-button [routerLink]="['']" 
+            [routerLinkActive]="['active']" 
+            [routerLinkActiveOptions]="{exact: true}">
+            Map
+        </button>
+
+        <!-- Report page -->
+        <button 
+            mat-button [routerLink]="['/report']"
+            [routerLinkActive]="['active']">
+            Report
+        </button>
+    </div>
+</section>
+

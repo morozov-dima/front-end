@@ -1,0 +1,15 @@
+.current-location-content {
+    padding:10px;
+    height: 70px;
+    border-bottom: 1px solid #bebec2;
+}
+
+.current-location-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    .location-block {
+        padding: 10px;
+    }
+}
+
