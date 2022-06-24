@@ -41,13 +41,13 @@ export class MapsEffects {
       map(() => {
 
           // set app location state. 
-          // this.store.dispatch(
-          //   MapPageActions.setInternalAppState({
-          //     appLocationState: JSON.parse(
-          //       localStorage.getItem('appLocationState') || '{}'
-          //     ),
-          //   })
-          // );
+          this.store.dispatch(
+            MapPageActions.setInternalAppState({
+              appLocationState: JSON.parse(
+                localStorage.getItem('appLocationState') || '{}'
+              ),
+            })
+          );
 
           // locations saved by user (save button inside dialog popup)
           // this.store.dispatch(

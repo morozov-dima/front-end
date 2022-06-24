@@ -46,11 +46,11 @@ export class SaveLocationDialogComponent implements OnInit {
             this.store.dispatch(MapPageActions.saveLocation({updatedLocation: this.updatedLocation})); 
 
 
-            // this.store.select(getISSLocationSavedByUser).subscribe({
-            //   next: responseLocationsSavedByUser => {
-            //     localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
-            //   }
-            // });
+            this.store.select(getISSLocationSavedByUser).subscribe({
+              next: responseLocationsSavedByUser => {
+                localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
+              }
+            });
 
 
             this.locationsFrom.reset();

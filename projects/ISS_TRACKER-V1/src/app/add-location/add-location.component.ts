@@ -14,7 +14,7 @@ import { ISSLocationFromAPI } from '../maps/state/maps.interface';
   styleUrls: ['./add-location.component.scss']
 })
 export class AddLocationComponent {
-  currentLocation!: ISSLocationFromAPI | null;
+  currentLocation!: ISSLocationFromAPI;
   constructor(
     public dialog: MatDialog,
     private store: Store<State>
@@ -37,13 +37,15 @@ export class AddLocationComponent {
     )
     .subscribe({
       next: (response) => {
-               this.currentLocation = {
-                  iss_position: {
-                    longitude: response!.iss_position.longitude,
-                    latitude: response!.iss_position.latitude,
-                  },
-                  timestamp: currentDate
-              };
+              if(response) {
+                this.currentLocation = {
+                   iss_position: {
+                     longitude: response!.iss_position.longitude,
+                     latitude: response!.iss_position.latitude,
+                   },
+                   timestamp: currentDate
+               };
+              }
           }
     });
   }
