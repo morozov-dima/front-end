@@ -45,13 +45,16 @@ export class SaveLocationDialogComponent implements OnInit {
        if(this.locationsFrom.valid) {
             this.store.dispatch(MapPageActions.saveLocation({updatedLocation: this.updatedLocation})); 
 
-
-            // this.store.select(getISSLocationSavedByUser).subscribe({
-            //   next: responseLocationsSavedByUser => {
-            //     localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
-            //   }
-            // });
-
+            this.store.select(getISSLocationSavedByUser).subscribe({
+              next: responseLocationsSavedByUser => {
+                console.log(responseLocationsSavedByUser);
+                console.log(responseLocationsSavedByUser.length);
+                
+                if (responseLocationsSavedByUser.length > 0) {
+                  localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
+                }
+              }
+            });
 
             this.locationsFrom.reset();
             this.matDialogRef.close('save');

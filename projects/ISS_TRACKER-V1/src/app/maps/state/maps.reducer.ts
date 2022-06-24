@@ -1,15 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
-import { ISSLocationSavedByUser, MapState } from './maps.interface';
+import { MapState } from './maps.interface';
 import { MapApiActions, MapPageActions } from './actions';
 
 
 const initialState: MapState = {
      appLocationState: 1,
      ISSLocationSavedByUser: [],
-     //selectedTab: 1,
      ISSLocationFromAPI: null,
      currentLocation: null,
-     ActiveLocationsHistory: [],
      error: ''    
 };
 
@@ -45,15 +43,6 @@ export const mapReducer = createReducer<MapState>(
             }
         }
     ),
-    // on(
-    //     MapPageActions.updateSelectedTab,
-    //     (state, action): MapState => {
-    //         return {
-    //             ...state,
-    //             selectedTab: action.tabId
-    //         }
-    //     }
-    // ),
     on(
         MapPageActions.deleteLocation,
         (state, action): MapState => {
@@ -95,18 +84,8 @@ export const mapReducer = createReducer<MapState>(
                 appLocationState: action.appLocationState
             }
         }
-    ),
-    on(
-        MapPageActions.saveLocationsHistory,
-        (state, action): MapState => {
-            const ActiveLocationsHistory = state.ActiveLocationsHistory.slice(0);
-            ActiveLocationsHistory.push(action.updatedLocation);
-              return {
-                ...state,
-                ActiveLocationsHistory: ActiveLocationsHistory 
-            }
-        }
-    ),
+    )
+
 
 );
 

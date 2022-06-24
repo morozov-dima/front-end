@@ -3,12 +3,6 @@ import { MapState } from './maps.interface';
 
 const getMapFeatureState = createFeatureSelector<MapState>('maps');
 
-// export const getSelectedTab = createSelector(
-//     getMapFeatureState,
-//     state => {
-//         return state.selectedTab
-//     }
-// );
 
 
 export const getISSLocationFromAPI = createSelector(
@@ -43,10 +37,3 @@ export const getAppLocationState = createSelector(
 );
 
 
-
-export const getActiveLocationsHistory = createSelector(
-    getMapFeatureState,
-    state => {
-        return state.ActiveLocationsHistory
-    }
-);

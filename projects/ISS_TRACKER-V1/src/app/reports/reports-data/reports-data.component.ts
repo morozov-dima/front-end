@@ -30,8 +30,14 @@ export class ReportsDataComponent implements OnInit, AfterViewInit {
   getLocations() {
     this.store.select(getISSLocationSavedByUser).subscribe({
       next: response => {
+        console.log('a1');
+        console.log(response);
+        
+        
+        
         response.length > 0 ? this.dataIsAvailable = true : this.dataIsAvailable = false;
         this.dataSource = new MatTableDataSource(response);
+        
         this.dataSource.paginator = this.paginator;
       }
     });

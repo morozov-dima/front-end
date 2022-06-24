@@ -58,10 +58,20 @@ $base-search-location-section-color: #6273c6;
   overflow: auto;
 }
 
-.cell-data  {
-  span{
+.cell-data-title{
     font-weight: bold;
-  }
+}
+
+.cell-data-date {
+  font-weight: bold;
+}
+
+.search-location-name {
+  font-weight: bold;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .actions-content {

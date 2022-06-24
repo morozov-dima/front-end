@@ -24,12 +24,19 @@ export class GoogleMapComponent implements OnInit {
 
   ngOnInit(): void {
     
+
+
+
+    
     this.store.select(getAppLocationState).subscribe({
       next: (appStateResponse) => {
-                
+        console.log(appStateResponse);
+
         switch (appStateResponse) {
           // The ISS location coorrdinates get updated every 'X' seconds.
           case 1:
+            console.log('state 1');
+            
             if(this.activeLocationSub) {
                 this.activeLocationSub.unsubscribe();
               }
@@ -40,21 +47,14 @@ export class GoogleMapComponent implements OnInit {
 
           // The map will be focused to chosen location  
           case 2:
+            console.log('state 2');
               if(this.locationFromAPISub) {
                 this.locationFromAPISub.unsubscribe();
               }
               this.setCurrentFocusedLocation();
               break;
 
-          // The ISS location coorrdinates get updated every 'X' seconds.    
-          default:
-            if(this.activeLocationSub) {
-                this.activeLocationSub.unsubscribe();
-              }
-              this.getMultipleISSCoordinates(this.time); 
-              //this.store.dispatch(MapPageActions.loadMaps()); 
-              this.setCurrentLocation();
-              break;
+
         }
       }
     });
@@ -67,8 +67,8 @@ export class GoogleMapComponent implements OnInit {
     this.locationFromAPISub = this.store.select(getISSLocationFromAPI).subscribe({
       next: (response) => {
           if (response) {
-            this.lat = +response.iss_position.latitude;
-            this.lng = +response.iss_position.longitude;
+            this.lat = parseFloat(response?.iss_position?.latitude);
+            this.lng = parseFloat(response?.iss_position?.longitude);
           }
       }
     });
@@ -79,8 +79,8 @@ export class GoogleMapComponent implements OnInit {
     this.activeLocationSub = this.store.select(getcurrentActiveLocation).subscribe({
       next: (response) => {
           if (response) {
-            this.lat = +response.iss_position.latitude;
-            this.lng = +response.iss_position.longitude;
+            this.lat = parseFloat(response?.iss_position?.latitude);
+            this.lng = parseFloat(response?.iss_position?.longitude);
           }
       }
     });

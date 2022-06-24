@@ -4,7 +4,7 @@ import { ISSLocationSavedByUser } from '../maps/state/maps.interface';
 import { Store } from '@ngrx/store';
 import { State } from '../state/app.reducer';
 import { MapPageActions } from '../maps/state/actions';
-import { getActiveLocationsHistory, getISSLocationSavedByUser } from '../maps/state/maps.selectors';
+import { getISSLocationSavedByUser } from '../maps/state/maps.selectors';
 
 export interface PeriodicElement {
   name: string;
@@ -34,6 +34,7 @@ export class SearchLocationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLocations();
+    
   }
 
   applyFilter(event: Event) {
@@ -45,7 +46,11 @@ export class SearchLocationComponent implements OnInit {
   getLocations() {
     this.store.select(getISSLocationSavedByUser).subscribe({
       next: response => {
+        console.log(response);
+        
         response.length > 0 ? this.dataIsAvailable = true : this.dataIsAvailable = false;
+        console.log(response.length);
+        
         this.dataSource = new MatTableDataSource(response);
       }
     });
@@ -62,16 +67,13 @@ export class SearchLocationComponent implements OnInit {
       this.store.dispatch(MapPageActions.setInternalAppState({appLocationState: 2}));
       this.store.dispatch(MapPageActions.currentActiveLocation({currentLocation: focusedLocation})); 
 
-      //localStorage.setItem('currentLocation', JSON.stringify(focusedLocation));
-      localStorage.setItem('appLocationState', JSON.stringify(222));
+
+      
+      localStorage.setItem('currentLocation', JSON.stringify(focusedLocation));
 
 
-      // this.store.select(getActiveLocationsHistory).subscribe({
-      //   next: responseGetActiveLocationsHistory => {
-      //     localStorage.setItem('ActiveLocationsHistory', JSON.stringify(responseGetActiveLocationsHistory));
-      //   }
-      // });
 
+      localStorage.setItem('appLocationState', JSON.stringify(2));
 
       this.isFocused = true;
     }
@@ -80,7 +82,10 @@ export class SearchLocationComponent implements OnInit {
       this.store.dispatch(MapPageActions.setInternalAppState({appLocationState: 1}));
       this.store.dispatch(MapPageActions.loadMaps()); 
       this.store.dispatch(MapPageActions.saveLocationsHistory({updatedLocation: focusedLocation})); 
-      localStorage.setItem('appLocationState', JSON.stringify(111));
+      localStorage.setItem('appLocationState', JSON.stringify(1));
+            
+      localStorage.removeItem('currentLocation');
+
       this.isFocused = false;
     }
   }

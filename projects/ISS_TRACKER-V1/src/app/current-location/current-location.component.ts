@@ -63,8 +63,8 @@ export class CurrentLocationComponent implements OnInit {
       next: (response) => {
             if(response) {
               this.isDataLoaded = true;
-              this.lat = response.iss_position.latitude;
-              this.lng = response.iss_position.longitude;
+              this.lat = response?.iss_position?.latitude;
+              this.lng = response?.iss_position?.longitude;
               this.time = response.timestamp;
             }
       }
@@ -78,9 +78,9 @@ export class CurrentLocationComponent implements OnInit {
       next: (response) => {
           if (response) {
             this.isDataLoaded = true;
-            this.lat = response.iss_position.latitude;
-            this.lng = response.iss_position.longitude;
-            this.time = response.timestamp;
+            this.lat = response?.iss_position?.latitude;
+            this.lng = response?.iss_position?.longitude;
+            this.time = response?.timestamp;
           }
       }
     });

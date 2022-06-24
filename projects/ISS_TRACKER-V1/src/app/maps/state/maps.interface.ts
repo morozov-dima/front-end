@@ -4,7 +4,6 @@ export interface MapState {
     ISSLocationSavedByUser: ISSLocationSavedByUser[];
     ISSLocationFromAPI: ISSLocationFromAPI | null;
     currentLocation: ISSLocationFromAPI | null;
-    ActiveLocationsHistory: ISSLocationSavedByUser[];
     error: string;
 }
 
