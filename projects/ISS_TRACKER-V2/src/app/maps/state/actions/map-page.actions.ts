@@ -43,3 +43,4 @@ export const saveLocationsHistory = createAction(
   '[Maps Page] Save Location History',
   props<{ updatedLocation: ISSLocationSavedByUser }>()
 );
+

@@ -10,6 +10,7 @@ export const getISSLocationFromAPI = createSelector(
     }
 );
 
+
 export const getISSLocationSavedByUser = createSelector(
     getMapFeatureState,
     state => {

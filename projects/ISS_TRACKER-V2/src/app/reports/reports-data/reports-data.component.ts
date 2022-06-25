@@ -32,6 +32,7 @@ export class ReportsDataComponent implements OnInit, AfterViewInit {
       next: response => {
         response.length > 0 ? this.dataIsAvailable = true : this.dataIsAvailable = false;
         this.dataSource = new MatTableDataSource(response);
+        
         this.dataSource.paginator = this.paginator;
       }
     });

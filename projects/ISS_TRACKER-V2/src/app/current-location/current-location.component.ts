@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { getAppLocationState, getcurrentActiveLocation, getISSLocationFromAPI } from '../maps/state/maps.selectors';
 import { Store } from '@ngrx/store';
 import { State } from '../state/app.reducer';
-import { Subscription } from 'rxjs';
+import { map, Observable, Subscription, timer } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-current-location',
@@ -20,6 +21,7 @@ export class CurrentLocationComponent implements OnInit {
   locationFromAPISub!: Subscription;
   activeLocationSub!: Subscription; 
 
+
   ngOnInit(): void {
     /*
       * app state 1: The ISS location coorrdinates get updated every 'X' seconds.
@@ -28,6 +30,7 @@ export class CurrentLocationComponent implements OnInit {
     this.getCurrentLocationAccordingToAppState();
 
   }
+
 
 
 
@@ -92,6 +95,8 @@ export class CurrentLocationComponent implements OnInit {
       }
     });
   }
+
+
 
 
   

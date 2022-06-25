@@ -4,7 +4,7 @@ import { State } from '../state/app.reducer';
 import { MapPageActions } from '../maps/state/actions';
 import { interval, Subscription } from 'rxjs';
 import { getAppLocationState, getcurrentActiveLocation, getISSLocationFromAPI } from '../maps/state/maps.selectors';
-
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-google-map',
@@ -15,7 +15,7 @@ import { getAppLocationState, getcurrentActiveLocation, getISSLocationFromAPI } 
 export class GoogleMapComponent implements OnInit {
    lat!: number;
    lng!: number ;
-   time: number = 2000; // 2 sec interval
+   time: number = environment.apiCallsInterval; // 2 sec interval
 
    locationFromAPISub!: Subscription;
    activeLocationSub!: Subscription; 

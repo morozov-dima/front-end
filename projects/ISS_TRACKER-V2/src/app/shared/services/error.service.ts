@@ -1,15 +1,19 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { throwError } from "rxjs";
+import { Store } from '@ngrx/store';
+import { State } from '../../state/app.reducer';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class HandleErrorService {
+
+  constructor(private store: Store<State>) {}
     
     handleError(error: HttpErrorResponse) {
-      
+
         if (error.status === 0) {
           // A client-side or network error occurred. Handle it accordingly.
           console.error('An error occurred:', error.error);
