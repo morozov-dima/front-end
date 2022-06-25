@@ -1,0 +1,16 @@
+.google-map-content {
+    position: relative;
+}
+
+.google-map-wrapper {
+    position: relative;
+    agm-map {
+        height: 500px;
+    }
+}
+
+.add-location-wrapper {
+    position: absolute;
+    bottom: 25px;
+    right: 75px;
+}
