@@ -54,7 +54,16 @@ export class GoogleMapComponent implements OnInit {
               this.setCurrentFocusedLocation();
               break;
 
-
+          // The ISS location coorrdinates get updated every 'X' seconds.    
+          default:
+            console.log('state default');
+            if(this.activeLocationSub) {
+                this.activeLocationSub.unsubscribe();
+              }
+              this.getMultipleISSCoordinates(this.time); 
+              //this.store.dispatch(MapPageActions.loadMaps()); 
+              this.setCurrentLocation();
+              break;
         }
       }
     });

@@ -5,6 +5,7 @@ import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { MapsService } from './maps.service';
 import { Store } from '@ngrx/store';
 import { State } from '../../state/app.reducer';
+import { ISSLocationSavedByUser } from './maps.interface';
 
 
 @Injectable()
@@ -15,8 +16,6 @@ export class MapsEffects {
     private store: Store<State>
     ) {}
     
-    
-
     
     
     
@@ -40,24 +39,16 @@ export class MapsEffects {
 
 
 
-
-
   
   restoreLocations$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(MapPageActions.restoreData),
-
-
       tap(() => {
-        console.log('restore locations effect ...');
-        
+        console.log('inside restoreLocations effect...');
       }),
       map(() => {
-        
         const localStorageData = localStorage.getItem('appLocationState');
-
         if (localStorageData) {
-          
           
           // set app location state. 
           this.store.dispatch(
@@ -67,20 +58,11 @@ export class MapsEffects {
                 ),
               })
           );
-          
-
-
+            
           // locations saved by user (save button inside dialog popup)
-          this.store.dispatch(
-            MapPageActions.saveLocation({
-              updatedLocation: JSON.parse(
-                localStorage.getItem('ISSLocationsSavedByUser') || '{}' 
-                ),
-              })
-              );
-
-              
-              
+          const ISSLocationSavedByUser: ISSLocationSavedByUser[] = JSON.parse(localStorage.getItem('ISSLocationsSavedByUser') || '{}');
+          this.store.dispatch( MapPageActions.saveRestoredLocations({ restoredLocations: ISSLocationSavedByUser   }) );
+          
           // current active location  
           this.store.dispatch(
             MapPageActions.currentActiveLocation({
@@ -89,24 +71,14 @@ export class MapsEffects {
               ),
             })
           );
-          
+
+
         }
-        
           return MapPageActions.restoreDataSuccess();
-          
         })
         );
   });
   
-
-
-
-
-  
-
-
-
-
 
   
 }

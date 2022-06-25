@@ -12,7 +12,6 @@ const initialState: MapState = {
 };
 
 
-
 export const mapReducer = createReducer<MapState>(
     initialState,
     on(
@@ -32,7 +31,6 @@ export const mapReducer = createReducer<MapState>(
                 error: action.error
             }
         }
-
     ),
     on(
         MapPageActions.setCurrentLocation,
@@ -64,6 +62,15 @@ export const mapReducer = createReducer<MapState>(
               return {
                 ...state,
                ISSLocationSavedByUser: ISSLocationSavedByUser 
+            }
+        }
+    ),
+    on(
+        MapPageActions.saveRestoredLocations,
+        (state, action): MapState => {
+              return {
+                ...state,
+               ISSLocationSavedByUser: action.restoredLocations 
             }
         }
     ),

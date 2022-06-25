@@ -46,11 +46,7 @@ export class SearchLocationComponent implements OnInit {
   getLocations() {
     this.store.select(getISSLocationSavedByUser).subscribe({
       next: response => {
-        console.log(response);
-        
         response.length > 0 ? this.dataIsAvailable = true : this.dataIsAvailable = false;
-        console.log(response.length);
-        
         this.dataSource = new MatTableDataSource(response);
       }
     });
@@ -61,12 +57,15 @@ export class SearchLocationComponent implements OnInit {
   onChoseLocation(focusedLocation: ISSLocationSavedByUser) {
     // toggle background color of selected location.
     this.rowClicked === focusedLocation.id ? this.rowClicked = -1 : this.rowClicked = focusedLocation.id;
+
+
     
     if(!this.isFocused) {
       // user select a saved location
+     
+  
       this.store.dispatch(MapPageActions.setInternalAppState({appLocationState: 2}));
       this.store.dispatch(MapPageActions.currentActiveLocation({currentLocation: focusedLocation})); 
-
 
       
       localStorage.setItem('currentLocation', JSON.stringify(focusedLocation));
@@ -79,6 +78,8 @@ export class SearchLocationComponent implements OnInit {
     }
     else {
       // When a user unselects the location,  the app will return to show the whole map.
+
+
       this.store.dispatch(MapPageActions.setInternalAppState({appLocationState: 1}));
       this.store.dispatch(MapPageActions.loadMaps()); 
       this.store.dispatch(MapPageActions.saveLocationsHistory({updatedLocation: focusedLocation})); 
@@ -94,7 +95,41 @@ export class SearchLocationComponent implements OnInit {
 
 
   onDeleteLocation(locationId: number) {
+    console.log('onDeleteLocation' + locationId);
+    
        this.store.dispatch(MapPageActions.deleteLocation({id: locationId})); 
+
+       const ISSLocationSavedByUser: ISSLocationSavedByUser[] = JSON.parse(localStorage.getItem('ISSLocationsSavedByUser') || '{}');
+       console.log(ISSLocationSavedByUser);
+       
+       localStorage.removeItem('currentLocation');
+
+
+
+
+      //  this.store.select(getISSLocationSavedByUser).subscribe({
+      //   next: responseLocationsSavedByUser => {
+      //     console.log('onDeleteLocation .......');
+          
+      //     console.log(responseLocationsSavedByUser);
+      //     console.log(responseLocationsSavedByUser.length);
+          
+      //     if (responseLocationsSavedByUser.length > 0) {
+      //       localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
+      //     }
+      //   }
+      // });
+
+
+
+
+      //  if (responseLocationsSavedByUser.length > 0) {
+      //   localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
+      // }
+
+
+
+
   }
 
 }

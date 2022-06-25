@@ -17,9 +17,7 @@ export class CurrentLocationComponent implements OnInit {
   lat: string = '';
   lng: string = '';
   time: string = ''; 
-
   isDataLoaded: boolean = false;
-
   locationFromAPISub!: Subscription;
   activeLocationSub!: Subscription; 
 

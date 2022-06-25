@@ -13,8 +13,11 @@ import { ISSLocationFromAPI } from '../maps/state/maps.interface';
   templateUrl: './add-location.component.html',
   styleUrls: ['./add-location.component.scss']
 })
+
 export class AddLocationComponent {
+
   currentLocation!: ISSLocationFromAPI;
+  
   constructor(
     public dialog: MatDialog,
     private store: Store<State>

@@ -50,9 +50,18 @@ export class SaveLocationDialogComponent implements OnInit {
                 console.log(responseLocationsSavedByUser);
                 console.log(responseLocationsSavedByUser.length);
                 
-                if (responseLocationsSavedByUser.length > 0) {
+             //   if (responseLocationsSavedByUser.length > 0) {
                   localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
-                }
+             //   }
+
+
+
+                // if (responseLocationsSavedByUser.length > 0) {
+                //   localStorage.setItem('ISSLocationsSavedByUser', JSON.stringify(responseLocationsSavedByUser));
+                // }
+
+
+                
               }
             });
 
