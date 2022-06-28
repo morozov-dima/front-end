@@ -100,3 +100,29 @@ interface Named {
 interface Greetable extends Named {
     greet(phrase: string) : void;
 }
+
+
+
+
+
+
+
+
+// **************************************************************************
+// ******************************** Example *********************************
+// **************************************************************************
+interface Animal {
+    name: string;
+    age: number;
+  }
+  interface Dog extends Animal {
+    run(): void;
+  }
+  
+  const a1: Dog = {
+    name: 'Tom',
+    age: 3,
+    run() {
+      console.log('the dog runs...');
+    },
+  };
