@@ -23,12 +23,6 @@ export class ShortenPipe implements PipeTransform {
 }
 
 
-
-
-
-
-
-
 // ********************* app.component.html **************************
 <strong>{{ server.name | shorten:10 }}</strong> | 
 
