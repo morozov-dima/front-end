@@ -12,40 +12,32 @@
  *  2. You can add new headers to existing headers.
  *  3. We can interact with requests.
  *  4. We can interact with response.
+ * 
+ *  5. you can add new headers to existing headers
+       our interceptop will add this header for all outgoing requests,
 */
 
 
 
 // ************* app/shared/login.interceptor.ts **************
-
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpRequest, HttpHandler, HttpInterceptor } from '@angular/common/http';
+
 
 @Injectable()
-export class LoginInterceptor implements HttpInterceptor {
+export class PhotosInterceptor implements HttpInterceptor {
 
   constructor() {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
     
-    // ***************** we can interact with requests ****************
-    const modifiedRequest = request.clone({
-      // you can add new headers to existing headers
-      // our interceptop will add this header for all outgoing requests,
-      headers: request.headers.append('Auth', 'xyzxyzxyzxyz')
+    const modifiedRequest = req.clone({
+      headers: req.headers
+      .set('Content-type', 'application/json; charset=UTF-8')
+      .set('Authorization', 'DGDGFGSGFGDSF454SDFSDFDSFD')
     });
-    // ***************** we can interact with requests ****************
 
-    // ***************** we can interact with response ****************
-    // we add pipe if we need do something with response.
     return next.handle(modifiedRequest);
-    // ***************** we can interact with response ****************
     
   }
 }
@@ -57,31 +49,29 @@ export class LoginInterceptor implements HttpInterceptor {
 // ************************ app/app.module.ts *************************
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoginInterceptor } from './shared/login.interceptor';
+import { PhotosInterceptor } from './shared/photos.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
   providers: [
-    // ************* add this code for interceptors - begin ************  
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoginInterceptor,
+      useClass: PhotosInterceptor,
       multi: true
     }
-    // ************* add this code for interceptors - end *************  
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
 
 
 
