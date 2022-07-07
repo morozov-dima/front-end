@@ -3,6 +3,35 @@
 // **********************************************************************
 
 
+
+
+
+// ****************** app.component.ts ******************
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
 // ******************* save-location-dialog.component.html ***************
 <h1 mat-dialog-title>Save location</h1>
 <div mat-dialog-content>
@@ -60,6 +89,16 @@ export class SaveLocationDialogComponent implements OnInit {
           }]
       });
     }
+
+
+        // save location when user press 'save' button on dialog (save location) popup.
+        saveLocation() {
+          if(this.locationsFrom.valid) {
+               // some login ...
+               this.locationsFrom.reset();
+               this.matDialogRef.close('save');
+          }
+       }
 
         
 
@@ -125,3 +164,5 @@ export class LocationsService {
   }
 
 }
+
+
