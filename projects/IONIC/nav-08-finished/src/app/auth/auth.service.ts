@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private _userIsAuthenticated = false;
 
@@ -12,10 +13,12 @@ export class AuthService {
 
   constructor() {}
 
+  // login method
   login() {
     this._userIsAuthenticated = true;
   }
 
+  // logout method
   logout() {
     this._userIsAuthenticated = false;
   }

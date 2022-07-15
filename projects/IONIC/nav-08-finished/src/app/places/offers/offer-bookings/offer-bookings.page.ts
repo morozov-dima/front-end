@@ -20,6 +20,8 @@ export class OfferBookingsPage implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    // subscribe to 'paramMap'
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('placeId')) {
         this.navCtrl.navigateBack('/places/tabs/offers');
@@ -27,5 +29,6 @@ export class OfferBookingsPage implements OnInit {
       }
       this.place = this.placesService.getPlace(paramMap.get('placeId'));
     });
+
   }
 }
