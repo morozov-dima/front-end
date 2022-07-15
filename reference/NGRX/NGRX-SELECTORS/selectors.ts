@@ -127,8 +127,6 @@ export const getCurrentUser = createSelector(
 // **************************** Example 3 *******************************
 // **********************************************************************
 
-
-
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { UserState } from './users.interface';
 
@@ -248,4 +246,102 @@ export const selectApartmentsDistance = createSelector(
         return state.distanceFromBeach
     }
 );
+
+
+
+
+
+
+
+
+
+// **********************************************************************
+// **************************** Example 5 *******************************
+// **********************************************************************
+
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { State } from './app.state';
+import { Item } from './items.interface';
+ 
+export const selectItemsFeatureState = createFeatureSelector<State>('results');
+
+export const selectFilterQuery = createSelector(
+    selectItemsFeatureState,
+    state => state.filterQuery
+);
+
+
+export const changeSortedDirection = createSelector(
+    selectItemsFeatureState,
+    state => state.sortedDirection
+);
+
+
+export const selectGridData = createSelector(
+    selectItemsFeatureState,
+    state => state.gridData
+);
+    
+
+export const selectItems = createSelector(
+    selectItemsFeatureState,
+    changeSortedDirection,
+    selectFilterQuery,
+     (state, sortedDirection, filterQuery) => {
+
+        let filteredData = [...state.items];
+        
+        if (filterQuery !== '') {
+            filteredData = filteredData
+                .filter((item) =>  {
+                    const updaedItem = item['Year'].toLowerCase().includes(filterQuery) || item['Title'].toLowerCase().includes(filterQuery);
+                    return updaedItem;
+                }
+            );
+        }
+
+        const sortedData = [...filteredData];
+        sortedData.sort(function (x: any, y: any) {
+            let paramA = x.Title.toUpperCase();
+            let paramB = y.Title.toUpperCase();
+            return compare(paramA, paramB, sortedDirection);
+        });
+       return sortedData;
+    }
+); 
+
+
+export const selectView = createSelector(
+    selectItemsFeatureState,
+    state => state.view
+);
+    
+
+export const selectError = createSelector(
+    selectItemsFeatureState,
+    state => state.error
+);
+
+
+export const selectItemById = (id: number) => createSelector(
+    selectItemsFeatureState,
+    state => {
+       const currentItem: Item[] = state.items.filter(item => item.id === id);
+
+        return currentItem;
+
+    }
+);
+
+
+// Utils
+export function compare(a: any, b: any, sortDirection: string): number {
+    if (a > b) {
+        return sortDirection === 'asc' ? 1 : -1;
+    }
+    if(a < b) {
+        return sortDirection === 'desc' ? 1 : -1;
+    }
+    return 0;
+}
 
