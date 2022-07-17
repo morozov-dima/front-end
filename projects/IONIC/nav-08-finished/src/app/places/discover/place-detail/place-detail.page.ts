@@ -21,6 +21,7 @@ export class PlaceDetailPage implements OnInit {
     private modalCtrl: ModalController
   ) {}
 
+
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('placeId')) {
@@ -31,10 +32,13 @@ export class PlaceDetailPage implements OnInit {
     });
   }
 
+
   onBookPlace() {
     // this.router.navigateByUrl('/places/tabs/discover');
     // this.navCtrl.navigateBack('/places/tabs/discover');
     // this.navCtrl.pop();
+
+    // create component programmatically.
     this.modalCtrl
       .create({
         component: CreateBookingComponent,
@@ -51,4 +55,6 @@ export class PlaceDetailPage implements OnInit {
         }
       });
   }
+
+  
 }
