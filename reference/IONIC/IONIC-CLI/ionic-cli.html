@@ -3,7 +3,7 @@
     1. install ionic globally
  -->
  npm install -g @ionic/cli
-
+ npm install --force -g @ionic/cli native-run cordova-res
 
 
  
@@ -26,17 +26,21 @@
     5. new ionic project will be created and all dependencies will be installed.
     6. don't choose "Install the free Ionic Appflow SDK"
     7. create ionic account - choose 'No'.
+    8. you can also write already all path like this: 'ionic start photo-gallery tabs --type=angular --capacitor'
  -->
  ionic start
+ ionic start photo-gallery tabs --type=angular --capacitor
 
 
 
 
+ 
 
 
 
 <!-- 
     ******************* run ionic project *******************
+    1. you can open your app in : 'http://localhost:8100'
  -->
  ionic serve
 

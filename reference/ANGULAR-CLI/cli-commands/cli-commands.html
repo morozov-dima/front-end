@@ -42,6 +42,9 @@ ng new myapp --defaults --routing --skip-tests --d
 
 
 
+
+ 
+
 <!-- 
     ***************** run Angular project locally ********************
     1. you can add '--live-reload false' this will disable live reload
@@ -86,7 +89,7 @@ ng new myapp --defaults --routing --skip-tests --d
  ng generate module posts --dry-run
  ng g module posts -d
  ng g module posts/posts-routing --flat -d
-
+ ng g module app.routing --flat -d
 
 
  
@@ -224,6 +227,12 @@ http-server -p 8081
  ng add @ngrx/router-store@13.2.0
 
 
+
+
+
+
+
+
 <!-- 
     ***************  CLI ******************
     1. Install angular CLI
@@ -260,23 +269,6 @@ npm install --force
     https://ng-bootstrap.github.io/#/home
  -->
  npm install ngx-bootstrap --save
-
-
-
-
-
-
-
-
-
-<!-- 
-    *************** Install Lodash JavaScript utility library ******************
-    // this is external JavaScript package.
- -->
- npm i --save lodash
- npm install --save @types/lodash
-
-
 
 
 
